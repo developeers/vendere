@@ -1,6 +1,18 @@
 <template>
+  <navigation-bar></navigation-bar>
   <router-view/>
 </template>
+
+<script lang="ts">
+import { defineComponent } from 'vue'
+import NavigationBar from './components/navigation/NavigationBar.vue'
+
+export default defineComponent({
+  components: {
+    NavigationBar,
+  }
+})
+</script>
 
 <style>
 #app {
@@ -9,5 +21,8 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+}
+* {
+  margin: 0px;
 }
 </style>
