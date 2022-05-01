@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="product-card-container">
         <img src="../../assets/bike.png" alt="Product image">
         <div class="product-info">
             <div class="product-name"> {{ product.name }} </div>
@@ -26,8 +26,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.container {
-    width: 25vw;
+.product-card-container {
     max-width: 300px;
     border: 1px solid #b8b8b8;
     border-radius: 5px;
@@ -36,7 +35,6 @@ img {
     width: 95%;
 }
 .product-info {
-    width: 25vw;
     min-width: 180px;
     max-width: 300px;
     border-top: solid 1px #b8b8b8;

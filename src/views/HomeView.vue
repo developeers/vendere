@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <ProductCard :product="sampleProduct" />
+  <div class="container">
+    <ProductCard v-for="index in 5" :product="sampleProduct" :key="index"/>
   </div>
 </template>
 
@@ -31,3 +31,12 @@ export default defineComponent({
   }
 });
 </script>
+
+<style scoped>
+.container {
+  margin: 20px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+}
+</style>
