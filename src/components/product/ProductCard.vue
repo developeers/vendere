@@ -30,6 +30,7 @@ export default defineComponent({
     max-width: 300px;
     border: 1px solid #b8b8b8;
     border-radius: 5px;
+    margin: 0 auto;
 }
 img {
     width: 95%;
