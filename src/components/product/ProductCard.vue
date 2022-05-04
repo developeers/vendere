@@ -10,8 +10,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import { PropType } from '@vue/composition-api'
+import { defineComponent, PropType } from 'vue'
 
 import { IProductInfo } from '@/services/interfaces/IProduct'
 

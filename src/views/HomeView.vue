@@ -1,19 +1,21 @@
 <template>
   <div class="container">
-    <ProductCard v-for="index in 5" :product="sampleProduct" :key="index"/>
+    <!-- <ProductCard v-for="index in 5" :product="sampleProduct" :key="index"/> -->
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 
-import ProductCard from '@/components/product/ProductCard.vue'
+// import ProductCard from '@/components/product/ProductCard.vue'
 import { IProductInfo } from '@/services/interfaces/IProduct'
+import { getProductsList } from '@/services/vendereApi/VendereApiProduct'
+import { IApiResponse } from '@/services/vendereApi/vendereApiResponse/IApiResponse';
 
 export default defineComponent({
   name: 'HomeView',
   components: {
-    ProductCard,
+    // ProductCard,
   },
   setup() {
     const sampleProduct: IProductInfo = {
@@ -28,6 +30,12 @@ export default defineComponent({
     return {
       sampleProduct
     }
+  },
+  mounted() {
+    getProductsList().then((productsList: Array<IApiResponse>) => {
+      console.log(`Get products list: ${productsList}`)
+
+    })
   }
 });
 </script>
