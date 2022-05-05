@@ -1,14 +1,17 @@
 import { IProductInfo } from '@/services/interfaces/IProduct'
 
-interface ProductsState {
+export interface ProductsState {
     products: Array<IProductInfo>
 }
 
-export const products = {
+const ProductModule = {
     state: {
-        products: []
+        products: [] as Array<IProductInfo>
     },
     mutations: {
+        setProductsList(state: ProductsState, productsList: Array<IProductInfo>) {
+            state.products = productsList
+        },
         addProduct(state: ProductsState, product: IProductInfo) {
             state.products.push(product)
         }
@@ -21,3 +24,5 @@ export const products = {
     actions: {
     }
 }
+
+export default ProductModule

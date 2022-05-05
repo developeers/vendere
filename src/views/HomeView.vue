@@ -10,31 +10,16 @@ import { defineComponent } from 'vue';
 // import ProductCard from '@/components/product/ProductCard.vue'
 import { IProductInfo } from '@/services/interfaces/IProduct'
 import { getProductsList } from '@/services/vendereApi/VendereApiProduct'
-import { IApiResponse } from '@/services/vendereApi/vendereApiResponse/IApiResponse';
 
 export default defineComponent({
   name: 'HomeView',
   components: {
     // ProductCard,
   },
-  setup() {
-    const sampleProduct: IProductInfo = {
-      name: 'Old bicycle',
-      price: 9000,
-      owner: {
-        name: 'Josephs'
-      },
-      updatedAt: '2021-05-01'
-    }
-
-    return {
-      sampleProduct
-    }
-  },
   mounted() {
-    getProductsList().then((productsList: Array<IApiResponse>) => {
-      console.log(`Get products list: ${productsList}`)
-
+    getProductsList().then((productsList: Array<IProductInfo>) => {
+      console.log('Get products list: ', productsList)
+      this.$store.commit('setProductsList', productsList)
     })
   }
 });
