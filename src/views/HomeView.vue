@@ -1,13 +1,13 @@
 <template>
   <div class="container">
-    <!-- <ProductCard v-for="index in 5" :product="sampleProduct" :key="index"/> -->
+    <ProductCard v-for="(product, index) in productsList" :product="product" :key="index"/>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { computed, defineComponent } from 'vue';
 
-// import ProductCard from '@/components/product/ProductCard.vue'
+import ProductCard from '@/components/product/ProductCard.vue'
 import { IProductInfo } from '@/services/interfaces/IProduct'
 import { getProductsList } from '@/services/vendereApi/VendereApiProduct'
 import ProductModule from '@/store/modules/Product'
@@ -15,7 +15,13 @@ import ProductModule from '@/store/modules/Product'
 export default defineComponent({
   name: 'HomeView',
   components: {
-    // ProductCard,
+    ProductCard,
+  },
+  setup() {
+    const productsList = computed(() => ProductModule.productsList)
+    return {
+      productsList
+    }
   },
   mounted() {
     getProductsList().then((productsList: Array<IProductInfo>) => {
