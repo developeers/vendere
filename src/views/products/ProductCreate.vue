@@ -15,6 +15,7 @@
 import { defineComponent } from 'vue'
 
 import { IProductInfo } from '@/services/interfaces/IProduct'
+import { submitProduct } from '@/services/vendereApi/VendereApiProduct'
 
 export default defineComponent({
     setup() {
@@ -30,6 +31,8 @@ export default defineComponent({
     methods: {
         submitNewProduct() {
             console.log('Create product: ', this.product)
+            submitProduct(this.product)
+            this.$router.push({name: 'home'})
         }
     }
 })
