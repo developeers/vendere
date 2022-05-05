@@ -11,6 +11,8 @@
     "forceConsistentCasingInFileNames": true,
     "useDefineForClassFields": true,
     "sourceMap": true,
+    "importHelpers": true,
+    "experimentalDecorators": true,
     "baseUrl": ".",
     "types": [
       "webpack-env"

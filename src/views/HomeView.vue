@@ -10,6 +10,7 @@ import { defineComponent } from 'vue';
 // import ProductCard from '@/components/product/ProductCard.vue'
 import { IProductInfo } from '@/services/interfaces/IProduct'
 import { getProductsList } from '@/services/vendereApi/VendereApiProduct'
+import ProductModule from '@/store/modules/Product'
 
 export default defineComponent({
   name: 'HomeView',
@@ -19,7 +20,7 @@ export default defineComponent({
   mounted() {
     getProductsList().then((productsList: Array<IProductInfo>) => {
       console.log('Get products list: ', productsList)
-      this.$store.commit('setProductsList', productsList)
+      ProductModule.setProductsList(productsList)
     })
   }
 });
