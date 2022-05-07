@@ -53,7 +53,7 @@ export default defineComponent({
     padding: 15px;
 }
 .product-image-carousel {
-    width: 55%;
+    width: 590px;
     position: relative;
     display: flex;
     justify-content: center;
@@ -71,15 +71,15 @@ export default defineComponent({
     font-style: italic;
 }
 .product-description .custom-button {
-    width: 75%;
-    height: 40px;
+    width: 60%;
+    height: 36px;
     font-weight: bold;
     display: flex;
     align-items: center;
     justify-content: center;
     color: whitesmoke;
     margin: 0 auto;
-    margin-top: 20px;
+    margin-top: 15px;
     cursor: pointer;
     border-radius: 5px;
 }

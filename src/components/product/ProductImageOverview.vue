@@ -1,7 +1,7 @@
 <template>
 <div class="carousel-item-container">
-    <img :src="imageUrl" :id="thumbnailElementId" alt="Product image">
-    <div class="product-image-zoom-in" :style="{'display':displayFlag}">
+    <img :src="imageUrl" :id="thumbnailElementId" :class="{'selected-thumbnail': selectedFlag}" alt="Product image">
+    <div class="product-image-zoom-in" :class="{ 'show': selectedFlag}">
         <img :src="imageUrl" alt="Product image">
     </div>
 </div>
@@ -24,10 +24,10 @@ export default defineComponent({
     },
     setup(props) {
         const thumbnailElementId = "product-thumbnail-" + props.thumbnailIndex
-        const displayFlag = computed(() => ProductModule.productThumbnailIndex === props.thumbnailIndex ? "block" : "none")
+        const selectedFlag = computed(() => ProductModule.productThumbnailIndex === props.thumbnailIndex)
         return {
-            thumbnailElementId , 
-            displayFlag
+            thumbnailElementId,
+            selectedFlag
         }
     },
     mounted() {
@@ -45,6 +45,10 @@ export default defineComponent({
 }
 .carousel-item-container > img {
     width: 100%;
+    cursor: pointer;
+}
+.carousel-item-container > img.selected-thumbnail {
+    box-shadow: 0 0 5px 4px grey;
 }
 .product-image-zoom-in {
     display: none;
@@ -53,7 +57,13 @@ export default defineComponent({
     top: -400px;
 }
 .product-image-zoom-in > img {
-    width: 100%;
+    width: 590px;
     height: 390px;
+}
+.show {
+    display: block !important;
+}
+.product-image-zoom-in {
+    display: none;
 }
 </style>
