@@ -1,30 +1,7 @@
 <template>
     <div class="product-detail-container">
         <div class="product-image-carousel">
-            <div class="carousel-item-container">
-                <img src="../../assets/01.jpg" alt="Product image">
-                <div class="product-image-zoom-in">
-                    <img src="../../assets/01.jpg" alt="Product image">
-                </div>
-            </div>
-            <div class="carousel-item-container">
-                <img src="../../assets/02.jpg" alt="Product image">
-                <div class="product-image-zoom-in">
-                    <img src="../../assets/02.jpg" alt="Product image">
-                </div>
-            </div>
-            <div class="carousel-item-container">
-                <img src="../../assets/03.jpg" alt="Product image">
-                <div class="product-image-zoom-in">
-                    <img src="../../assets/03.jpg" alt="Product image">
-                </div>
-            </div>
-            <div class="carousel-item-container">
-                <img src="../../assets/04.jpg" alt="Product image">
-                <div class="product-image-zoom-in">
-                    <img src="../../assets/04.jpg" alt="Product image">
-                </div>
-            </div>
+            <ProductImageOverview v-for="(imageUrl, index) in imagesList" :key="index" :thumbnailIndex="index" :imageUrl="imageUrl"/>
         </div>
         <div class="product-description">
             <h2> {{ productDetail.name }} </h2>
@@ -39,14 +16,25 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 
+import ProductImageOverview from '@/components/product/ProductImageOverview.vue'
 import { getProductByHashId } from '@/services/vendereApi/VendereApiProduct'
 import { DefaultProductInfo } from '@/services/interfaces/IProduct'
 
 export default defineComponent({
+    components: {
+        ProductImageOverview
+    },
     data() {
         const productDetail = DefaultProductInfo
+        const imagesList = [
+            "https://cdn.pixabay.com/photo/2021/11/12/07/04/china-6788187_960_720.jpg",
+            "https://cdn.pixabay.com/photo/2020/02/25/09/57/road-4878453_960_720.jpg",
+            "https://cdn.pixabay.com/photo/2017/03/27/14/56/auto-2179220_960_720.jpg",
+            "https://cdn.pixabay.com/photo/2020/10/21/18/07/laptop-5673901_960_720.jpg",            
+        ]
         return {
-            productDetail
+            productDetail,
+            imagesList
         }
     },
     mounted() {
@@ -109,24 +97,5 @@ export default defineComponent({
 .order-button:hover {
     background: rgb(255, 110, 57);
     border-color: rgb(255, 110, 57);
-}
-.carousel-item-container {
-    width: 60px;
-}
-.carousel-item-container > img {
-    width: 100%;
-}
-.carousel-item-container > img:hover + .product-image-zoom-in {
-    display: block;
-}
-.product-image-zoom-in {
-    display: none;
-    position: absolute;
-    left: 15px;
-    top: 45px;
-}
-.product-image-zoom-in > img {
-    width: 100%;
-    height: 100%;
 }
 </style>
