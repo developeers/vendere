@@ -58,6 +58,7 @@ export default defineComponent({
     display: flex;
     justify-content: center;
     gap: 10px;
+    top: 400px;
 }
 .product-image-carousel > img {
     width: 100%;

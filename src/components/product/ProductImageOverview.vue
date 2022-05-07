@@ -49,11 +49,11 @@ export default defineComponent({
 .product-image-zoom-in {
     display: none;
     position: absolute;
-    left: 15px;
-    top: 45px;
+    left: 0;
+    top: -400px;
 }
 .product-image-zoom-in > img {
     width: 100%;
-    height: 100%;
+    height: 390px;
 }
 </style>
