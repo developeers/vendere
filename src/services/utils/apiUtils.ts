@@ -6,7 +6,8 @@ export const convertApiResponseProduct = (response: IApiResponse): IProductInfo 
         name: response.fields.name?.stringValue,
         price: +response.fields.price?.integerValue,
         owner: {name: response.fields.owner?.stringValue},
-        updatedAt: response.updateTime
+        updatedAt: response.updateTime,
+        hashId: response.name.split('/').slice(-1)[0]
     }
     return product
 }

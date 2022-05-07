@@ -8,8 +8,8 @@ export const getProductsList = async (): Promise<Array<IProductInfo>> => {
     return res?.data.documents.map((product: IApiResponse) => convertApiResponseProduct(product))
 }
 
-export const getProductById = async (productId: number): Promise<IProductInfo> => {
-    const res = await VendereApiInstance.get(`products/${productId}`)
+export const getProductByHashId = async (productHashId: string): Promise<IProductInfo> => {
+    const res = await VendereApiInstance.get(`products/${productHashId}`)
     return convertApiResponseProduct(res?.data)
 }
 

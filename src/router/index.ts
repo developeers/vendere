@@ -12,6 +12,11 @@ const routes: Array<RouteRecordRaw> = [
     name: 'ProductCreate',
     component: () => import(/* webpackChunkName: "about" */ '@/views/products/ProductCreate.vue')
   },
+  {
+    path: '/product/:hashId',
+    name: 'ProductDetail',
+    component: () => import('@/views/products/ProductDetail.vue')
+  },
 ]
 
 const router = createRouter({

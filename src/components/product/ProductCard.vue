@@ -1,5 +1,5 @@
 <template>
-    <div class="product-card-container">
+    <div class="product-card-container" @click="navToDetailPage">
         <img src="../../assets/bike.png" alt="Product image">
         <div class="product-info">
             <div class="product-name"> {{ product.name }} </div>
@@ -20,6 +20,11 @@ export default defineComponent({
             type: Object as PropType<IProductInfo>,
             required: true
         }
+    },
+    methods: {
+        navToDetailPage() {
+            this.$router.push({name: 'ProductDetail', params: {hashId: this.product.hashId}})
+        }
     }
 })
 </script>
@@ -30,6 +35,7 @@ export default defineComponent({
     border: 1px solid #b8b8b8;
     border-radius: 5px;
     margin: 0 auto;
+    cursor: pointer;
 }
 img {
     width: 95%;
