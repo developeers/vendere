@@ -1,7 +1,7 @@
 <template>
     <div class="product-detail-container">
-        <div class="product-image">
-            <img src="../../assets/bike.png" alt="Product image">
+        <div class="product-image-carousel">
+            <ProductImageOverview v-for="(imageUrl, index) in imagesList" :key="index" :thumbnailIndex="index" :imageUrl="imageUrl"/>
         </div>
         <div class="product-description">
             <h2> {{ productDetail.name }} </h2>
@@ -16,14 +16,25 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 
+import ProductImageOverview from '@/components/product/ProductImageOverview.vue'
 import { getProductByHashId } from '@/services/vendereApi/VendereApiProduct'
 import { DefaultProductInfo } from '@/services/interfaces/IProduct'
 
 export default defineComponent({
+    components: {
+        ProductImageOverview
+    },
     data() {
         const productDetail = DefaultProductInfo
+        const imagesList = [
+            "https://cdn.pixabay.com/photo/2021/11/12/07/04/china-6788187_960_720.jpg",
+            "https://cdn.pixabay.com/photo/2020/02/25/09/57/road-4878453_960_720.jpg",
+            "https://cdn.pixabay.com/photo/2017/03/27/14/56/auto-2179220_960_720.jpg",
+            "https://cdn.pixabay.com/photo/2020/10/21/18/07/laptop-5673901_960_720.jpg",            
+        ]
         return {
-            productDetail
+            productDetail,
+            imagesList
         }
     },
     mounted() {
@@ -41,10 +52,15 @@ export default defineComponent({
     margin-top: 20px;
     padding: 15px;
 }
-.product-image {
-    width: 55%;
+.product-image-carousel {
+    width: 590px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    top: 400px;
 }
-.product-image > img {
+.product-image-carousel > img {
     width: 100%;
 }
 .product-description {
@@ -55,15 +71,15 @@ export default defineComponent({
     font-style: italic;
 }
 .product-description .custom-button {
-    width: 75%;
-    height: 40px;
+    width: 60%;
+    height: 36px;
     font-weight: bold;
     display: flex;
     align-items: center;
     justify-content: center;
     color: whitesmoke;
     margin: 0 auto;
-    margin-top: 20px;
+    margin-top: 15px;
     cursor: pointer;
     border-radius: 5px;
 }

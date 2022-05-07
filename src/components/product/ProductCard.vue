@@ -1,6 +1,6 @@
 <template>
     <div class="product-card-container" @click="navToDetailPage">
-        <img src="../../assets/bike.png" alt="Product image">
+        <img src="https://cdn.pixabay.com/photo/2017/03/27/14/56/auto-2179220_960_720.jpg" alt="Product image">
         <div class="product-info">
             <div class="product-name"> {{ product.name }} </div>
             <div class="product-price"> {{product.price}}¥</div>
