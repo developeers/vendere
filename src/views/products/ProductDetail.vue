@@ -1,7 +1,30 @@
 <template>
     <div class="product-detail-container">
-        <div class="product-image">
-            <img src="../../assets/bike.png" alt="Product image">
+        <div class="product-image-carousel">
+            <div class="carousel-item-container">
+                <img src="../../assets/01.jpg" alt="Product image">
+                <div class="product-image-zoom-in">
+                    <img src="../../assets/01.jpg" alt="Product image">
+                </div>
+            </div>
+            <div class="carousel-item-container">
+                <img src="../../assets/02.jpg" alt="Product image">
+                <div class="product-image-zoom-in">
+                    <img src="../../assets/02.jpg" alt="Product image">
+                </div>
+            </div>
+            <div class="carousel-item-container">
+                <img src="../../assets/03.jpg" alt="Product image">
+                <div class="product-image-zoom-in">
+                    <img src="../../assets/03.jpg" alt="Product image">
+                </div>
+            </div>
+            <div class="carousel-item-container">
+                <img src="../../assets/04.jpg" alt="Product image">
+                <div class="product-image-zoom-in">
+                    <img src="../../assets/04.jpg" alt="Product image">
+                </div>
+            </div>
         </div>
         <div class="product-description">
             <h2> {{ productDetail.name }} </h2>
@@ -41,10 +64,14 @@ export default defineComponent({
     margin-top: 20px;
     padding: 15px;
 }
-.product-image {
+.product-image-carousel {
     width: 55%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
 }
-.product-image > img {
+.product-image-carousel > img {
     width: 100%;
 }
 .product-description {
@@ -82,5 +109,24 @@ export default defineComponent({
 .order-button:hover {
     background: rgb(255, 110, 57);
     border-color: rgb(255, 110, 57);
+}
+.carousel-item-container {
+    width: 60px;
+}
+.carousel-item-container > img {
+    width: 100%;
+}
+.carousel-item-container > img:hover + .product-image-zoom-in {
+    display: block;
+}
+.product-image-zoom-in {
+    display: none;
+    position: absolute;
+    left: 15px;
+    top: 45px;
+}
+.product-image-zoom-in > img {
+    width: 100%;
+    height: 100%;
 }
 </style>
