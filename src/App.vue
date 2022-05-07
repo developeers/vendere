@@ -1,6 +1,8 @@
 <template>
   <navigation-bar></navigation-bar>
-  <router-view/>
+  <div class="body-container">
+    <router-view/>
+  </div>
 </template>
 
 <script lang="ts">
@@ -15,6 +17,7 @@ export default defineComponent({
 </script>
 
 <style>
+@import '@/assets/css/main.css';
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -24,5 +27,8 @@ export default defineComponent({
 }
 * {
   margin: 0px;
+}
+.body-container {
+  padding: 15px;
 }
 </style>

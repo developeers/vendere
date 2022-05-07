@@ -11,18 +11,21 @@
             <div class="custom-button order-button">Buy now</div>
         </div>
     </div>
+    <SellerInfo/>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
 
 import ProductImageOverview from '@/components/product/ProductImageOverview.vue'
+import SellerInfo from '@/components/seller/SellerInfo.vue'
 import { getProductByHashId } from '@/services/vendereApi/VendereApiProduct'
 import { DefaultProductInfo } from '@/services/interfaces/IProduct'
 
 export default defineComponent({
     components: {
-        ProductImageOverview
+        ProductImageOverview,
+        SellerInfo,
     },
     data() {
         const productDetail = DefaultProductInfo
@@ -49,11 +52,11 @@ export default defineComponent({
 <style scoped>
 .product-detail-container {
     display: flex;
-    margin-top: 20px;
-    padding: 15px;
+    height: 450px;
 }
 .product-image-carousel {
     width: 590px;
+    height: fit-content;
     position: relative;
     display: flex;
     justify-content: center;

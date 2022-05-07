@@ -53,7 +53,6 @@ export default defineComponent({
     justify-content: left;
     background: #296495;
     padding: 10px 16px;
-    margin-bottom: 15px;
     gap: 20px;
 }
 .app-name {
