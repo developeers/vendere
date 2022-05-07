@@ -5,7 +5,7 @@ export const convertApiResponseProduct = (response: IApiResponse): IProductInfo 
     const product: IProductInfo = {
         name: response.fields.name?.stringValue,
         price: +response.fields.price?.integerValue,
-        owner: {"name": "John"},
+        owner: {name: response.fields.owner?.stringValue},
         updatedAt: response.updateTime
     }
     return product

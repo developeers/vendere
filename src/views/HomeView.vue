@@ -18,7 +18,13 @@ export default defineComponent({
     ProductCard,
   },
   setup() {
-    const productsList = computed(() => ProductModule.productsList)
+    const productsList = computed(() => {
+      const filteredProductsList = ProductModule.productsList
+      if (filteredProductsList.length > 0 || ProductModule.searchKeyword.length > 0) {
+        return filteredProductsList
+      }
+      return ProductModule.allProductsList
+    })
     return {
       productsList
     }
@@ -27,6 +33,7 @@ export default defineComponent({
     getProductsList().then((productsList: Array<IProductInfo>) => {
       console.log('Get products list: ', productsList)
       ProductModule.setProductsList(productsList)
+      ProductModule.setAllProductsList(productsList)
     })
   }
 });

@@ -1,7 +1,7 @@
 <template>
     <nav class="nav-bar">
         <router-link :to="{name: 'home'}" class="app-name">Vendere</router-link>
-        <input type="text" class="search-bar" placeholder="Search here">
+        <SearchBar/>
         <div class="profile">
             <img alt="Profile image" id="profile-icon" src="../../assets/user.png">
             <div class="profile-menu-dropdown" id="profile-menu-dropdown">
@@ -18,7 +18,12 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 
+import SearchBar from './SearchBar.vue'
+
 export default defineComponent({
+    components: {
+        SearchBar
+    },
     mounted() {
         const dropdownMenu = document.getElementById("profile-menu-dropdown")
 
@@ -58,13 +63,6 @@ export default defineComponent({
     text-decoration: none;
     color: whitesmoke;
     cursor: pointer;
-}
-.search-bar {
-    outline: none;
-    height: 20px;
-    width: 25vw;
-    max-width: 280px;
-    min-width: 190px;
 }
 .profile {
     display: flex;
