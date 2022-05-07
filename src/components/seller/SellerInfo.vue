@@ -17,7 +17,7 @@ import { defineComponent } from 'vue'
 export default defineComponent({
     methods: {
         navToSellerProfile() {
-            this.$router.push({name: 'home'})
+            this.$router.push({name: 'SellerDetail', params: {hashId: "asdf"}})
         }
     }
 })

@@ -44,6 +44,8 @@ export default defineComponent({
         const productHashId = this.$route.params.hashId as string
         getProductByHashId(productHashId).then(product => {
             this.productDetail = product
+            // To-do: Send another API request to get seller info from seller hash id in product detail
+            // then update seller info in Vuex store
         })
     }
 })

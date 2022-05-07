@@ -17,6 +17,11 @@ const routes: Array<RouteRecordRaw> = [
     name: 'ProductDetail',
     component: () => import('@/views/products/ProductDetail.vue')
   },
+  {
+    path: '/seller/:hashId',
+    name: 'SellerDetail',
+    component: () => import('@/views/seller/SellerDetail.vue')
+  },
 ]
 
 const router = createRouter({
