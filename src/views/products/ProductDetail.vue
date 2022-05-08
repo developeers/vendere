@@ -6,7 +6,7 @@
         <div class="product-description">
             <h2> {{ productDetail.name }} </h2>
             <h5 class="product-price"> {{ productDetail.price }} ¥</h5>
-            <p> Uploaded by {{ sellerInfo?.name }} at {{ productDetail.updatedAt }} </p>
+            <p v-if="sellerInfo"> Uploaded by {{ sellerInfo.name }} at {{ productDetail.updatedAt }} </p>
             <div class="custom-button add-to-cart-button">Add to cart</div>
             <div class="custom-button order-button">Buy now</div>
         </div>

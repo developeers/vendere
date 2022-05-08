@@ -1,11 +1,11 @@
 <template>
-    <div class="seller-info-container">
+    <div class="seller-info-container" v-if="seller">
         <div class="seller-profile-image">
-            <img :src="seller?.imageUrl" alt="Profile image">
+            <img :src="seller.imageUrl" alt="Profile image">
         </div>
         <div class="seller-info">
-            <h3> {{ seller?.name }} </h3>
-            <p> {{ seller?.averageReview }} points ( {{ seller?.numOfReviews }} reviews) </p>
+            <h3> {{ seller.name }} </h3>
+            <p> {{ seller.averageReview }} points ( {{ seller.numOfReviews }} reviews) </p>
             <div class="view-profile-button center-element" @click="navToSellerProfile">View Profile</div>
         </div>
     </div>
@@ -22,7 +22,8 @@ export default defineComponent({
     },
     methods: {
         navToSellerProfile() {
-            const sellerHashId = this.seller?.hashId
+            if (!this.seller) return
+            const sellerHashId = this.seller.hashId
             this.$router.push({name: 'SellerDetail', params: {hashId: sellerHashId}})
         }
     }
