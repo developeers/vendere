@@ -21,6 +21,7 @@ import ProductImageOverview from '@/components/product/ProductImageOverview.vue'
 import SellerInfo from '@/components/seller/SellerInfo.vue'
 import { getProductByHashId } from '@/services/vendereApi/VendereApiProduct'
 import { DefaultProductInfo } from '@/services/interfaces/IProduct'
+import { getSellerByHashId } from '@/services/vendereApi/VendereApiSeller'
 
 export default defineComponent({
     components: {
@@ -44,8 +45,9 @@ export default defineComponent({
         const productHashId = this.$route.params.hashId as string
         getProductByHashId(productHashId).then(product => {
             this.productDetail = product
-            // To-do: Send another API request to get seller info from seller hash id in product detail
-            // then update seller info in Vuex store
+            getSellerByHashId(product.ownerHashId).then(res => {
+                // To-do: Update seller info to Vuex store
+            })
         })
     }
 })
