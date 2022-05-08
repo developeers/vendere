@@ -3,8 +3,7 @@
         <img :src="product.imageUrl" alt="Product image">
         <div class="product-info">
             <div class="product-name"> {{ product.name }} </div>
-            <div class="product-price"> {{product.price}}¥</div>
-            <i class="product-update-info"> Updated at {{ product.updatedAt }} by <span style="font-weight: bold"> Michael Scott </span> </i>
+            <div class="product-price"> {{product.price}} ¥</div>
         </div>
     </div>
 </template>
@@ -36,9 +35,11 @@ export default defineComponent({
     border-radius: 5px;
     margin: 0 auto;
     cursor: pointer;
+    display: flex;
+    flex-direction: column;
 }
 img {
-    width: 95%;
+    width: 100%;
 }
 .product-info {
     min-width: 180px;
@@ -51,6 +52,8 @@ img {
 .product-price {
     font-style: italic;
     font-size: 14px;
+    font-weight: bold;
+    color: brown;
 }
 .product-update-info {
     font-size: 15px;
