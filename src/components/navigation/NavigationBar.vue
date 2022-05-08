@@ -3,6 +3,9 @@
         <router-link :to="{name: 'home'}" class="app-name">Vendere</router-link>
         <SearchBar/>
         <div class="profile">
+            <router-link to="#">Sign up</router-link>
+            <router-link to="#">Login</router-link>
+            <router-link to="#">Orders <i class="fa fa-shopping-cart"></i></router-link>
             <img alt="Profile image" id="profile-icon" src="../../assets/user.png">
             <div class="profile-menu-dropdown" id="profile-menu-dropdown">
                 <div class="dropdown-items">
@@ -56,7 +59,14 @@ export default defineComponent({
     padding: 10px 16px;
     border-bottom: 2px solid mediumvioletred;
 }
-.app-name {
+.profile {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-left: auto;
+}
+.app-name,
+.profile > a {
     font-size: 20px;
     font-weight: bold;
     font-style: italic;
@@ -64,14 +74,17 @@ export default defineComponent({
     color: mediumvioletred;
     cursor: pointer;
 }
-.profile {
-    display: flex;
-    margin-left: auto;
+.profile > a {
+    font-size: 17px;
+    font-style: initial;
 }
 .profile > img {
     width: 28px;
     border-radius: 50%;
     cursor: pointer;
+}
+.profile .fa-shopping-cart {
+    color: mediumvioletred;
 }
 .profile-menu-dropdown {
     display: none;
@@ -88,7 +101,6 @@ export default defineComponent({
 }
 .dropdown-items a {
     text-decoration: none;
-    font-style: italic;
     font-size: 14px;
     text-align: left;
     color: black;
