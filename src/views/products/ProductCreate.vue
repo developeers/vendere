@@ -5,8 +5,6 @@
         <input type="text" id="product-name" name="product-name" placeholder="..." v-model="product.name">
         <label for="product-price">Product Price</label>
         <input type="text" id="product-price" name="product-price" v-model="product.price">
-        <label for="owner-name">Owner Name</label>
-        <input type="text" id="owner-name" name="owner-name" placeholder="..." v-model="product.owner.name">
         <div class="submit-button" @click="submitNewProduct">Create</div>
     </div>
 </template>
@@ -14,17 +12,12 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 
-import { IProductInfo } from '@/services/interfaces/IProduct'
+import { DefaultProductInfo } from '@/services/interfaces/IProduct'
 import { submitProduct } from '@/services/vendereApi/VendereApiProduct'
 
 export default defineComponent({
     setup() {
-        const product: IProductInfo = {
-            name: "",
-            price: 0,
-            owner: {name : ""},
-            updatedAt: ""
-        }
+        const product = DefaultProductInfo
 
         return { product }
     },

@@ -1,7 +1,7 @@
 export interface IProductInfo {
     name: string
     price: number
-    owner: Record<string, unknown>
+    ownerHashId: string
     updatedAt: string
     hashId?: string
 }
@@ -9,6 +9,6 @@ export interface IProductInfo {
 export const DefaultProductInfo: IProductInfo = {
     name: "",
     price: 0,
-    owner: {name: ""},
+    ownerHashId: "",
     updatedAt: ""
 }

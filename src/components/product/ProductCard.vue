@@ -4,7 +4,7 @@
         <div class="product-info">
             <div class="product-name"> {{ product.name }} </div>
             <div class="product-price"> {{product.price}}¥</div>
-            <i class="product-update-info"> Updated at {{ product.updatedAt }} by <span style="font-weight: bold"> {{product.owner.name}} </span> </i>
+            <i class="product-update-info"> Updated at {{ product.updatedAt }} by <span style="font-weight: bold"> Michael Scott </span> </i>
         </div>
     </div>
 </template>

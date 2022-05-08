@@ -18,7 +18,6 @@ export const submitProduct = async (product: IProductInfo): Promise<void> => {
         fields: {
             name: { stringValue: product.name },
             price: { integerValue: product.price },
-            owner: { stringValue: product.owner.name },
         }
     }
     VendereApiInstance.post(`products`, postParams).then(res => {
