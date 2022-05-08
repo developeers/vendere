@@ -16,7 +16,7 @@ export const convertApiResponseProduct = (response: IApiResponse): IProductInfo 
 export const convertApiResponseSeller = (response: IApiResponse): ISellerInfo => {
     const seller: ISellerInfo = {
         name: response.fields.name.stringValue,
-        averageReview: +response.fields.averageReview.stringValue,
+        averageReview: +response.fields.averageReview.doubleValue,
         numOfReviews: +response.fields.numOfReviews.integerValue,
         imageUrl: response.fields.imageUrl.stringValue,
         hashId: response.name.split('/').slice(-1)[0]

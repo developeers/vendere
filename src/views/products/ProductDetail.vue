@@ -6,7 +6,7 @@
         <div class="product-description">
             <h2> {{ productDetail.name }} </h2>
             <h5 class="product-price"> {{ productDetail.price }} ¥</h5>
-            <p> Uploaded by Michale Scott at {{ productDetail.updatedAt }} </p>
+            <p> Uploaded by {{ sellerInfo?.name }} at {{ productDetail.updatedAt }} </p>
             <div class="custom-button add-to-cart-button">Add to cart</div>
             <div class="custom-button order-button">Buy now</div>
         </div>
@@ -15,13 +15,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { computed, defineComponent } from 'vue'
 
 import ProductImageOverview from '@/components/product/ProductImageOverview.vue'
 import SellerInfo from '@/components/seller/SellerInfo.vue'
 import { getProductByHashId } from '@/services/vendereApi/VendereApiProduct'
 import { DefaultProductInfo } from '@/services/interfaces/IProduct'
 import { getSellerByHashId } from '@/services/vendereApi/VendereApiSeller'
+import SellerModule from '@/store/modules/Seller'
 
 export default defineComponent({
     components: {
@@ -36,17 +37,19 @@ export default defineComponent({
             "https://cdn.pixabay.com/photo/2017/03/27/14/56/auto-2179220_960_720.jpg",
             "https://cdn.pixabay.com/photo/2020/10/21/18/07/laptop-5673901_960_720.jpg",            
         ]
+        const sellerInfo = computed(() => SellerModule.sellerInfo)
         return {
             productDetail,
-            imagesList
+            imagesList,
+            sellerInfo
         }
     },
     mounted() {
         const productHashId = this.$route.params.hashId as string
         getProductByHashId(productHashId).then(product => {
             this.productDetail = product
-            getSellerByHashId(product.ownerHashId).then(res => {
-                // To-do: Update seller info to Vuex store
+            getSellerByHashId(product.ownerHashId).then(sellerInfo => {
+                SellerModule.setSellerInfo(sellerInfo)
             })
         })
     }

@@ -31,7 +31,6 @@ export default defineComponent({
   },
   mounted() {
     getProductsList().then((productsList: Array<IProductInfo>) => {
-      console.log('Get products list: ', productsList)
       ProductModule.setProductsList(productsList)
       ProductModule.setAllProductsList(productsList)
     })

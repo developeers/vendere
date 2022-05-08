@@ -1,23 +1,29 @@
 <template>
     <div class="seller-info-container">
         <div class="seller-profile-image">
-            <img src="https://cdn.pixabay.com/photo/2018/01/29/17/01/woman-3116587_960_720.jpg" alt="Profile image">
+            <img :src="seller?.imageUrl" alt="Profile image">
         </div>
         <div class="seller-info">
-            <h3> Michael Scott </h3>
-            <p> 4.3 points (45 reviews) </p>
+            <h3> {{ seller?.name }} </h3>
+            <p> {{ seller?.averageReview }} points ( {{ seller?.numOfReviews }} reviews) </p>
             <div class="view-profile-button center-element" @click="navToSellerProfile">View Profile</div>
         </div>
     </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { computed, defineComponent } from 'vue'
+import SellerModule from '@/store/modules/Seller'
 
 export default defineComponent({
+    setup() {
+        const seller = computed(() => SellerModule.sellerInfo)
+        return { seller }
+    },
     methods: {
         navToSellerProfile() {
-            this.$router.push({name: 'SellerDetail', params: {hashId: "asdf"}})
+            const sellerHashId = this.seller?.hashId
+            this.$router.push({name: 'SellerDetail', params: {hashId: sellerHashId}})
         }
     }
 })
@@ -35,7 +41,7 @@ export default defineComponent({
 }
 .seller-profile-image > img {
     width: 50px;
-    height: 46px;
+    height: 50px;
     border-radius: 50%;
 }
 .view-profile-button {
