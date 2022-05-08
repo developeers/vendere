@@ -75,10 +75,12 @@ export default defineComponent({
 }
 .profile-menu-dropdown {
     display: none;
-    background: white;
+    background: whitesmoke;
     position: fixed;
-    top: 48px;
-    right: 0;
+    width: 136px;
+    top: 55px;
+    right: 3px;
+    border-radius: 3px;
 }
 .dropdown-items {
     display: flex;
@@ -87,15 +89,19 @@ export default defineComponent({
 .dropdown-items a {
     text-decoration: none;
     font-style: italic;
-    font-size: 15px;
+    font-size: 14px;
     text-align: left;
     color: black;
-    border: 1px solid #296495;
-    border-top: 0;
-    padding: 3px 10px;
+    padding: 5px 15px;
+}
+.dropdown-items a:first-child {
+    padding-top: 10px;
+}
+.dropdown-items a:last-child {
+    padding-bottom: 10px;
 }
 .dropdown-items a:hover {
-    background: rgb(174, 210, 212);
-    color: whitesmoke;
+    color: mediumvioletred;
+    font-weight: bold;
 }
 </style>
