@@ -29,6 +29,6 @@ export default defineComponent({
   margin: 0px;
 }
 .body-container {
-  padding: 15px;
+  padding: 25px 35px;
 }
 </style>

@@ -49,18 +49,19 @@ export default defineComponent({
 <style scoped>
 .nav-bar {
     display: flex;
+    gap: 20px;
     align-items: center;
     justify-content: left;
-    background: #296495;
+    background: whitesmoke;
     padding: 10px 16px;
-    gap: 20px;
+    border-bottom: 2px solid mediumvioletred;
 }
 .app-name {
     font-size: 20px;
     font-weight: bold;
     font-style: italic;
     text-decoration: none;
-    color: whitesmoke;
+    color: mediumvioletred;
     cursor: pointer;
 }
 .profile {

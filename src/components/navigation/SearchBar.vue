@@ -31,8 +31,11 @@ export default defineComponent({
 <style scoped>
 .search-bar {
     outline: none;
-    height: 20px;
+    height: 30px;
     width: 25vw;
+    border-radius: 20px;
+    border: 0;
+    padding-left: 12px;
     max-width: 280px;
     min-width: 190px;
 }

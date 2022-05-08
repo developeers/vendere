@@ -60,6 +60,7 @@ export default defineComponent({
 .product-detail-container {
     display: flex;
     height: 450px;
+    gap: 30px;
 }
 .product-image-carousel {
     width: 590px;
@@ -81,32 +82,32 @@ export default defineComponent({
     font-style: italic;
 }
 .product-description .custom-button {
-    width: 60%;
-    height: 36px;
+    width: 50%;
+    height: 33px;
     font-weight: bold;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: whitesmoke;
     margin: 0 auto;
     margin-top: 15px;
     cursor: pointer;
     border-radius: 5px;
+    background: whitesmoke;
 }
 .add-to-cart-button {
-    background: blueviolet;
-    border: 1px solid blueviolet;
+    color: cadetblue;
+    border: 2px solid cadetblue;
 }
 .add-to-cart-button:hover {
-    background: rgb(108, 24, 187);
-    border-color: rgb(108, 24, 187);
+    color: whitesmoke;
+    background: cadetblue;
 }
 .order-button {
-    background: coral;
-    border: 1px solid coral;
+    color: mediumvioletred;
+    border: 2px solid mediumvioletred;
 }
 .order-button:hover {
-    background: rgb(255, 110, 57);
-    border-color: rgb(255, 110, 57);
+    color: whitesmoke;
+    background: mediumvioletred;
 }
 </style>
