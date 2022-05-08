@@ -4,11 +4,13 @@ export interface IProductInfo {
     ownerHashId: string
     updatedAt: string
     hashId?: string
+    imageUrl: string
 }
 
 export const DefaultProductInfo: IProductInfo = {
     name: "",
     price: 0,
     ownerHashId: "",
-    updatedAt: ""
+    updatedAt: "",
+    imageUrl: ""
 }
