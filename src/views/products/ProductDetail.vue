@@ -48,7 +48,7 @@ export default defineComponent({
         const productHashId = this.$route.params.hashId as string
         getProductByHashId(productHashId).then(product => {
             this.productDetail = product
-            getSellerByHashId(product.ownerHashId).then(sellerInfo => {
+            getSellerByHashId(product.sellerHashId).then(sellerInfo => {
                 SellerModule.setSellerInfo(sellerInfo)
             })
         })
