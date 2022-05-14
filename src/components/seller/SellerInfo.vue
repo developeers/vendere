@@ -5,7 +5,7 @@
         </div>
         <div class="seller-info">
             <h3> {{ seller.name }} </h3>
-            <p> {{ seller.averageReview }} points ( {{ seller.numOfReviews }} reviews) </p>
+            <p> {{ seller.averageReview }} points ({{ seller.numOfReviews }} reviews) </p>
             <div class="view-profile-button center-element" @click="navToSellerProfile">View Profile</div>
         </div>
     </div>
@@ -16,15 +16,18 @@ import { computed, defineComponent } from 'vue'
 import SellerModule from '@/store/modules/Seller'
 
 export default defineComponent({
-    setup() {
-        const seller = computed(() => SellerModule.sellerInfo)
+    setup(props) {
+        const seller = computed(() => SellerModule.sellerInfo(props.hashId || ""))
         return { seller }
+    },
+    props: {
+        hashId: {
+            type: String
+        }
     },
     methods: {
         navToSellerProfile() {
-            if (!this.seller) return
-            const sellerHashId = this.seller.hashId
-            this.$router.push({name: 'SellerDetail', params: {hashId: sellerHashId}})
+            this.$router.push({name: 'SellerDetail', params: {hashId: this.hashId}})
         }
     }
 })

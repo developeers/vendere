@@ -6,16 +6,16 @@
         <div class="product-description">
             <h2> {{ productDetail.name }} </h2>
             <h5 class="product-price"> {{ productDetail.price }} ¥</h5>
-            <p v-if="sellerInfo"> Uploaded by {{ sellerInfo.name }} at {{ productDetail.updatedAt }} </p>
+            <p v-if="sellerInfo.name"> Uploaded by {{ sellerInfo.name }} at {{ productDetail.updatedAt }} </p>
             <div class="custom-button add-to-cart-button">Add to cart</div>
             <div class="custom-button order-button">Buy now</div>
         </div>
     </div>
-    <SellerInfo/>
+    <SellerInfo :hashId="sellerInfo.hashId"/>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue'
+import { defineComponent, reactive } from 'vue'
 
 import ProductImageOverview from '@/components/product/ProductImageOverview.vue'
 import SellerInfo from '@/components/seller/SellerInfo.vue'
@@ -37,7 +37,7 @@ export default defineComponent({
             "https://cdn.pixabay.com/photo/2017/03/27/14/56/auto-2179220_960_720.jpg",
             "https://cdn.pixabay.com/photo/2020/10/21/18/07/laptop-5673901_960_720.jpg",            
         ]
-        const sellerInfo = computed(() => SellerModule.sellerInfo)
+        const sellerInfo = reactive({})
         return {
             productDetail,
             imagesList,
@@ -48,9 +48,15 @@ export default defineComponent({
         const productHashId = this.$route.params.hashId as string
         getProductByHashId(productHashId).then(product => {
             this.productDetail = product
-            getSellerByHashId(product.sellerHashId).then(sellerInfo => {
-                SellerModule.setSellerInfo(sellerInfo)
-            })
+            const sellerInfo = SellerModule.sellerInfo(product.sellerHashId)
+            if (sellerInfo) {
+                this.sellerInfo = sellerInfo
+            } else {
+                getSellerByHashId(product.sellerHashId).then(sellerInfo => {
+                    SellerModule.addSellerInfo(sellerInfo)
+                    this.sellerInfo = sellerInfo
+                })
+            }
         })
     }
 })

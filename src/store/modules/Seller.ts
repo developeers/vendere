@@ -13,15 +13,15 @@ import { Module, VuexModule, Mutation, getModule } from 'vuex-module-decorators'
 
 @Module({ dynamic: true, store: store, name: 'SellerModule' })
 class SellerModule extends VuexModule {
-  private _sellerInfo: ISellerInfo | undefined
+  private _sellerInfoList: Array<ISellerInfo> = []
 
   @Mutation
-  setSellerInfo(sellerInfo: ISellerInfo) {
-    this._sellerInfo = sellerInfo
+  addSellerInfo(sellerInfo: ISellerInfo) {
+    this._sellerInfoList.push(sellerInfo)
   }
 
   get sellerInfo() {
-    return this._sellerInfo
+    return (hashId: string) => this._sellerInfoList.find((sellInfo) => sellInfo.hashId == hashId)
   }
 }
 
