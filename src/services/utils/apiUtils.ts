@@ -1,5 +1,5 @@
 import { IProductInfo } from '@/services/interfaces/IProduct'
-import { ISellerInfo } from '../interfaces/ISeller'
+import { IUserInfo } from '../interfaces/IUser'
 import { IApiResponse } from '../vendereApi/vendereApiResponse/IApiResponse'
 
 export const convertApiResponseProduct = (response: IApiResponse): IProductInfo => {
@@ -14,13 +14,13 @@ export const convertApiResponseProduct = (response: IApiResponse): IProductInfo 
     return product
 }
 
-export const convertApiResponseSeller = (response: IApiResponse): ISellerInfo => {
-    const seller: ISellerInfo = {
+export const convertApiResponseUser = (response: IApiResponse): IUserInfo => {
+    const user: IUserInfo = {
         name: response.fields.name.stringValue,
         averageReview: +response.fields.averageReview.doubleValue,
         numOfReviews: +response.fields.numOfReviews.integerValue,
         imageUrl: response.fields.imageUrl.stringValue,
         hashId: response.name.split('/').slice(-1)[0]
     }
-    return seller
+    return user
 }

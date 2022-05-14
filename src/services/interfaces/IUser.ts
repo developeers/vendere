@@ -1,4 +1,4 @@
-export interface ISellerInfo {
+export interface IUserInfo {
     name: string
     averageReview: number
     numOfReviews: number

@@ -23,8 +23,8 @@ import SellerInfo from '@/components/seller/SellerInfo.vue'
 import SellerReview from '@/components/seller/SellerReview.vue'
 import { getProductByHashId } from '@/services/vendereApi/VendereApiProduct'
 import { DefaultProductInfo } from '@/services/interfaces/IProduct'
-import { getSellerByHashId } from '@/services/vendereApi/VendereApiSeller'
-import SellerModule from '@/store/modules/Seller'
+import { getUserByHashId } from '@/services/vendereApi/VendereApiUser'
+import UserModule from '@/store/modules/User'
 
 export default defineComponent({
     components: {
@@ -51,12 +51,12 @@ export default defineComponent({
         const productHashId = this.$route.params.hashId as string
         getProductByHashId(productHashId).then(product => {
             this.productDetail = product
-            const sellerInfo = SellerModule.sellerInfo(product.sellerHashId)
+            const sellerInfo = UserModule.userInfo(product.sellerHashId)
             if (sellerInfo) {
                 this.sellerInfo = sellerInfo
             } else {
-                getSellerByHashId(product.sellerHashId).then(sellerInfo => {
-                    SellerModule.addSellerInfo(sellerInfo)
+                getUserByHashId(product.sellerHashId).then(sellerInfo => {
+                    UserModule.addUserInfo(sellerInfo)
                     this.sellerInfo = sellerInfo
                 })
             }
