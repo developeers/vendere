@@ -58,6 +58,11 @@ export default defineComponent({
     background: whitesmoke;
     padding: 10px 16px;
     border-bottom: 2px solid mediumvioletred;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: calc(100vw - 32px);
 }
 .profile {
     display: flex;
