@@ -13,11 +13,11 @@
 
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
-import SellerModule from '@/store/modules/Seller'
+import UserModule from '@/store/modules/User'
 
 export default defineComponent({
     setup(props) {
-        const seller = computed(() => SellerModule.sellerInfo(props.hashId || ""))
+        const seller = computed(() => UserModule.userInfo(props.hashId || ""))
         return { seller }
     },
     props: {

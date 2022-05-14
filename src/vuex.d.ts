@@ -2,13 +2,13 @@
 import { Store } from 'vuex'
 
 import { ProductsState } from '@/store/modules/Product'
-import { SellerState } from '@/store/modules/Seller'
+import { UserState } from '@/store/modules/User'
 
 declare module '@vue/runtime-core' {
   // declare your own store states
   interface State {
     ProductModule: ProductsState
-    SellerModule: SellerState
+    UserModule: UserState
   }
 
   // provide typings for `this.$store`
