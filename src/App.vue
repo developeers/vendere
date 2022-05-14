@@ -30,6 +30,9 @@ export default defineComponent({
   margin: 0px;
 }
 .body-container {
-  padding: 25px 35px;
+    width: 90vw;
+    max-width: 1400px;
+    margin: 0 auto;
+    margin-top: 90px;
 }
 </style>
