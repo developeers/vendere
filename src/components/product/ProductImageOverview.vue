@@ -79,9 +79,7 @@ export default defineComponent({
 }
 .product-image-zoom-in > img {
     width: 100%;
-}
-.show {
-    display: block !important;
+    box-shadow: 0 0 4px 4px grey;
 }
 .product-image-zoom-in {
     display: none;

@@ -34,5 +34,6 @@ export default defineComponent({
     max-width: 1280px;
     margin: 0 auto;
     margin-top: 90px;
+    margin-bottom: 50px;
 }
 </style>

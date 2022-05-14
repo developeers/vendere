@@ -12,6 +12,7 @@
         </div>
     </div>
     <SellerInfo :hashId="sellerInfo.hashId"/>
+    <SellerReview/>
 </template>
 
 <script lang="ts">
@@ -19,6 +20,7 @@ import { defineComponent, reactive } from 'vue'
 
 import ProductImageOverview from '@/components/product/ProductImageOverview.vue'
 import SellerInfo from '@/components/seller/SellerInfo.vue'
+import SellerReview from '@/components/seller/SellerReview.vue'
 import { getProductByHashId } from '@/services/vendereApi/VendereApiProduct'
 import { DefaultProductInfo } from '@/services/interfaces/IProduct'
 import { getSellerByHashId } from '@/services/vendereApi/VendereApiSeller'
@@ -28,6 +30,7 @@ export default defineComponent({
     components: {
         ProductImageOverview,
         SellerInfo,
+        SellerReview,
     },
     data() {
         const productDetail = DefaultProductInfo

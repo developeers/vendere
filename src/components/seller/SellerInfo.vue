@@ -39,6 +39,7 @@ export default defineComponent({
     display: flex;
     gap: 10px;
     margin-top: 50px;
+    margin-bottom: 50px;
 }
 .seller-profile-image {
     display: flex;
