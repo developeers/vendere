@@ -69,7 +69,7 @@ export default defineComponent({
     gap: 30px;
 }
 .product-image-carousel {
-    width: 590px;
+    width: 60%;
     height: fit-content;
     position: relative;
     display: flex;

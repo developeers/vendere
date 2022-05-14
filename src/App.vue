@@ -31,7 +31,7 @@ export default defineComponent({
 }
 .body-container {
     width: 90vw;
-    max-width: 1400px;
+    max-width: 1280px;
     margin: 0 auto;
     margin-top: 90px;
 }

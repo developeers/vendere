@@ -1,7 +1,7 @@
 <template>
 <div class="carousel-item-container">
     <img :src="imageUrl" :id="thumbnailElementId" :class="{'selected-thumbnail': selectedFlag}" alt="Product image">
-    <div class="product-image-zoom-in" :class="{ 'show': selectedFlag}">
+    <div class="product-image-zoom-in" :class="{ 'show': selectedFlag}" :id="productImageZoomInId">
         <img :src="imageUrl" alt="Product image">
     </div>
 </div>
@@ -24,16 +24,36 @@ export default defineComponent({
     },
     setup(props) {
         const thumbnailElementId = "product-thumbnail-" + props.thumbnailIndex
+        const productImageZoomInId = "product-image-zoom-in-" + props.thumbnailIndex
         const selectedFlag = computed(() => ProductModule.productThumbnailIndex === props.thumbnailIndex)
         return {
             thumbnailElementId,
-            selectedFlag
+            selectedFlag,
+            productImageZoomInId
         }
     },
     mounted() {
         document.getElementById(this.thumbnailElementId)!.addEventListener("mouseover", () => {
             ProductModule.setProductThumbnailIndex(this.thumbnailIndex)
         })
+        const updateHeightProductImageContainer = (): void => {
+            const productImageZoomIn = document.getElementById(this.productImageZoomInId) //as HTMLElement
+            const productImageZoomInHeight = productImageZoomIn!.offsetHeight
+            if (!productImageZoomInHeight) return
+
+            const productDetailContainer = document.querySelector('.product-detail-container') as HTMLElement
+            const productImageCarousel = document.querySelector('.product-image-carousel') as HTMLElement
+
+            productImageCarousel.style.top = (productImageZoomInHeight + 10) + 'px'
+            // eslint-disable-next-line no-undef
+            const productImageZoomIns = document.getElementsByClassName('product-image-zoom-in') as HTMLCollectionOf<HTMLElement>
+            for (let i = 0; i < productImageZoomIns.length; i++) {
+                productImageZoomIns[i].style.top = (-productImageZoomInHeight - 10) + 'px'
+            }
+            productDetailContainer.style.height = (productImageZoomInHeight + 50) + 'px'
+        }
+        updateHeightProductImageContainer()
+        window.addEventListener('resize', updateHeightProductImageContainer)
     },
 })
 </script>
@@ -54,11 +74,11 @@ export default defineComponent({
     display: none;
     position: absolute;
     left: 0;
+    right: 0;
     top: -400px;
 }
 .product-image-zoom-in > img {
-    width: 590px;
-    height: 390px;
+    width: 100%;
 }
 .show {
     display: block !important;
