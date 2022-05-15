@@ -1,6 +1,7 @@
 import { IProductInfo } from '@/services/interfaces/IProduct'
+import { ISellerReview } from '../interfaces/ISellerReview'
 import { IUserInfo } from '../interfaces/IUser'
-import { IApiResponse } from '../vendereApi/vendereApiResponse/IApiResponse'
+import { IApiResponse, IApiResponseDocument } from '../vendereApi/vendereApiResponse/IApiResponse'
 
 export const convertApiResponseProduct = (response: IApiResponse): IProductInfo => {
     const product: IProductInfo = {
@@ -23,4 +24,16 @@ export const convertApiResponseUser = (response: IApiResponse): IUserInfo => {
         hashId: response.name.split('/').slice(-1)[0]
     }
     return user
+}
+
+export const convertApiResponseSellerReviews = (response: Array<IApiResponseDocument>): Array<ISellerReview> => {
+    const sellerReviews = response.map((review: IApiResponseDocument): ISellerReview => {
+        const sellerReview: ISellerReview = {
+            targetSellerHashId: review.document.fields.targetSellerHashId.stringValue,
+            reviewUserHashId: review.document.fields.reviewUserHashId.stringValue,
+            content: review.document.fields.content.stringValue
+        }
+        return sellerReview
+    })
+    return sellerReviews
 }

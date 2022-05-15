@@ -4,3 +4,8 @@ export interface IApiResponse {
     createTime: string
     updateTime: string
 }
+
+export interface IApiResponseDocument {
+    document: IApiResponse
+    readTime: string
+}

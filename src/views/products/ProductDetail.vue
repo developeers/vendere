@@ -23,7 +23,7 @@ import SellerInfo from '@/components/seller/SellerInfo.vue'
 import SellerReview from '@/components/seller/SellerReview.vue'
 import { getProductByHashId } from '@/services/vendereApi/VendereApiProduct'
 import { DefaultProductInfo } from '@/services/interfaces/IProduct'
-import { getUserByHashId } from '@/services/vendereApi/VendereApiUser'
+import { getUserByHashId, getSellerReviews } from '@/services/vendereApi/VendereApiUser'
 import UserModule from '@/store/modules/User'
 
 export default defineComponent({
@@ -60,6 +60,8 @@ export default defineComponent({
                     this.sellerInfo = sellerInfo
                 })
             }
+            // To-do: Get seller reviews with `product.sellerHashId`
+            getSellerReviews(product.sellerHashId)
         })
     }
 })
