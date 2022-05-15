@@ -1,4 +1,4 @@
-import VendereApiInstance from './VendereApiBase'
+import { VendereApiInstance } from './VendereApiBase'
 import { IUserInfo } from "../interfaces/IUser"
 import { ISellerReview } from '../interfaces/ISellerReview'
 import { convertApiResponseUser, convertApiResponseSellerReviews } from '../utils/apiUtils'
