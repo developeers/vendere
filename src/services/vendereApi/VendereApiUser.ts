@@ -27,3 +27,8 @@ export const getSellerReviews = async (
 
     return convertApiResponseSellerReviews(res.data)
 }
+
+export const getUsersByHashIds = async (hashIds: Array<string>): Promise<Array<IUserInfo>> => {
+    const promiseArray = hashIds.map(hashId => getUserByHashId(hashId))
+    return await Promise.all(promiseArray)
+}

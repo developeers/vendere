@@ -92,3 +92,4 @@ export const createFirestoreRequestBody = (collectionName: string, fieldFilters:
     })
     return firestoreRequestBody
 }
+// Reference: https://www.jeansnyman.com/posts/google-firestore-rest-api-examples/

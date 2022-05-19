@@ -3,3 +3,9 @@ export interface ISellerReview {
     reviewUserHashId: string
     content: string
 }
+
+export interface IReviewInfo {
+    content: string;
+    reviewUserName: string;
+    reviewUserImageUrl: string;
+}
