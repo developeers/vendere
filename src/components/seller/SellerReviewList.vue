@@ -65,6 +65,6 @@ export default defineComponent({
 <style scoped>
 .seller-review-list-container {
   display: flex;
-  gap: 30px;
+  gap: 27px;
 }
 </style>

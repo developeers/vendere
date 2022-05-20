@@ -2,7 +2,7 @@
   <div class="seller-review-container">
     <img :src="review.reviewUserImageUrl" alt="Profile picture" />
     <p>
-      "{{ review.content }}" -
+      "{{ review.content }}" <br />
       <span style="font-weight: bold"> {{ review.reviewUserName }} </span>
     </p>
   </div>
@@ -24,7 +24,8 @@ export default defineComponent({
 
 <style scoped>
 .seller-review-container {
-  width: 150px;
+  width: 136px;
+  min-width: 136px;
 }
 .seller-review-container > img {
   width: 90px;
