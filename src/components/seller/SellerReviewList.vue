@@ -66,5 +66,9 @@ export default defineComponent({
 .seller-review-list-container {
   display: flex;
   gap: 27px;
+  width: 788px; /* reviewItemWidth x 5 + gap x 4 */
+  overflow-x: hidden;
+  padding: 7px;
+  margin: 0 auto;
 }
 </style>
