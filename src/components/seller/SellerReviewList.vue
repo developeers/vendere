@@ -1,10 +1,14 @@
 <template>
   <div v-if="!isLoading" class="seller-review-list-container">
-    <SellerReview
-      v-for="(review, index) in reviews"
-      :key="index"
-      :review="review"
-    />
+    <div id="prev-button"></div>
+    <div id="next-button"></div>
+    <div class="seller-review-list">
+      <SellerReview
+        v-for="(review, index) in reviews"
+        :key="index"
+        :review="review"
+      />
+    </div>
   </div>
 </template>
 
@@ -64,11 +68,35 @@ export default defineComponent({
 
 <style scoped>
 .seller-review-list-container {
+  position: relative;
+  width: fit-content;
+  margin: 0 auto;
+}
+.seller-review-list {
+  width: 788px; /* reviewItemWidth x 5 + gap x 4 */
   display: flex;
   gap: 27px;
-  width: 788px; /* reviewItemWidth x 5 + gap x 4 */
   overflow-x: hidden;
   padding: 7px;
-  margin: 0 auto;
+}
+#prev-button,
+#next-button {
+  position: absolute;
+  top: 45%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  border-top: 5px solid cadetblue;
+  border-right: 5px solid cadetblue;
+  border-top-right-radius: 5px;
+  cursor: pointer;
+}
+#prev-button {
+  left: -50px;
+  transform: rotate(-135deg);
+}
+#next-button {
+  right: -50px;
+  transform: rotate(45deg);
 }
 </style>
