@@ -62,34 +62,58 @@ export default defineComponent({
             // Invoke setTimeOut with timer value is 0 to run the callback function after
             // other operations on the main thread have finished (e.g., updating templates)
             setTimeout(() => {
-              const prevButton = document.querySelector("#prev-button");
-              const nextButton = document.querySelector("#next-button");
+              if (this.reviews.length <= 5) {
+                return;
+              }
+              const prevButton = document.querySelector(
+                "#prev-button"
+              ) as HTMLElement;
+              const nextButton = document.querySelector(
+                "#next-button"
+              ) as HTMLElement;
               const sellerReviewListElement = document.querySelector(
                 ".seller-review-list"
-              );
+              ) as HTMLElement;
 
               const reviewItemWidth = 136;
               const reviewItemGap = 27;
               const scrollDistance = reviewItemWidth + reviewItemGap;
+              const scrollTime = 300; // ms
 
               let prevClickTime = Date.now();
+              nextButton.style.display = "block";
 
-              prevButton?.addEventListener("click", () => {
+              prevButton.addEventListener("click", () => {
                 const clickTime = Date.now();
-                if (clickTime < prevClickTime + 200) {
+                if (clickTime < prevClickTime + scrollTime) {
                   return;
                 }
-                sellerReviewListElement?.scrollBy(-scrollDistance, 0);
+                sellerReviewListElement.scrollBy(-scrollDistance, 0);
                 prevClickTime = clickTime;
+                nextButton.style.display = "block";
+                setTimeout(() => {
+                  if (sellerReviewListElement.scrollLeft <= 0) {
+                    prevButton.style.display = "none";
+                  }
+                }, scrollTime);
               });
 
-              nextButton?.addEventListener("click", () => {
+              nextButton.addEventListener("click", () => {
                 const clickTime = Date.now();
-                if (clickTime < prevClickTime + 200) {
+                if (clickTime < prevClickTime + scrollTime) {
                   return;
                 }
-                sellerReviewListElement?.scrollBy(scrollDistance, 0);
+                sellerReviewListElement.scrollBy(scrollDistance, 0);
                 prevClickTime = clickTime;
+                prevButton.style.display = "block";
+                setTimeout(() => {
+                  const numScrolledLeftItems =
+                    sellerReviewListElement.scrollLeft / scrollDistance;
+                  console.log(numScrolledLeftItems);
+                  if (numScrolledLeftItems >= this.reviews.length - 5) {
+                    nextButton.style.display = "none";
+                  }
+                }, scrollTime);
               });
             }, 0);
           });
@@ -115,6 +139,7 @@ export default defineComponent({
 }
 #prev-button,
 #next-button {
+  display: none;
   position: absolute;
   top: 45%;
   transform: translateY(-50%);
