@@ -1,4 +1,5 @@
 <template>
+  <h3 class="meet-seller-text">Meet the seller</h3>
   <div class="seller-info-container" v-if="seller">
     <div class="seller-profile-image">
       <img :src="seller.imageUrl" alt="Profile image" />
@@ -45,10 +46,15 @@ export default defineComponent({
 
 
 <style scoped>
+.meet-seller-text {
+  text-align: left;
+  margin-top: 50px;
+  color: cadetblue;
+}
 .seller-info-container {
   display: flex;
   gap: 10px;
-  margin-top: 50px;
+  margin-top: 10px;
   margin-bottom: 50px;
 }
 .seller-profile-image {

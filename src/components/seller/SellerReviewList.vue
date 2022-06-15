@@ -109,7 +109,6 @@ export default defineComponent({
                 setTimeout(() => {
                   const numScrolledLeftItems =
                     sellerReviewListElement.scrollLeft / scrollDistance;
-                  console.log(numScrolledLeftItems);
                   if (numScrolledLeftItems >= this.reviews.length - 5) {
                     nextButton.style.display = "none";
                   }
@@ -127,10 +126,9 @@ export default defineComponent({
 .seller-review-list-container {
   position: relative;
   width: fit-content;
-  margin: 0 auto;
 }
 .seller-review-list {
-  width: 788px; /* reviewItemWidth x 5 + gap x 4 */
+  max-width: 788px; /* reviewItemWidth x 5 + gap x 4 */
   display: flex;
   gap: 27px;
   overflow-x: hidden;
@@ -151,11 +149,11 @@ export default defineComponent({
   cursor: pointer;
 }
 #prev-button {
-  left: -50px;
+  left: -35px;
   transform: rotate(-135deg);
 }
 #next-button {
-  right: -50px;
+  right: -35px;
   transform: rotate(45deg);
 }
 </style>
