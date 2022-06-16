@@ -1,5 +1,5 @@
 <template>
-  <form action="#" method="POST">
+  <div class="signup-form">
     <div class="email-input">
       <label for="email">Email</label>
       <input type="email" name="email" placeholder="Enter your email" />
@@ -8,17 +8,51 @@
       <label for="password">Password</label>
       <input type="password" name="password" placeholder="Create a password" />
     </div>
-    <button type="submit">Sign up</button>
-  </form>
+    <button type="text" class="signup-button">Sign up</button>
+  </div>
 </template>
 
+<script lang="ts">
+import { defineComponent } from "vue";
+import { getAuth, createUserWithEmailAndPassword } from "@firebase/auth";
+
+export default defineComponent({
+  mounted() {
+    const auth = getAuth();
+    const submitButton = document.querySelector("button.signup-button");
+    submitButton?.addEventListener("click", () => {
+      const emailInput = document.querySelector(
+        `input[type="email"]`
+      ) as HTMLInputElement;
+      const passwordInput = document.querySelector(
+        `input[type="password"]`
+      ) as HTMLInputElement;
+
+      createUserWithEmailAndPassword(
+        auth,
+        emailInput.value,
+        passwordInput.value
+      )
+        .then((userCredentials) => {
+          const user = userCredentials.user;
+          console.log(user);
+        })
+        .catch((error) => {
+          console.log("Error signing up user: ", error);
+        });
+    });
+  },
+});
+</script>
+
 <style scoped>
-form {
+.signup-form {
   display: flex;
   flex-direction: column;
   gap: 20px;
   width: 30vw;
   max-width: 330px;
+  min-width: 250px;
   margin: 0 auto;
 }
 label {
