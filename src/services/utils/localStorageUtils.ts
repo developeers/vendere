@@ -1,13 +1,19 @@
 import Lockr from "lockr";
 
-export const getItem = (key: string) => {
+const getItem = (key: string) => {
     return Lockr.get(key);
 }
 
-export const setItem = (key: string, value: any): void => {
+const setItem = (key: string, value: unknown): void => {
     Lockr.set(key, value);
 }
 
-export const removeItem = (key: string): void => {
+const removeItem = (key: string): void => {
     Lockr.rm(key);
 }
+
+export default {
+    getItem,
+    setItem,
+    removeItem
+};
