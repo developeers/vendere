@@ -4623,6 +4623,11 @@
   dependencies:
     "p-locate" "^4.1.0"
 
+"lockr@^0.9.0-beta.0":
+  "integrity" "sha512-/00iP8I+RJStGkExa8bW5yl1tIyxZvYS1eM5S8ze9D8A73QOxXMSE0lijF37b2HryyqzFJi7vS9LdurTX5e/CA=="
+  "resolved" "https://registry.npmjs.org/lockr/-/lockr-0.9.0-beta.0.tgz"
+  "version" "0.9.0-beta.0"
+
 "lodash.camelcase@^4.3.0":
   "integrity" "sha512-TwuEnCnxbc3rAvhf/LbG7tJUDzhqXyFnv3dtzLOPgCG/hODL7WFnsbwktkD7yUV0RrreP/l1PALq/YSg6VvjlA=="
   "resolved" "https://registry.npmjs.org/lodash.camelcase/-/lodash.camelcase-4.3.0.tgz"
