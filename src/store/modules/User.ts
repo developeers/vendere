@@ -1,3 +1,5 @@
+import { User } from "@firebase/auth"
+
 import store from '../index'
 import { IUserInfo } from '@/services/interfaces/IUser'
 import localStorageUtils from '@/services/utils/localStorageUtils'
@@ -12,33 +14,33 @@ export interface UserState {
 
 import { Module, VuexModule, Mutation, getModule } from 'vuex-module-decorators'
 
-const authTokenLocalStorageKey = "auth_token";
+const firebaseUserLocalStorageKey = "vendere_firebase-user"
 
 @Module({ dynamic: true, store: store, name: 'UserModule' })
 class UserModule extends VuexModule {
   private _userInfoList: Array<IUserInfo> = []
-  private _authToken: string = localStorageUtils.getItem(authTokenLocalStorageKey) ?? "";
+  private _firebaseUser: User | undefined = localStorageUtils.getItem(firebaseUserLocalStorageKey)
 
   @Mutation
   addUserInfo(userInfo: IUserInfo) {
     this._userInfoList.push(userInfo)
   }
   @Mutation
-  setAuthToken(authToken: string | null) {
-    if (authToken) {
-      localStorageUtils.setItem(authTokenLocalStorageKey, authToken);
-      this._authToken = authToken;
+  setFirebaseUser(firebaseUser?: User) {
+    if (firebaseUser) {
+      this._firebaseUser = firebaseUser
+      localStorageUtils.setItem(firebaseUserLocalStorageKey, firebaseUser)
     } else {
-      localStorageUtils.removeItem(authTokenLocalStorageKey);
-      this._authToken = "";
+      this._firebaseUser = undefined
+      localStorageUtils.removeItem(firebaseUserLocalStorageKey)
     }
   }
 
   get userInfo() {
     return (hashId: string) => this._userInfoList.find((userInfo) => userInfo.hashId == hashId)
   }
-  get authToken() {
-    return this._authToken;
+  get firebaseUser() {
+    return this._firebaseUser
   }
 }
 
