@@ -12,11 +12,12 @@ export interface UserState {
 
 import { Module, VuexModule, Mutation, getModule } from 'vuex-module-decorators'
 
+const authTokenLocalStorageKey = "auth_token";
+
 @Module({ dynamic: true, store: store, name: 'UserModule' })
 class UserModule extends VuexModule {
   private _userInfoList: Array<IUserInfo> = []
-  private _authTokenLocalStorageKey = "auth_token";
-  private _authToken: string = localStorageUtils.getItem(this._authTokenLocalStorageKey) ?? "";
+  private _authToken: string = localStorageUtils.getItem(authTokenLocalStorageKey) ?? "";
 
   @Mutation
   addUserInfo(userInfo: IUserInfo) {
@@ -25,10 +26,10 @@ class UserModule extends VuexModule {
   @Mutation
   setAuthToken(authToken: string | null) {
     if (authToken) {
-      localStorageUtils.setItem(this._authTokenLocalStorageKey, authToken);
+      localStorageUtils.setItem(authTokenLocalStorageKey, authToken);
       this._authToken = authToken;
     } else {
-      localStorageUtils.removeItem(this._authTokenLocalStorageKey);
+      localStorageUtils.removeItem(authTokenLocalStorageKey);
       this._authToken = "";
     }
   }
