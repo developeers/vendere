@@ -36,9 +36,7 @@ export default defineComponent({
       )
         .then((userCredentials) => {
           const user = userCredentials.user;
-          user.getIdToken().then((accessToken) => {
-            UserModule.setAuthToken(accessToken);
-          });
+          UserModule.setFirebaseUser(user);
         })
         .catch((error) => {
           console.log("Error signing up user: ", error);
