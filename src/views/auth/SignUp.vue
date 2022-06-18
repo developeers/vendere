@@ -4,6 +4,10 @@
       <label for="email">Email</label>
       <input type="email" name="email" placeholder="Enter your email" />
     </div>
+    <div class="username-input">
+      <label for="username">Username</label>
+      <input type="text" name="username" placeholder="Create a username" />
+    </div>
     <div class="password-input">
       <label for="password">Password</label>
       <input type="password" name="password" placeholder="Create a password" />
@@ -14,7 +18,11 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { getAuth, createUserWithEmailAndPassword } from "@firebase/auth";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  updateProfile,
+} from "@firebase/auth";
 
 export default defineComponent({
   mounted() {
@@ -33,8 +41,13 @@ export default defineComponent({
         emailInput.value,
         passwordInput.value
       )
-        .then((userCredentials) => {
-          // To-do: redirect user to home page
+        .then(() => {
+          const usernameInput = document.querySelector(
+            `input[name="username"]`
+          ) as HTMLInputElement;
+          updateProfile(auth.currentUser!, {
+            displayName: usernameInput.value,
+          });
         })
         .catch((error) => {
           console.log("Error signing up user: ", error);
@@ -69,7 +82,8 @@ input {
   border-radius: 4px;
 }
 .email-input,
-.password-input {
+.password-input,
+.username-input {
   display: flex;
   flex-direction: column;
 }
