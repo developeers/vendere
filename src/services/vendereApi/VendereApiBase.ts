@@ -1,5 +1,5 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
-import UserModule from '@/store/modules/User'
+import { getAuth } from "@firebase/auth";
 
 const config: AxiosRequestConfig = {
     baseURL: process.env.VUE_APP_API_SERVER_URL
@@ -8,10 +8,18 @@ const queryApiConfig: AxiosRequestConfig = {
     baseURL: process.env.VUE_APP_API_SERVER_QUERY_URL
 }
 
-const interceptAxiosRequest = (config: AxiosRequestConfig): AxiosRequestConfig => {
-    const authToken = UserModule.authToken;
-    if (authToken.length) {
-        config.headers!.Authorization = `Bearer ${authToken}`;
+const interceptAxiosRequest = async (config: AxiosRequestConfig): Promise<AxiosRequestConfig> => {
+    const firebaseUser = getAuth().currentUser
+
+    if (firebaseUser) {
+        const accessToken = await firebaseUser.getIdToken()
+        return {
+            ...config,
+            headers: {
+                ...config.headers,
+                Authorization: `Bearer ${accessToken}`
+            }
+        }
     }
     return config;
 }

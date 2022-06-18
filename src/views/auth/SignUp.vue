@@ -15,7 +15,6 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { getAuth, createUserWithEmailAndPassword } from "@firebase/auth";
-import UserModule from "@/store/modules/User";
 
 export default defineComponent({
   mounted() {
@@ -35,8 +34,7 @@ export default defineComponent({
         passwordInput.value
       )
         .then((userCredentials) => {
-          const user = userCredentials.user;
-          UserModule.setFirebaseUser(user);
+          // To-do: redirect user to home page
         })
         .catch((error) => {
           console.log("Error signing up user: ", error);
