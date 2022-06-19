@@ -43,6 +43,7 @@ import {
   createUserWithEmailAndPassword,
   updateProfile,
 } from "@firebase/auth";
+import UserModule from "@/store/modules/User";
 
 export default defineComponent({
   methods: {
@@ -83,8 +84,14 @@ export default defineComponent({
         emailInput.value,
         passwordInput.value
       )
-        .then(() => {
-          updateProfile(auth.currentUser!, {
+        .then((userCredentials) => {
+          const newUser = userCredentials.user;
+          UserModule.setRefreshToken(newUser.refreshToken);
+          newUser.getIdToken().then((accessToken) => {
+            UserModule.setAccessToken(accessToken);
+          });
+
+          updateProfile(newUser, {
             displayName: usernameInput.value,
           });
         })
