@@ -75,7 +75,6 @@ export default defineComponent({
   methods: {
     zoomInProductImage() {
       ProductModule.setProductThumbnailIndex(this.thumbnailIndex);
-      console.log(this.thumbnailIndex);
     },
   },
 });
