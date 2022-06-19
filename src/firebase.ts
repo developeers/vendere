@@ -1,10 +1,11 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { initializeApp } from 'firebase/app';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
+import UserModule from './store/modules/User';
 
-import UserModule from "./store/modules/User";
 // Your web app's Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyC5FRiW7CiNiSu_Qpufsnsx-3yYO_hr8Ls",
@@ -17,6 +18,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
+export const refreshAccessTokenApiUrl = `https://securetoken.googleapis.com/v1/token?key=${firebaseConfig.apiKey}`;
 
 const auth = getAuth();
 onAuthStateChanged(auth, (user) => {
