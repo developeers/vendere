@@ -8,7 +8,12 @@
       <router-link to="#"
         >Orders <i class="fa fa-shopping-cart"></i
       ></router-link>
-      <img alt="Profile image" id="profile-icon" src="../../assets/user.png" />
+      <img
+        alt="Profile image"
+        id="profile-icon"
+        src="../../assets/user.png"
+        @click="toggleDropDownMenu"
+      />
       <div class="profile-menu-dropdown" id="profile-menu-dropdown">
         <div class="dropdown-items">
           <router-link to="#">Orders</router-link>
@@ -32,22 +37,28 @@ export default defineComponent({
     SearchBar,
   },
   mounted() {
-    const dropdownMenu = document.getElementById("profile-menu-dropdown");
-
-    document.getElementById("profile-icon")!.addEventListener("click", () => {
-      if (dropdownMenu!.style.display === "block") {
-        dropdownMenu!.style.display = "none";
-      } else {
-        dropdownMenu!.style.display = "block";
-      }
-    });
+    const dropdownMenu = document.getElementById(
+      "profile-menu-dropdown"
+    ) as HTMLElement;
     document.addEventListener("click", (event) => {
       if (event.target instanceof Element) {
         if (event.target.id != "profile-icon") {
-          dropdownMenu!.style.display = "none";
+          dropdownMenu.style.display = "none";
         }
       }
     });
+  },
+  methods: {
+    toggleDropDownMenu() {
+      const dropdownMenu = document.getElementById(
+        "profile-menu-dropdown"
+      ) as HTMLElement;
+      if (dropdownMenu.style.display === "block") {
+        dropdownMenu.style.display = "none";
+      } else {
+        dropdownMenu.style.display = "block";
+      }
+    },
   },
 });
 </script>
