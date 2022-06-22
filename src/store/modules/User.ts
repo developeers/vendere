@@ -20,7 +20,7 @@ const refreshTokenLocalStorageKey = "vendere_refresh-token"
 @Module({ dynamic: true, store: store, name: 'UserModule' })
 class UserModule extends VuexModule {
   private _userInfoList: Array<IUserInfo> = []
-  private _currentUser: User | null = null
+  private _firebaseUser: User | null = null
   private _accessToken: string | undefined = localStorageUtils.getItem(accessTokenLocalStorageKey)
   private _refreshToken: string | undefined = localStorageUtils.getItem(refreshTokenLocalStorageKey)
 
@@ -29,8 +29,8 @@ class UserModule extends VuexModule {
     this._userInfoList.push(userInfo)
   }
   @Mutation
-  setCurrentUser(user: User) {
-    this._currentUser = user
+  setFirebaseUser(user: User) {
+    this._firebaseUser = user
   }
   @Mutation
   setAccessToken(accessToken?: string) {
@@ -56,8 +56,8 @@ class UserModule extends VuexModule {
   get userInfo() {
     return (hashId: string) => this._userInfoList.find((userInfo) => userInfo.hashId == hashId)
   }
-  get currentUser() {
-    return this._currentUser
+  get firebaseUser() {
+    return this._firebaseUser
   }
   get accessToken() {
     return this._accessToken

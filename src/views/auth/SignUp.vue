@@ -93,6 +93,9 @@ export default defineComponent({
 
           updateProfile(newUser, {
             displayName: usernameInput.value,
+          }).then(() => {
+            UserModule.setFirebaseUser(auth.currentUser!);
+            this.$router.push({ name: "home" });
           });
         })
         .catch((error) => {

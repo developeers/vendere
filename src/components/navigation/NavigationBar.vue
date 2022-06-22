@@ -8,12 +8,15 @@
       <router-link to="#"
         >Orders <i class="fa fa-shopping-cart"></i
       ></router-link>
-      <img
-        alt="Profile image"
-        id="profile-icon"
-        src="../../assets/user.png"
-        @click="toggleDropDownMenu"
-      />
+      <div class="navbar-userinfo">
+        <img
+          alt="Profile image"
+          id="profile-icon"
+          src="../../assets/user.png"
+          @click="toggleDropDownMenu"
+        />
+        <div id="login-username"></div>
+      </div>
       <div class="profile-menu-dropdown" id="profile-menu-dropdown">
         <div class="dropdown-items">
           <router-link to="#">Orders</router-link>
@@ -28,13 +31,21 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { computed, defineComponent } from "vue";
 
+import UserModule from "@/store/modules/User";
 import SearchBar from "./SearchBar.vue";
 
 export default defineComponent({
   components: {
     SearchBar,
+  },
+  setup() {
+    const isUserLoggedIn = computed(() => !!UserModule.firebaseUser);
+
+    return {
+      isUserLoggedIn,
+    };
   },
   mounted() {
     const dropdownMenu = document.getElementById(
@@ -79,6 +90,11 @@ export default defineComponent({
   z-index: 1;
   width: calc(100vw - 32px);
 }
+.navbar-userinfo {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
 .profile {
   display: flex;
   gap: 20px;
@@ -98,7 +114,7 @@ export default defineComponent({
   font-size: 17px;
   font-style: initial;
 }
-.profile > img {
+.profile img {
   width: 28px;
   border-radius: 50%;
   cursor: pointer;
