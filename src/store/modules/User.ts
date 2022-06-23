@@ -23,6 +23,7 @@ class UserModule extends VuexModule {
   private _firebaseUser: User | null = null
   private _accessToken: string | undefined = localStorageUtils.getItem(accessTokenLocalStorageKey)
   private _refreshToken: string | undefined = localStorageUtils.getItem(refreshTokenLocalStorageKey)
+  private _loginUser: IUserInfo | null = null
 
   @Mutation
   addUserInfo(userInfo: IUserInfo) {
@@ -31,6 +32,10 @@ class UserModule extends VuexModule {
   @Mutation
   setFirebaseUser(user: User) {
     this._firebaseUser = user
+  }
+  @Mutation
+  setLoginUser(user: IUserInfo) {
+    this._loginUser = user
   }
   @Mutation
   setAccessToken(accessToken?: string) {
@@ -58,6 +63,9 @@ class UserModule extends VuexModule {
   }
   get firebaseUser() {
     return this._firebaseUser
+  }
+  get loginUser() {
+    return this._loginUser
   }
   get accessToken() {
     return this._accessToken

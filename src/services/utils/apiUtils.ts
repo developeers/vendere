@@ -31,10 +31,10 @@ export const convertApiResponseProduct = (
 export const convertApiResponseUser = (response: IApiResponse): IUserInfo => {
     const user: IUserInfo = {
         name: response.fields.name.stringValue,
-        averageReview: +response.fields.averageReview.doubleValue,
-        numOfReviews: +response.fields.numOfReviews.integerValue,
-        imageUrl: response.fields.imageUrl.stringValue,
-        uid: response.name.split("/").slice(-1)[0],
+        // averageReview: +response.fields.averageReview.doubleValue,
+        // numOfReviews: +response.fields.numOfReviews.integerValue,
+        // imageUrl: response.fields.imageUrl.stringValue,
+        uid: response.fields.uid.stringValue,
     }
     return user
 }

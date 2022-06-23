@@ -4,7 +4,6 @@ import {
     convertApiResponseSellerReviews, convertApiResponseUser, createFirestoreRequestBody,
     firestoreQueryOperators, IFirestoreFieldFilter
 } from '../utils/apiUtils';
-import httpStatusCodes from '../utils/httpStatusCodes';
 import { VendereApiInstance, VendereQueryApiInstance } from './VendereApiBase';
 
 export const getUserByHashId = async (hashId: string): Promise<IUserInfo> => {
@@ -31,16 +30,13 @@ export const getUsersByHashIds = async (hashIds: Array<string>): Promise<Array<I
     return await Promise.all(promiseArray)
 }
 
-export const createUser = async (userData: IUserInfo): Promise<void> => {
+export const createUser = async (userData: IUserInfo): Promise<IUserInfo> => {
     const postParams = {
         fields: {
             uid: { stringValue: userData.uid },
             name: { stringValue: userData.name },
         }
     }
-    VendereApiInstance.post('users', postParams).then(res => {
-        if (res.status == httpStatusCodes.SUCCESS) {
-            console.log("User created: ", res)
-        }
-    }).catch(error => console.log("Error creating user: ", error))
+    const response = await VendereApiInstance.post('users', postParams)
+    return convertApiResponseUser(response.data)
 }

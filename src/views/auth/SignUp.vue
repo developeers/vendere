@@ -38,12 +38,9 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  updateProfile,
-} from "@firebase/auth";
+import { getAuth, createUserWithEmailAndPassword } from "@firebase/auth";
 import UserModule from "@/store/modules/User";
+import { createUser } from "@/services/vendereApi/VendereApiUser";
 
 export default defineComponent({
   methods: {
@@ -91,12 +88,11 @@ export default defineComponent({
             UserModule.setAccessToken(accessToken);
           });
 
-          // To-do: create a user corresponding to the new Firebase account
-          // instead of updating fields on firebase user account
-          updateProfile(newUser, {
-            displayName: usernameInput.value,
-          }).then(() => {
-            UserModule.setFirebaseUser(auth.currentUser!);
+          createUser({
+            uid: auth.currentUser!.uid,
+            name: usernameInput.value,
+          }).then((res) => {
+            UserModule.setLoginUser(res);
             this.$router.push({ name: "home" });
           });
         })

@@ -15,7 +15,7 @@
           src="../../assets/user.png"
           @click="toggleDropDownMenu"
         />
-        <div id="login-username"></div>
+        <div id="login-username">{{ loginUser?.name }}</div>
       </div>
       <div class="profile-menu-dropdown" id="profile-menu-dropdown">
         <div class="dropdown-items">
@@ -42,9 +42,11 @@ export default defineComponent({
   },
   setup() {
     const isUserLoggedIn = computed(() => !!UserModule.firebaseUser);
+    const loginUser = computed(() => UserModule.loginUser);
 
     return {
       isUserLoggedIn,
+      loginUser,
     };
   },
   mounted() {
