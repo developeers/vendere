@@ -48,7 +48,7 @@ export default defineComponent({
           .then((users) => {
             users.forEach((user) => {
               const reviewContent = reviews.find(
-                (review) => review.reviewUserHashId === user.hashId
+                (review) => review.reviewUserHashId === user.uid
               )!.content;
               this.reviews.push({
                 content: reviewContent,

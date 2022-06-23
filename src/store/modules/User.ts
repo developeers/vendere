@@ -54,7 +54,7 @@ class UserModule extends VuexModule {
   }
 
   get userInfo() {
-    return (hashId: string) => this._userInfoList.find((userInfo) => userInfo.hashId == hashId)
+    return (uid: string) => this._userInfoList.find((userInfo) => userInfo.uid == uid)
   }
   get firebaseUser() {
     return this._firebaseUser

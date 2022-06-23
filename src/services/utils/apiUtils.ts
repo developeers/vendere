@@ -1,10 +1,8 @@
-import { IProductInfo } from "@/services/interfaces/IProduct";
-import { ISellerReview } from "../interfaces/ISellerReview";
-import { IUserInfo } from "../interfaces/IUser";
-import {
-    IApiResponse,
-    IApiResponseDocument,
-} from "../vendereApi/vendereApiResponse/IApiResponse";
+import { IProductInfo } from '@/services/interfaces/IProduct';
+
+import { ISellerReview } from '../interfaces/ISellerReview';
+import { IUserInfo } from '../interfaces/IUser';
+import { IApiResponse, IApiResponseDocument } from '../vendereApi/vendereApiResponse/IApiResponse';
 
 export const firestoreQueryOperators = {
     EQUAL: "EQUAL"
@@ -36,7 +34,7 @@ export const convertApiResponseUser = (response: IApiResponse): IUserInfo => {
         averageReview: +response.fields.averageReview.doubleValue,
         numOfReviews: +response.fields.numOfReviews.integerValue,
         imageUrl: response.fields.imageUrl.stringValue,
-        hashId: response.name.split("/").slice(-1)[0],
+        uid: response.name.split("/").slice(-1)[0],
     }
     return user
 }

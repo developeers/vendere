@@ -91,6 +91,8 @@ export default defineComponent({
             UserModule.setAccessToken(accessToken);
           });
 
+          // To-do: create a user corresponding to the new Firebase account
+          // instead of updating fields on firebase user account
           updateProfile(newUser, {
             displayName: usernameInput.value,
           }).then(() => {
