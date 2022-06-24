@@ -45,13 +45,13 @@ export const convertApiResponseSellerReviews = (
     return sellerReviews
 }
 
-export const convertApiResponseUser = (response: IApiResponseDocument): IUserInfo => {
+export const convertApiResponseUser = (response: IApiResponse): IUserInfo => {
     const user: IUserInfo = {
-        uid: response.document.fields.uid.stringValue,
-        name: response.document.fields.name.stringValue,
-        averageReview: +response.document.fields.averageReview.doubleValue,
-        numOfReviews: +response.document.fields.numOfReviews.integerValue,
-        imageUrl: response.document.fields.imageUrl.stringValue,
+        uid: response.fields.uid.stringValue,
+        name: response.fields.name.stringValue,
+        averageReview: +response.fields.averageReview.doubleValue,
+        numOfReviews: +response.fields.numOfReviews.integerValue,
+        imageUrl: response.fields.imageUrl.stringValue,
     }
     return user
 }

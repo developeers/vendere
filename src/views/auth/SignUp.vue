@@ -91,6 +91,11 @@ export default defineComponent({
           createUser({
             uid: auth.currentUser!.uid,
             name: usernameInput.value,
+            // For development purpose, these fields are randomly generated
+            numOfReviews: +Math.floor(Math.random() * 50),
+            averageReview: +(Math.random() + 3.7).toFixed(1),
+            imageUrl:
+              "https://cdn.pixabay.com/photo/2018/04/18/18/56/user-3331257_1280.png",
           }).then((res) => {
             UserModule.setLoginUser(res);
             this.$router.push({ name: "home" });

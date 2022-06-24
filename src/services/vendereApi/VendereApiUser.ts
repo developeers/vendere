@@ -14,7 +14,7 @@ export const getUserByUID = async (uid: string): Promise<IUserInfo> => {
     }
     const getUserRequestBody = createFirestoreRequestBody("users", [fieldFilter])
     const res = await VendereQueryApiInstance.post("", getUserRequestBody)
-    return convertApiResponseUser(res.data[0])
+    return convertApiResponseUser(res.data[0].document)
 }
 
 export const getSellerReviews = async (
@@ -41,6 +41,9 @@ export const createUser = async (userData: IUserInfo): Promise<IUserInfo> => {
         fields: {
             uid: { stringValue: userData.uid },
             name: { stringValue: userData.name },
+            numOfReviews: { integerValue: userData.numOfReviews },
+            averageReview: { doubleValue: userData.averageReview },
+            imageUrl: { stringValue: userData.imageUrl },
         }
     }
     const response = await VendereApiInstance.post('users', postParams)
