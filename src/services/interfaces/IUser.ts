@@ -1,5 +1,5 @@
 export interface IUserInfo {
-    uid: string // Firebase account's uid
+    uid: string // Firebase Auth's uid
     name: string
     averageReview?: number
     numOfReviews?: number

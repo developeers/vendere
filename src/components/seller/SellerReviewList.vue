@@ -17,13 +17,13 @@ import { defineComponent } from "vue";
 import SellerReview from "./SellerReview.vue";
 import {
   getSellerReviews,
-  getUsersByHashIds,
+  getUserByUIDs,
 } from "@/services/vendereApi/VendereApiUser";
 import { IReviewInfo } from "@/services/interfaces/ISellerReview";
 
 export default defineComponent({
   props: {
-    sellerHashId: {
+    sellerUID: {
       type: String,
     },
   },
@@ -39,16 +39,14 @@ export default defineComponent({
     SellerReview,
   },
   watch: {
-    sellerHashId(newHashId) {
-      getSellerReviews(newHashId).then((reviews) => {
-        const reviewUserHashIds = reviews.map(
-          (review) => review.reviewUserHashId
-        );
-        getUsersByHashIds(reviewUserHashIds)
+    sellerUID(newUID) {
+      getSellerReviews(newUID).then((reviews) => {
+        const reviewUserUIDs = reviews.map((review) => review.reviewUserUID);
+        getUserByUIDs(reviewUserUIDs)
           .then((users) => {
             users.forEach((user) => {
               const reviewContent = reviews.find(
-                (review) => review.reviewUserHashId === user.uid
+                (review) => review.reviewUserUID === user.uid
               )!.content;
               this.reviews.push({
                 content: reviewContent,

@@ -1,7 +1,7 @@
 export interface IProductInfo {
     name: string
     price: number
-    sellerHashId: string
+    sellerUID: string
     updatedAt: string
     hashId?: string
     imageUrl: string
@@ -10,7 +10,7 @@ export interface IProductInfo {
 export const DefaultProductInfo: IProductInfo = {
     name: "",
     price: 0,
-    sellerHashId: "",
+    sellerUID: "",
     updatedAt: "",
     imageUrl: ""
 }

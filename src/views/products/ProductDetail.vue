@@ -18,8 +18,8 @@
       <div class="custom-button order-button">Buy now</div>
     </div>
   </div>
-  <SellerInfo :hashId="sellerInfo.hashId" />
-  <SellerReviewList :sellerHashId="sellerInfo.hashId" />
+  <SellerInfo :uid="sellerInfo.uid" />
+  <SellerReviewList :sellerUID="sellerInfo.uid" />
 </template>
 
 <script lang="ts">
@@ -30,7 +30,7 @@ import SellerInfo from "@/components/seller/SellerInfo.vue";
 import SellerReviewList from "@/components/seller/SellerReviewList.vue";
 import { getProductByHashId } from "@/services/vendereApi/VendereApiProduct";
 import { DefaultProductInfo } from "@/services/interfaces/IProduct";
-import { getUserByHashId } from "@/services/vendereApi/VendereApiUser";
+import { getUserByUID } from "@/services/vendereApi/VendereApiUser";
 import UserModule from "@/store/modules/User";
 
 export default defineComponent({
@@ -58,11 +58,11 @@ export default defineComponent({
     const productHashId = this.$route.params.hashId as string;
     getProductByHashId(productHashId).then((product) => {
       this.productDetail = product;
-      const sellerInfo = UserModule.userInfo(product.sellerHashId);
+      const sellerInfo = UserModule.userInfo(product.sellerUID);
       if (sellerInfo) {
         this.sellerInfo = sellerInfo;
       } else {
-        getUserByHashId(product.sellerHashId).then((sellerInfo) => {
+        getUserByUID(product.sellerUID).then((sellerInfo) => {
           UserModule.addUserInfo(sellerInfo);
           this.sellerInfo = sellerInfo;
         });
