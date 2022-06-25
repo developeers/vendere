@@ -3,12 +3,15 @@
     <router-link :to="{ name: 'home' }" class="app-name">Vendere</router-link>
     <SearchBar />
     <div class="profile">
-      <router-link :to="{ name: 'SignUp' }">Sign up</router-link>
-      <router-link to="#">Login</router-link>
+      <div v-if="!isUserLoggedIn" class="not-loggin-options">
+        <router-link :to="{ name: 'SignUp' }">Sign up</router-link>
+        <router-link to="#">Login</router-link>
+      </div>
+      <router-link v-if="isUserLoggedIn" to="#">Notifications</router-link>
       <router-link to="#"
         >Orders <i class="fa fa-shopping-cart"></i
       ></router-link>
-      <div class="navbar-userinfo">
+      <div v-if="isUserLoggedIn" class="navbar-userinfo">
         <img
           alt="Profile image"
           id="profile-icon"
@@ -41,7 +44,7 @@ export default defineComponent({
     SearchBar,
   },
   setup() {
-    const isUserLoggedIn = computed(() => !!UserModule.firebaseUser);
+    const isUserLoggedIn = computed(() => UserModule.isLogin);
     const loginUser = computed(() => UserModule.loginUser);
 
     return {
@@ -92,6 +95,10 @@ export default defineComponent({
   z-index: 1;
   width: calc(100vw - 32px);
 }
+.not-loggin-options {
+  display: flex;
+  gap: 20px;
+}
 .navbar-userinfo {
   display: flex;
   align-items: center;
@@ -104,7 +111,7 @@ export default defineComponent({
   margin-left: auto;
 }
 .app-name,
-.profile > a {
+.profile a {
   font-size: 20px;
   font-weight: bold;
   font-style: italic;
@@ -112,7 +119,7 @@ export default defineComponent({
   color: mediumvioletred;
   cursor: pointer;
 }
-.profile > a {
+.profile a {
   font-size: 17px;
   font-style: initial;
 }
@@ -143,6 +150,7 @@ export default defineComponent({
   text-align: left;
   color: black;
   padding: 5px 15px;
+  font-weight: initial;
 }
 .dropdown-items a:first-child {
   padding-top: 10px;

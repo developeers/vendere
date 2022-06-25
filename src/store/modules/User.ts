@@ -73,6 +73,9 @@ class UserModule extends VuexModule {
   get refreshToken() {
     return this._refreshToken
   }
+  get isLogin() {
+    return !!this._accessToken
+  }
 }
 
 export default getModule(UserModule)
