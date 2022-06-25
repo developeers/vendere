@@ -41,8 +41,14 @@ import { defineComponent } from "vue";
 import { getAuth, createUserWithEmailAndPassword } from "@firebase/auth";
 import UserModule from "@/store/modules/User";
 import { createUser } from "@/services/vendereApi/VendereApiUser";
+import { resetInputFieldState } from "@/services/utils/componentUtils";
 
 export default defineComponent({
+  setup() {
+    return {
+      resetInputFieldState,
+    };
+  },
   methods: {
     signUpFirebaseUser() {
       const auth = getAuth();
@@ -105,74 +111,10 @@ export default defineComponent({
           console.log("Error signing up user: ", error);
         });
     },
-    resetInputFieldState(event: Event) {
-      const inputField = event.target as HTMLInputElement;
-      inputField.classList.remove("warning");
-    },
   },
 });
 </script>
 
 <style scoped>
-.signup-form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  width: 30vw;
-  max-width: 330px;
-  min-width: 250px;
-  margin: 0 auto;
-}
-label {
-  text-align: left;
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-input {
-  outline-color: cadetblue;
-  height: 30px;
-  font-size: 15px;
-  color: #3d3d3d;
-  padding-left: 8px;
-  border: 1px solid #ffaee1;
-  border-radius: 4px;
-}
-span.warning-message {
-  display: none;
-}
-input.warning {
-  box-shadow: 0 0 5px orange;
-  border-color: orange;
-  outline: none;
-}
-input.warning + span.warning-message {
-  display: initial;
-  font-size: 14px;
-  color: orange;
-  text-align: left;
-  margin-top: 5px;
-}
-.email-input,
-.password-input,
-.username-input {
-  display: flex;
-  flex-direction: column;
-}
-button {
-  margin-top: 10px;
-  height: 37px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: mediumvioletred;
-  color: whitesmoke;
-  border: none;
-  border-radius: 4px;
-  font-weight: bold;
-  font-size: 15px;
-  cursor: pointer;
-}
-button:hover {
-  opacity: 0.8;
-}
+@import "@/assets/css/auth.css";
 </style>
