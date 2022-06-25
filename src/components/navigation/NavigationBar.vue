@@ -5,7 +5,7 @@
     <div class="profile">
       <div v-if="!isUserLoggedIn" class="not-loggin-options">
         <router-link :to="{ name: 'SignUp' }">Sign up</router-link>
-        <router-link to="#">Login</router-link>
+        <router-link :to="{ name: 'Login' }">Login</router-link>
       </div>
       <router-link v-if="isUserLoggedIn" to="#">Notifications</router-link>
       <router-link to="#"
