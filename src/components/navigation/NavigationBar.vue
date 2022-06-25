@@ -154,4 +154,8 @@ export default defineComponent({
   color: mediumvioletred;
   font-weight: bold;
 }
+#login-username {
+  font-weight: bold;
+  color: cadetblue;
+}
 </style>
