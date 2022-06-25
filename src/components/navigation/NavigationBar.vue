@@ -11,24 +11,31 @@
       <router-link to="#"
         >Orders <i class="fa fa-shopping-cart"></i
       ></router-link>
-      <div v-if="isUserLoggedIn" class="navbar-userinfo">
-        <img
-          alt="Profile image"
-          id="profile-icon"
-          src="../../assets/user.png"
-          @click="toggleDropDownMenu"
-        />
-        <div id="login-username">{{ loginUser?.name }}</div>
+      <div
+        v-if="isUserLoggedIn"
+        @click="toggleDropDownMenu"
+        id="navbar-account"
+      >
+        Account
       </div>
-      <div class="profile-menu-dropdown" id="profile-menu-dropdown">
+      <div class="profile-menu-dropdown" ref="dropdownMenu">
         <div class="dropdown-items">
-          <router-link to="#">Orders</router-link>
-          <router-link to="#">Settings</router-link>
-          <router-link :to="{ name: 'ProductCreate' }"
-            >Create Products</router-link
-          >
+          <router-link to="#" class="profile-menu">
+            <img
+              alt="Profile image"
+              id="profile-icon"
+              :src="loginUser?.imageUrl"
+            />
+            <div id="login-username">{{ loginUser?.name }}</div>
+          </router-link>
+          <router-link to="#">Products you bought</router-link>
+          <router-link to="#">Sold products</router-link>
+          <router-link to="#">Logout</router-link>
         </div>
       </div>
+      <router-link :to="{ name: 'ProductCreate' }" class="sell-button"
+        >Sale</router-link
+      >
     </div>
   </nav>
 </template>
@@ -53,26 +60,20 @@ export default defineComponent({
     };
   },
   mounted() {
-    const dropdownMenu = document.getElementById(
-      "profile-menu-dropdown"
-    ) as HTMLElement;
     document.addEventListener("click", (event) => {
       if (event.target instanceof Element) {
-        if (event.target.id != "profile-icon") {
-          dropdownMenu.style.display = "none";
+        if (event.target.id != "navbar-account") {
+          (this.$refs.dropdownMenu as HTMLElement).style.display = "none";
         }
       }
     });
   },
   methods: {
     toggleDropDownMenu() {
-      const dropdownMenu = document.getElementById(
-        "profile-menu-dropdown"
-      ) as HTMLElement;
-      if (dropdownMenu.style.display === "block") {
-        dropdownMenu.style.display = "none";
+      if ((this.$refs.dropdownMenu as HTMLElement).style.display === "block") {
+        (this.$refs.dropdownMenu as HTMLElement).style.display = "none";
       } else {
-        dropdownMenu.style.display = "block";
+        (this.$refs.dropdownMenu as HTMLElement).style.display = "block";
       }
     },
   },
@@ -99,11 +100,6 @@ export default defineComponent({
   display: flex;
   gap: 20px;
 }
-.navbar-userinfo {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
 .profile {
   display: flex;
   gap: 20px;
@@ -111,7 +107,8 @@ export default defineComponent({
   margin-left: auto;
 }
 .app-name,
-.profile a {
+.profile a,
+.profile div#navbar-account {
   font-size: 20px;
   font-weight: bold;
   font-style: italic;
@@ -119,41 +116,53 @@ export default defineComponent({
   color: mediumvioletred;
   cursor: pointer;
 }
-.profile a {
+.profile a,
+.profile div#navbar-account {
   font-size: 17px;
   font-style: initial;
 }
 .profile img {
-  width: 28px;
+  width: 45px;
+  height: 43px;
   border-radius: 50%;
-  cursor: pointer;
 }
 .profile .fa-shopping-cart {
   color: mediumvioletred;
 }
 .profile-menu-dropdown {
   display: none;
-  background: whitesmoke;
+  background: white;
   position: fixed;
-  width: 136px;
+  width: 230px;
   top: 55px;
   right: 3px;
   border-radius: 3px;
 }
+.profile-menu {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
 .dropdown-items {
   display: flex;
   flex-direction: column;
+  border: 1px solid #d6d5d5;
+  border-radius: 4px;
 }
 .dropdown-items a {
   text-decoration: none;
   font-size: 14px;
   text-align: left;
   color: black;
-  padding: 5px 15px;
+  padding: 10px 15px;
   font-weight: initial;
 }
+.dropdown-items a:not(:last-child) {
+  border-bottom: 1px solid #d6d5d5;
+}
 .dropdown-items a:first-child {
-  padding-top: 10px;
+  padding-top: 8px;
+  padding-bottom: 8px;
 }
 .dropdown-items a:last-child {
   padding-bottom: 10px;
@@ -164,6 +173,17 @@ export default defineComponent({
 }
 #login-username {
   font-weight: bold;
-  color: cadetblue;
+  color: #b52e83;
+  font-size: 16px;
+}
+.profile a.sell-button {
+  background: mediumvioletred;
+  color: whitesmoke;
+  border-radius: 4px;
+  padding: 4px 13px;
+  margin-left: -4px;
+}
+.profile a.sell-button:hover {
+  opacity: 0.8;
 }
 </style>
