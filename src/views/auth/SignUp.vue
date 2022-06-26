@@ -53,13 +53,13 @@ export default defineComponent({
     signUpFirebaseUser() {
       const auth = getAuth();
       const emailInput = document.querySelector(
-        `input[type="email"]`
+        `.signup-form input[type="email"]`
       ) as HTMLInputElement;
       const passwordInput = document.querySelector(
-        `input[type="password"]`
+        `.signup-form input[type="password"]`
       ) as HTMLInputElement;
       const usernameInput = document.querySelector(
-        `input[name="username"]`
+        `.signup-form input[name="username"]`
       ) as HTMLInputElement;
 
       // Order matters as only the first empty element can be focused
