@@ -92,6 +92,7 @@ export default defineComponent({
 }
 .product-description {
   margin: 0 auto;
+  width: calc(40% - 30px);
 }
 .product-price {
   color: brown;

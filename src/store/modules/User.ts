@@ -24,6 +24,7 @@ class UserModule extends VuexModule {
   private _accessToken: string | undefined = localStorageUtils.getItem(accessTokenLocalStorageKey)
   private _refreshToken: string | undefined = localStorageUtils.getItem(refreshTokenLocalStorageKey)
   private _loginUser: IUserInfo | null = null
+  private _isUserBeingCreated = false
 
   @Mutation
   addUserInfo(userInfo: IUserInfo) {
@@ -57,6 +58,10 @@ class UserModule extends VuexModule {
       localStorageUtils.removeItem(refreshTokenLocalStorageKey)
     }
   }
+  @Mutation
+  setIsUserBeingCreated(status: boolean) {
+    this._isUserBeingCreated = status
+  }
 
   get userInfo() {
     return (uid: string) => this._userInfoList.find((userInfo) => userInfo.uid == uid)
@@ -75,6 +80,9 @@ class UserModule extends VuexModule {
   }
   get isLogin() {
     return !!this._accessToken
+  }
+  get isUserBeingCreated() {
+    return this._isUserBeingCreated
   }
 }
 

@@ -82,6 +82,11 @@ export default defineComponent({
         return;
       }
 
+      // Workaround: Inform Firebase Auth's onAuthStateChanged that a user is being created
+      // and an associated user account has not been created at Firestore yet.
+      // Therefore, getUserByUID should not be called.
+      UserModule.setIsUserBeingCreated(true);
+
       createUserWithEmailAndPassword(
         auth,
         emailInput.value,
@@ -105,6 +110,9 @@ export default defineComponent({
           }).then((res) => {
             UserModule.setLoginUser(res);
             this.$router.push({ name: "home" });
+            // Workaround: Finished creating user account at Firestore,
+            // inform Firebase Auth's onAuthStateChanged that getUserByUID can be called
+            UserModule.setIsUserBeingCreated(false);
           });
         })
         .catch((error) => {
