@@ -9,7 +9,7 @@
     <div
       class="product-image-zoom-in"
       :class="{ show: selectedFlag }"
-      :id="productImageZoomInId"
+      ref="zoomInImageContainer"
     >
       <img :src="imageUrl" alt="Product image" />
     </div>
@@ -32,22 +32,21 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const productImageZoomInId =
-      "product-image-zoom-in-" + props.thumbnailIndex;
     const selectedFlag = computed(
       () => ProductModule.productThumbnailIndex === props.thumbnailIndex
     );
     return {
       selectedFlag,
-      productImageZoomInId,
     };
   },
   mounted() {
     const updateHeightProductImageContainer = (): void => {
-      const productImageZoomIn = document.getElementById(
-        this.productImageZoomInId
-      ); //as HTMLElement
-      const productImageZoomInHeight = productImageZoomIn!.offsetHeight;
+      if (!this.$refs.zoomInImageContainer) {
+        return;
+      }
+      const productImageZoomInHeight = (
+        this.$refs.zoomInImageContainer as HTMLElement
+      ).offsetHeight;
       if (!productImageZoomInHeight) return;
 
       const productDetailContainer = document.querySelector(
