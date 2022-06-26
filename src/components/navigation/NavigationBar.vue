@@ -30,7 +30,7 @@
           </router-link>
           <router-link to="#">Products you bought</router-link>
           <router-link to="#">Sold products</router-link>
-          <router-link to="#">Logout</router-link>
+          <router-link to="/" @click="logout">Logout</router-link>
         </div>
       </div>
       <router-link :to="{ name: 'ProductCreate' }" class="sell-button"
@@ -45,6 +45,7 @@ import { computed, defineComponent } from "vue";
 
 import UserModule from "@/store/modules/User";
 import SearchBar from "./SearchBar.vue";
+import { getAuth, signOut } from "@firebase/auth";
 
 export default defineComponent({
   components: {
@@ -53,16 +54,22 @@ export default defineComponent({
   setup() {
     const isUserLoggedIn = computed(() => UserModule.isLogin);
     const loginUser = computed(() => UserModule.loginUser);
+    const auth = getAuth();
 
     return {
       isUserLoggedIn,
       loginUser,
+      auth,
+      signOut,
     };
   },
   mounted() {
     document.addEventListener("click", (event) => {
       if (event.target instanceof Element) {
         if (event.target.id != "navbar-account") {
+          if (!this.$refs.dropdownMenu) {
+            return;
+          }
           (this.$refs.dropdownMenu as HTMLElement).style.display = "none";
         }
       }
@@ -75,6 +82,16 @@ export default defineComponent({
       } else {
         (this.$refs.dropdownMenu as HTMLElement).style.display = "block";
       }
+    },
+    logout(event: Event) {
+      event.preventDefault();
+      signOut(this.auth).then(() => {
+        console.log("Sign out sucessfully.");
+        UserModule.setAccessToken();
+        UserModule.setRefreshToken();
+        UserModule.setLoginUser();
+        this.$router.push({ name: "home" });
+      });
     },
   },
 });

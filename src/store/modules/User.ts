@@ -35,8 +35,12 @@ class UserModule extends VuexModule {
     this._firebaseUser = user
   }
   @Mutation
-  setLoginUser(user: IUserInfo) {
-    this._loginUser = user
+  setLoginUser(user?: IUserInfo) {
+    if (user) {
+      this._loginUser = user
+    } else {
+      this._loginUser = null
+    }
   }
   @Mutation
   setAccessToken(accessToken?: string) {
