@@ -3,7 +3,7 @@
     <img :src="product.imageUrl" alt="Product image" />
     <div class="product-info">
       <div class="product-name">{{ product.name }}</div>
-      <div class="product-price">{{ product.price }} ¥</div>
+      <div class="product-price">¥{{ product.price }}</div>
     </div>
   </div>
 </template>
@@ -35,30 +35,37 @@ export default defineComponent({
 .product-card-container {
   max-width: 270px;
   width: 100%;
-  border: 1px solid #b8b8b8;
   border-radius: 5px;
   margin: 0 auto;
   cursor: pointer;
   display: flex;
   flex-direction: column;
+  gap: 8px;
 }
 img {
   width: 100%;
   height: 180px;
+  border-radius: 4px;
 }
 .product-info {
+  position: relative;
   min-width: 180px;
   max-width: 300px;
-  border-top: solid 1px #b8b8b8;
 }
 .product-name {
-  font-weight: bold;
+  text-align: left;
 }
 .product-price {
+  position: absolute;
+  top: -52px;
   font-style: italic;
-  font-size: 14px;
   font-weight: bold;
-  color: brown;
+  color: white;
+  background: #7d7d7d;
+  opacity: 0.7;
+  padding: 6px 15px 6px 10px;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
 }
 .product-update-info {
   font-size: 15px;
