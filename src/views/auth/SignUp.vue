@@ -1,38 +1,48 @@
 <template>
-  <div class="signup-form">
-    <div class="email-input">
-      <label for="email">Email</label>
-      <input
-        type="email"
-        name="email"
-        placeholder="Enter your email"
-        @mousedown="resetInputFieldState"
-      />
-      <span class="warning-message">* This field is required.</span>
+  <div class="signup-container">
+    <div class="app-motto-container">
+      <h3 class="app-name">Vendere</h3>
+      <p class="app-motto">
+        Create your own <br />
+        marketplace.
+      </p>
     </div>
-    <div class="username-input">
-      <label for="username">Username</label>
-      <input
-        type="text"
-        name="username"
-        placeholder="Create a username"
-        @mousedown="resetInputFieldState"
-      />
-      <span class="warning-message">* This field is required.</span>
+    <div class="signup-form">
+      <h3 class="signup-title">Sing up to Vendere</h3>
+      <div class="email-input">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          name="email"
+          placeholder="Enter your email"
+          @mousedown="resetInputFieldState"
+        />
+        <span class="warning-message">* This field is required.</span>
+      </div>
+      <div class="username-input">
+        <label for="username">Username</label>
+        <input
+          type="text"
+          name="username"
+          placeholder="Create a username"
+          @mousedown="resetInputFieldState"
+        />
+        <span class="warning-message">* This field is required.</span>
+      </div>
+      <div class="password-input">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          name="password"
+          placeholder="Create a password"
+          @mousedown="resetInputFieldState"
+        />
+        <span class="warning-message">* This field is required.</span>
+      </div>
+      <button type="text" class="signup-button" @click="signUpFirebaseUser">
+        Sign up
+      </button>
     </div>
-    <div class="password-input">
-      <label for="password">Password</label>
-      <input
-        type="password"
-        name="password"
-        placeholder="Create a password"
-        @mousedown="resetInputFieldState"
-      />
-      <span class="warning-message">* This field is required.</span>
-    </div>
-    <button type="text" class="signup-button" @click="signUpFirebaseUser">
-      Sign up
-    </button>
   </div>
 </template>
 
