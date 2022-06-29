@@ -40,8 +40,8 @@
         Sign up
       </button>
       <p class="redirect-login">
-        Already have an account ?
-        <router-link :to="{ name: 'Login' }" class="redirect-login-button"
+        Already have an account?
+        <router-link :to="{ name: 'Login' }" class="redirect-login-link"
           >Login
         </router-link>
       </p>
@@ -144,14 +144,12 @@ export default defineComponent({
 @import "@/assets/css/auth.css";
 .redirect-login {
   text-align: right;
-  font-size: 13px;
-  font-weight: bold;
-  opacity: 0.7;
-  font-style: italic;
+  font-size: 14px;
 }
-.redirect-login-button {
+.redirect-login-link {
+  font-weight: bold;
   text-decoration: none;
-  font-style: normal;
   color: mediumvioletred;
+  opacity: 0.9;
 }
 </style>

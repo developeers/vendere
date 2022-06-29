@@ -1,5 +1,11 @@
 <template>
   <div class="login-container">
+    <p class="redirect-signup">
+      Don't have an account?
+      <router-link :to="{ name: 'SignUp' }" class="redirect-signup-link"
+        >Sign up</router-link
+      >
+    </p>
     <app-motto></app-motto>
     <div class="login-form">
       <router-link :to="{ name: 'home' }" class="app-name-auth-form"
@@ -106,4 +112,20 @@ export default defineComponent({
 
 <style scoped>
 @import "@/assets/css/auth.css";
+.login-container {
+  position: relative;
+}
+.redirect-signup {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 14px;
+  color: black;
+}
+.redirect-signup-link {
+  font-weight: bold;
+  text-decoration: none;
+  color: mediumvioletred;
+  opacity: 0.9;
+}
 </style>
