@@ -1,26 +1,45 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
+
+import HomeView from '@/views/HomeView.vue';
+import MainView from '@/views/MainView.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
+    path: '/sign-up',
+    name: 'SignUp',
+    component: () => import('@/views/auth/SignUp.vue')
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: () => import('@/views/auth/LoginComponent.vue')
+  },
+  {
     path: '/',
-    name: 'home',
-    component: HomeView
-  },
-  {
-    path: '/product/create',
-    name: 'ProductCreate',
-    component: () => import(/* webpackChunkName: "about" */ '@/views/products/ProductCreate.vue')
-  },
-  {
-    path: '/product/:hashId',
-    name: 'ProductDetail',
-    component: () => import('@/views/products/ProductDetail.vue')
-  },
-  {
-    path: '/seller/:hashId',
-    name: 'SellerDetail',
-    component: () => import('@/views/seller/SellerDetail.vue')
+    name: 'MainView',
+    component: MainView,
+    children: [
+      {
+        path: '/',
+        name: 'home',
+        component: HomeView
+      },
+      {
+        path: '/product/create',
+        name: 'ProductCreate',
+        component: () => import(/* webpackChunkName: "about" */ '@/views/products/ProductCreate.vue')
+      },
+      {
+        path: '/product/:hashId',
+        name: 'ProductDetail',
+        component: () => import('@/views/products/ProductDetail.vue')
+      },
+      {
+        path: '/seller/:uid',
+        name: 'SellerDetail',
+        component: () => import('@/views/seller/SellerDetail.vue')
+      },
+    ]
   },
 ]
 

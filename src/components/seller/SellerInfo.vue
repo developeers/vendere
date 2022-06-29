@@ -25,11 +25,11 @@ import UserModule from "@/store/modules/User";
 
 export default defineComponent({
   setup(props) {
-    const seller = computed(() => UserModule.userInfo(props.hashId || ""));
+    const seller = computed(() => UserModule.userInfo(props.uid || ""));
     return { seller };
   },
   props: {
-    hashId: {
+    uid: {
       type: String,
     },
   },
@@ -37,7 +37,7 @@ export default defineComponent({
     navToSellerProfile() {
       this.$router.push({
         name: "SellerDetail",
-        params: { hashId: this.hashId },
+        params: { uid: this.uid },
       });
     },
   },

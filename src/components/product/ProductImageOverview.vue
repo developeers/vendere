@@ -2,14 +2,14 @@
   <div class="carousel-item-container">
     <img
       :src="imageUrl"
-      :id="thumbnailElementId"
       :class="{ 'selected-thumbnail': selectedFlag }"
       alt="Product image"
+      @mouseover="zoomInProductImage"
     />
     <div
       class="product-image-zoom-in"
       :class="{ show: selectedFlag }"
-      :id="productImageZoomInId"
+      ref="zoomInImageContainer"
     >
       <img :src="imageUrl" alt="Product image" />
     </div>
@@ -32,29 +32,21 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const thumbnailElementId = "product-thumbnail-" + props.thumbnailIndex;
-    const productImageZoomInId =
-      "product-image-zoom-in-" + props.thumbnailIndex;
     const selectedFlag = computed(
       () => ProductModule.productThumbnailIndex === props.thumbnailIndex
     );
     return {
-      thumbnailElementId,
       selectedFlag,
-      productImageZoomInId,
     };
   },
   mounted() {
-    document
-      .getElementById(this.thumbnailElementId)!
-      .addEventListener("mouseover", () => {
-        ProductModule.setProductThumbnailIndex(this.thumbnailIndex);
-      });
     const updateHeightProductImageContainer = (): void => {
-      const productImageZoomIn = document.getElementById(
-        this.productImageZoomInId
-      ); //as HTMLElement
-      const productImageZoomInHeight = productImageZoomIn!.offsetHeight;
+      if (!this.$refs.zoomInImageContainer) {
+        return;
+      }
+      const productImageZoomInHeight = (
+        this.$refs.zoomInImageContainer as HTMLElement
+      ).offsetHeight;
       if (!productImageZoomInHeight) return;
 
       const productDetailContainer = document.querySelector(
@@ -78,6 +70,11 @@ export default defineComponent({
     };
     updateHeightProductImageContainer();
     window.addEventListener("resize", updateHeightProductImageContainer);
+  },
+  methods: {
+    zoomInProductImage() {
+      ProductModule.setProductThumbnailIndex(this.thumbnailIndex);
+    },
   },
 });
 </script>

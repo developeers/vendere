@@ -1,6 +1,6 @@
 export interface ISellerReview {
-    targetSellerHashId: string
-    reviewUserHashId: string
+    targetSellerUID: string
+    reviewUserUID: string
     content: string
 }
 

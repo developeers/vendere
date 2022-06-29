@@ -1,25 +1,28 @@
-import { VendereApiInstance, VendereQueryApiInstance } from "./VendereApiBase"
-import { IUserInfo } from "../interfaces/IUser"
-import { ISellerReview } from "../interfaces/ISellerReview"
+import { ISellerReview } from '../interfaces/ISellerReview';
+import { IUserInfo } from '../interfaces/IUser';
 import {
-    convertApiResponseUser,
-    convertApiResponseSellerReviews,
-    IFirestoreFieldFilter,
-    firestoreQueryOperators,
-    createFirestoreRequestBody,
-} from "../utils/apiUtils"
+    convertApiResponseSellerReviews, convertApiResponseUser, createFirestoreRequestBody,
+    firestoreQueryOperators, IFirestoreFieldFilter
+} from '../utils/apiUtils';
+import { VendereApiInstance, VendereQueryApiInstance } from './VendereApiBase';
 
-export const getUserByHashId = async (hashId: string): Promise<IUserInfo> => {
-    const res = await VendereApiInstance.get(`users/${hashId}`)
-    return convertApiResponseUser(res.data)
+export const getUserByUID = async (uid: string): Promise<IUserInfo> => {
+    const fieldFilter: IFirestoreFieldFilter = {
+        fieldPath: "uid",
+        value: uid,
+        op: firestoreQueryOperators.EQUAL
+    }
+    const getUserRequestBody = createFirestoreRequestBody("users", [fieldFilter])
+    const res = await VendereQueryApiInstance.post("", getUserRequestBody)
+    return convertApiResponseUser(res.data[0].document)
 }
 
 export const getSellerReviews = async (
-    sellerHashId: string
+    sellerUID: string
 ): Promise<Array<ISellerReview>> => {
     const fieldFilter: IFirestoreFieldFilter = {
-        fieldPath: "targetSellerHashId",
-        value: sellerHashId,
+        fieldPath: "targetSellerUID",
+        value: sellerUID,
         op: firestoreQueryOperators.EQUAL
     }
     const sellerReviewsRequestBody = createFirestoreRequestBody("seller_review", [fieldFilter])
@@ -28,7 +31,21 @@ export const getSellerReviews = async (
     return convertApiResponseSellerReviews(res.data)
 }
 
-export const getUsersByHashIds = async (hashIds: Array<string>): Promise<Array<IUserInfo>> => {
-    const promiseArray = hashIds.map(hashId => getUserByHashId(hashId))
+export const getUserByUIDs = async (UIDs: Array<string>): Promise<Array<IUserInfo>> => {
+    const promiseArray = UIDs.map(UID => getUserByUID(UID))
     return await Promise.all(promiseArray)
+}
+
+export const createUser = async (userData: IUserInfo): Promise<IUserInfo> => {
+    const postParams = {
+        fields: {
+            uid: { stringValue: userData.uid },
+            name: { stringValue: userData.name },
+            numOfReviews: { integerValue: userData.numOfReviews },
+            averageReview: { doubleValue: userData.averageReview },
+            imageUrl: { stringValue: userData.imageUrl },
+        }
+    }
+    const response = await VendereApiInstance.post('users', postParams)
+    return convertApiResponseUser(response.data)
 }
