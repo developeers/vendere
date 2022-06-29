@@ -1,13 +1,10 @@
 <template>
   <div class="login-container">
-    <div class="app-motto-container">
-      <h3 class="app-name">Vendere</h3>
-      <p class="app-motto">
-        Create your own <br />
-        marketplace.
-      </p>
-    </div>
+    <app-motto></app-motto>
     <div class="login-form">
+      <router-link :to="{ name: 'home' }" class="app-name-auth-form"
+        >Vendere</router-link
+      >
       <h3 class="login-title">Log in to Vendere</h3>
       <div class="email-input">
         <label for="email">Email</label>
@@ -44,11 +41,16 @@ import { resetInputFieldState } from "@/services/utils/componentUtils";
 import UserModule from "@/store/modules/User";
 import { getUserByUID } from "@/services/vendereApi/VendereApiUser";
 
+import AppMotto from "./AppMotto.vue";
+
 export default defineComponent({
   setup() {
     return {
       resetInputFieldState,
     };
+  },
+  components: {
+    AppMotto,
   },
   methods: {
     loginFirebaseUser() {

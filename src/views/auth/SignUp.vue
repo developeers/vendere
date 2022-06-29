@@ -1,13 +1,10 @@
 <template>
   <div class="signup-container">
-    <div class="app-motto-container">
-      <h3 class="app-name">Vendere</h3>
-      <p class="app-motto">
-        Create your own <br />
-        marketplace.
-      </p>
-    </div>
+    <app-motto></app-motto>
     <div class="signup-form">
+      <router-link :to="{ name: 'home' }" class="app-name-auth-form"
+        >Vendere</router-link
+      >
       <h3 class="signup-title">Sing up to Vendere</h3>
       <div class="email-input">
         <label for="email">Email</label>
@@ -42,6 +39,12 @@
       <button type="text" class="signup-button" @click="signUpFirebaseUser">
         Sign up
       </button>
+      <p class="redirect-login">
+        Already have an account ?
+        <router-link :to="{ name: 'Login' }" class="redirect-login-button"
+          >Login
+        </router-link>
+      </p>
     </div>
   </div>
 </template>
@@ -52,12 +55,16 @@ import { getAuth, createUserWithEmailAndPassword } from "@firebase/auth";
 import UserModule from "@/store/modules/User";
 import { createUser } from "@/services/vendereApi/VendereApiUser";
 import { resetInputFieldState } from "@/services/utils/componentUtils";
+import AppMotto from "./AppMotto.vue";
 
 export default defineComponent({
   setup() {
     return {
       resetInputFieldState,
     };
+  },
+  components: {
+    AppMotto,
   },
   methods: {
     signUpFirebaseUser() {
@@ -135,4 +142,16 @@ export default defineComponent({
 
 <style scoped>
 @import "@/assets/css/auth.css";
+.redirect-login {
+  text-align: right;
+  font-size: 13px;
+  font-weight: bold;
+  opacity: 0.7;
+  font-style: italic;
+}
+.redirect-login-button {
+  text-decoration: none;
+  font-style: normal;
+  color: mediumvioletred;
+}
 </style>
