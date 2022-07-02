@@ -6,7 +6,7 @@
       <p>Or</p>
     </div>
     <label for="file-upload" class="file-upload-button"> Upload </label>
-    <input id="file-upload" type="file" />
+    <input id="file-upload" type="file" multiple @change="uploadFiles" />
     <div class="drop-area-image" ref="dropAreaImage"></div>
   </div>
 </template>
@@ -48,6 +48,16 @@ export default defineComponent({
         (this.$refs.dropAreaImage as HTMLElement).appendChild(img);
         this.numUploadedImages += 1;
       };
+    },
+    uploadFiles(event: Event) {
+      const uploadedFiles = (event.target as HTMLInputElement).files;
+      if (!uploadedFiles) {
+        return;
+      }
+      const uploadedImages = [...uploadedFiles].filter((file: File) => {
+        return file.type.startsWith("image");
+      });
+      uploadedImages.forEach((image) => this.previewImage(image));
     },
   },
   created() {
