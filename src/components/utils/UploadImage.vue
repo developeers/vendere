@@ -1,5 +1,5 @@
 <template>
-  <div class="drop-area">
+  <div class="drop-area" ref="dropArea">
     <i class="fa fa-camera"></i>
     <div class="drop-area-text">
       <p>Drop image here</p>
@@ -13,7 +13,44 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 
-export default defineComponent({});
+export default defineComponent({
+  methods: {
+    customPreventDefault(event: Event) {
+      event.preventDefault();
+      event.stopPropagation();
+    },
+  },
+  created() {
+    ["dragover", "drop"].forEach((eventName) => {
+      document.addEventListener(eventName, this.customPreventDefault);
+    });
+  },
+  mounted() {
+    // Prevent browser from opening dragged images in a new tab
+    // and the drop event can be handled by our callback
+    ["dragover", "drop"].forEach((eventName) => {
+      (this.$refs.dropArea as HTMLElement).addEventListener(
+        eventName,
+        (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+      );
+    });
+
+    (this.$refs.dropArea as HTMLElement).addEventListener(
+      "drop",
+      (event: DragEvent) => {
+        console.log(event.dataTransfer?.files);
+      }
+    );
+  },
+  beforeUnmount() {
+    ["dragover", "drop"].forEach((eventName) => {
+      document.removeEventListener(eventName, this.customPreventDefault);
+    });
+  },
+});
 </script>
 
 <style scoped>
