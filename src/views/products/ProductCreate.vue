@@ -1,7 +1,10 @@
 <template>
   <simple-nav-bar></simple-nav-bar>
+  <h3 class="page-title">Sell your item</h3>
   <div class="product-create-container">
-    <h3>Sell your item</h3>
+    <div class="product-image-upload">
+      <upload-image></upload-image>
+    </div>
     <div class="create-product-form">
       <h4>Description</h4>
       <div class="product-input-container">
@@ -67,6 +70,7 @@ import { DefaultProductInfo } from "@/services/interfaces/IProduct";
 import { submitProduct } from "@/services/vendereApi/VendereApiProduct";
 
 import SimpleNavBar from "@/components/navigation/SimpleNavBar.vue";
+import UploadImage from "@/components/utils/UploadImage.vue";
 
 export default defineComponent({
   setup() {
@@ -76,6 +80,7 @@ export default defineComponent({
   },
   components: {
     SimpleNavBar,
+    UploadImage,
   },
   methods: {
     submitNewProduct() {
@@ -88,17 +93,21 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.product-create-container {
+.page-title {
   margin-top: 80px;
 }
-
+.product-create-container {
+  display: flex;
+  justify-content: center;
+  margin: 0 30px;
+  gap: 30px;
+}
 .create-product-form {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  width: 40vw;
-  max-width: 300px;
-  margin: 0 auto;
+  width: 50%;
+  max-width: 360px;
 }
 .product-input-container {
   display: flex;
@@ -151,5 +160,10 @@ export default defineComponent({
 }
 .create-product-form > .submit-button:hover {
   opacity: 0.9;
+}
+.product-image-upload {
+  width: 40%;
+  max-width: 300px;
+  margin-top: 20px;
 }
 </style>
