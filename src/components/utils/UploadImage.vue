@@ -1,12 +1,13 @@
 <template>
-  <div :class="dropAreaClasses" ref="dropArea">
-    <i class="fa fa-camera"></i>
-    <div class="drop-area-text">
+  <div class="drop-area" ref="dropArea">
+    <i class="fa fa-camera" :class="[{ hide: imagesUploaded }]"></i>
+    <div class="drop-area-text" :class="[{ hide: imagesUploaded }]">
       <p>Drop image here</p>
       <p>Or</p>
-      <label for="file-upload" class="file-upload-button"> Upload </label>
-      <input id="file-upload" type="file" />
     </div>
+    <label for="file-upload" class="file-upload-button"> Upload </label>
+    <input id="file-upload" type="file" />
+    <div class="drop-area-image" ref="dropAreaImage"></div>
   </div>
 </template>
 
@@ -20,11 +21,11 @@ export default defineComponent({
     };
   },
   computed: {
-    dropAreaClasses() {
+    imagesUploaded() {
       if (this.numUploadedImages) {
-        return "drop-area drop-area-with-image";
+        return true;
       }
-      return "drop-area";
+      return false;
     },
   },
   methods: {
@@ -33,12 +34,18 @@ export default defineComponent({
       event.stopPropagation();
     },
     previewImage(image: File) {
+      if (this.numUploadedImages >= 9) {
+        return;
+      }
       const fileReader = new FileReader();
       fileReader.readAsDataURL(image);
       fileReader.onloadend = () => {
+        if (this.numUploadedImages >= 9) {
+          return;
+        }
         const img = document.createElement("img");
         img.src = fileReader.result as string;
-        (this.$refs.dropArea as HTMLElement).appendChild(img);
+        (this.$refs.dropAreaImage as HTMLElement).appendChild(img);
         this.numUploadedImages += 1;
       };
     },
@@ -64,6 +71,9 @@ export default defineComponent({
     (this.$refs.dropArea as HTMLElement).addEventListener(
       "drop",
       (event: DragEvent) => {
+        if (this.numUploadedImages >= 9) {
+          return;
+        }
         if (!event.dataTransfer) {
           return;
         }
@@ -88,6 +98,7 @@ export default defineComponent({
 
 <style scoped>
 .drop-area {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -95,14 +106,23 @@ export default defineComponent({
   gap: 5px;
   height: 240px;
   background: #f7f7f7;
-  margin-bottom: 10px;
   border-radius: 4px;
   border: 1px dashed grey;
+  max-width: 300px;
+  margin: 0 auto;
 }
-.drop-area.drop-area-with-image {
+.drop-area-image {
+  position: absolute;
+  top: 0;
+  left: 0;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 15px;
+  gap: 12px;
+  width: 100%;
+  padding: 15px;
+  box-sizing: border-box;
+  justify-items: center;
+  align-items: center;
 }
 .drop-area > .fa-camera {
   font-size: 30px;
@@ -125,6 +145,8 @@ export default defineComponent({
   font-size: 16px;
 }
 .file-upload-button {
+  position: absolute;
+  bottom: 10px;
   display: block;
   width: 100px;
   background: white;
@@ -138,6 +160,9 @@ export default defineComponent({
 input[type="file"] {
   display: none;
 }
+.hide {
+  display: none;
+}
 </style>
 
 <style>
@@ -145,8 +170,8 @@ input[type="file"] {
 will not be given attributes that bind them to scoped CSS. 
 Therefore, it's neccessary to style image elements in non-scoped CSS.
 */
-.drop-area img {
-  width: 40px;
-  height: 36px;
+.drop-area-image > img {
+  width: 100%;
+  height: 50px;
 }
 </style>
