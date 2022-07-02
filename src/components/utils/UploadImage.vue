@@ -183,5 +183,8 @@ Therefore, it's neccessary to style image elements in non-scoped CSS.
 .drop-area-image > img {
   width: 100%;
   height: 50px;
+  box-sizing: border-box;
+  border: 1px solid grey;
+  border-radius: 3px;
 }
 </style>
