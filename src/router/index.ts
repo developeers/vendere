@@ -15,6 +15,11 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/auth/LoginComponent.vue')
   },
   {
+    path: '/sell',
+    name: 'ProductCreate',
+    component: () => import(/* webpackChunkName: "about" */ '@/views/products/ProductCreate.vue')
+  },
+  {
     path: '/',
     name: 'MainView',
     component: MainView,
@@ -23,11 +28,6 @@ const routes: Array<RouteRecordRaw> = [
         path: '/',
         name: 'home',
         component: HomeView
-      },
-      {
-        path: '/product/create',
-        name: 'ProductCreate',
-        component: () => import(/* webpackChunkName: "about" */ '@/views/products/ProductCreate.vue')
       },
       {
         path: '/product/:hashId',
