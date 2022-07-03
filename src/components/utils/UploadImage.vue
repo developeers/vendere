@@ -24,7 +24,15 @@ import { defineComponent } from "vue";
 
 import ImagePreview from "./ImagePreview.vue";
 
+const MAX_NUM_IMAGES = 9;
+
 export default defineComponent({
+  props: {
+    processImage: {
+      type: Function,
+      required: true,
+    },
+  },
   components: {
     ImagePreview,
   },
@@ -48,20 +56,27 @@ export default defineComponent({
       event.stopPropagation();
     },
     previewImage(image: File) {
-      if (this.numUploadedImages >= 9) {
+      if (this.numUploadedImages >= MAX_NUM_IMAGES) {
         return;
       }
       const fileReader = new FileReader();
       fileReader.readAsDataURL(image);
       fileReader.onloadend = () => {
-        if (this.numUploadedImages >= 9) {
+        if (this.numUploadedImages >= MAX_NUM_IMAGES) {
           return;
         }
         this.previewImageList.push(fileReader.result as string);
         this.numUploadedImages += 1;
       };
     },
+    handleUploadedImage(image: File) {
+      this.processImage(image);
+      this.previewImage(image);
+    },
     uploadFiles(event: Event) {
+      if (this.numUploadedImages >= MAX_NUM_IMAGES) {
+        return;
+      }
       const uploadedFiles = (event.target as HTMLInputElement).files;
       if (!uploadedFiles) {
         return;
@@ -69,7 +84,7 @@ export default defineComponent({
       const uploadedImages = [...uploadedFiles].filter((file: File) => {
         return file.type.startsWith("image");
       });
-      uploadedImages.forEach((image) => this.previewImage(image));
+      uploadedImages.forEach(this.handleUploadedImage);
     },
     deletePreviewImage() {
       this.numUploadedImages -= 1;
@@ -93,7 +108,7 @@ export default defineComponent({
     (this.$refs.dropArea as HTMLElement).addEventListener(
       "drop",
       (event: DragEvent) => {
-        if (this.numUploadedImages >= 9) {
+        if (this.numUploadedImages >= MAX_NUM_IMAGES) {
           return;
         }
         if (!event.dataTransfer) {
@@ -106,7 +121,7 @@ export default defineComponent({
         const draggedImages = draggedFiles.filter((file: File) => {
           return file.type.startsWith("image");
         });
-        draggedImages.forEach((image) => this.previewImage(image));
+        draggedImages.forEach(this.handleUploadedImage);
       }
     );
   },

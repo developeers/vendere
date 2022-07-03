@@ -3,7 +3,7 @@
   <h3 class="page-title">Sell your item</h3>
   <div class="product-create-container">
     <div class="product-image-upload">
-      <upload-image></upload-image>
+      <upload-image :processImage="uploadImageToFirebase"></upload-image>
     </div>
     <div class="create-product-form">
       <h4>Description</h4>
@@ -65,9 +65,11 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 import { DefaultProductInfo } from "@/services/interfaces/IProduct";
 import { submitProduct } from "@/services/vendereApi/VendereApiProduct";
+import { firebaseStorage } from "@/firebase";
 
 import SimpleNavBar from "@/components/navigation/SimpleNavBar.vue";
 import UploadImage from "@/components/utils/UploadImage.vue";
@@ -82,7 +84,20 @@ export default defineComponent({
     SimpleNavBar,
     UploadImage,
   },
+  data() {
+    return {
+      imageList: [] as string[],
+    };
+  },
   methods: {
+    uploadImageToFirebase(image: File) {
+      const storageRef = ref(firebaseStorage, "fileName");
+      uploadBytes(storageRef, image).then(() => {
+        getDownloadURL(storageRef).then((url) => {
+          this.imageList.push(url);
+        });
+      });
+    },
     submitNewProduct() {
       console.log("Create product: ", this.product);
       submitProduct(this.product);
