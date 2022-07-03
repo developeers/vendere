@@ -38,7 +38,7 @@ export default defineComponent({
   },
   data() {
     return {
-      numUploadedImages: 0,
+      numPreviewImages: 0,
       previewImageList: [] as string[],
       numProcessingImage: 0,
       numProcessCompletedImage: 0,
@@ -46,7 +46,7 @@ export default defineComponent({
   },
   computed: {
     imagesUploaded() {
-      if (this.numUploadedImages) {
+      if (this.numPreviewImages) {
         return true;
       }
       return false;
@@ -58,17 +58,11 @@ export default defineComponent({
       event.stopPropagation();
     },
     previewImage(image: File) {
-      if (this.numUploadedImages >= MAX_NUM_IMAGES) {
-        return;
-      }
       const fileReader = new FileReader();
       fileReader.readAsDataURL(image);
       fileReader.onloadend = () => {
-        if (this.numUploadedImages >= MAX_NUM_IMAGES) {
-          return;
-        }
         this.previewImageList.push(fileReader.result as string);
-        this.numUploadedImages += 1;
+        this.numPreviewImages += 1;
       };
     },
     handleImage(image: File) {
@@ -81,12 +75,13 @@ export default defineComponent({
       });
       this.numProcessingImage = Math.min(
         uploadedImages.length,
-        MAX_NUM_IMAGES - this.numUploadedImages
+        MAX_NUM_IMAGES - this.numPreviewImages
       );
-      uploadedImages.forEach(this.handleImage);
+      const processedImages = uploadedImages.slice(0, this.numProcessingImage);
+      processedImages.forEach(this.handleImage);
     },
     uploadFiles(event: Event) {
-      if (this.numUploadedImages >= MAX_NUM_IMAGES) {
+      if (this.numPreviewImages >= MAX_NUM_IMAGES) {
         return;
       }
       const uploadedFiles = (event.target as HTMLInputElement).files;
@@ -96,7 +91,7 @@ export default defineComponent({
       this.processImagesFromFiles(uploadedFiles);
     },
     dropFiles(event: DragEvent) {
-      if (this.numUploadedImages >= MAX_NUM_IMAGES) {
+      if (this.numPreviewImages >= MAX_NUM_IMAGES) {
         return;
       }
       if (!event.dataTransfer) {
@@ -108,7 +103,7 @@ export default defineComponent({
       this.processImagesFromFiles(event.dataTransfer.files);
     },
     deletePreviewImage() {
-      this.numUploadedImages -= 1;
+      this.numPreviewImages -= 1;
     },
   },
   created() {
