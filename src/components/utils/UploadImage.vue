@@ -1,7 +1,7 @@
 <template>
   <div class="drop-area" ref="dropArea">
-    <i class="fa fa-camera" :class="[{ hide: imagesUploaded }]"></i>
-    <div class="drop-area-text" :class="[{ hide: imagesUploaded }]">
+    <i class="fa fa-camera" :class="[{ hide: numPreviewImages }]"></i>
+    <div class="drop-area-text" :class="[{ hide: numPreviewImages }]">
       <p>Drop image here</p>
       <p>Or</p>
     </div>
@@ -40,17 +40,7 @@ export default defineComponent({
     return {
       numPreviewImages: 0,
       previewImageList: [] as string[],
-      numProcessingImage: 0,
-      numProcessCompletedImage: 0,
     };
-  },
-  computed: {
-    imagesUploaded() {
-      if (this.numPreviewImages) {
-        return true;
-      }
-      return false;
-    },
   },
   methods: {
     customPreventDefault(event: Event) {
@@ -65,19 +55,19 @@ export default defineComponent({
         this.numPreviewImages += 1;
       };
     },
-    handleImage(image: File) {
-      this.processImage(image);
+    async handleImage(image: File) {
+      await this.processImage(image);
       this.previewImage(image);
     },
     processImagesFromFiles(files: FileList) {
       const uploadedImages = [...files].filter((file: File) => {
         return file.type.startsWith("image");
       });
-      this.numProcessingImage = Math.min(
+      const numProcessingImage = Math.min(
         uploadedImages.length,
         MAX_NUM_IMAGES - this.numPreviewImages
       );
-      const processedImages = uploadedImages.slice(0, this.numProcessingImage);
+      const processedImages = uploadedImages.slice(0, numProcessingImage);
       processedImages.forEach(this.handleImage);
     },
     uploadFiles(event: Event) {

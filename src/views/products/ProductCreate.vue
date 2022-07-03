@@ -90,13 +90,11 @@ export default defineComponent({
     };
   },
   methods: {
-    uploadImageToFirebase(image: File) {
+    async uploadImageToFirebase(image: File) {
       const storageRef = ref(firebaseStorage, "fileName");
-      uploadBytes(storageRef, image).then(() => {
-        getDownloadURL(storageRef).then((url) => {
-          this.imageList.push(url);
-        });
-      });
+      await uploadBytes(storageRef, image);
+      const downLoadUrl = await getDownloadURL(storageRef);
+      this.imageList.push(downLoadUrl);
     },
     submitNewProduct() {
       console.log("Create product: ", this.product);
