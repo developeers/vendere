@@ -7,17 +7,30 @@
     </div>
     <label for="file-upload" class="file-upload-button"> Upload </label>
     <input id="file-upload" type="file" multiple @change="uploadFiles" />
-    <div class="drop-area-image" ref="dropAreaImage"></div>
+    <div class="drop-area-image">
+      <image-preview
+        v-for="(imageUrl, index) in previewImageList"
+        :imageUrl="imageUrl"
+        :key="index"
+      >
+      </image-preview>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 
+import ImagePreview from "./ImagePreview.vue";
+
 export default defineComponent({
+  components: {
+    ImagePreview,
+  },
   data() {
     return {
       numUploadedImages: 0,
+      previewImageList: [] as string[],
     };
   },
   computed: {
@@ -43,9 +56,7 @@ export default defineComponent({
         if (this.numUploadedImages >= 9) {
           return;
         }
-        const img = document.createElement("img");
-        img.src = fileReader.result as string;
-        (this.$refs.dropAreaImage as HTMLElement).appendChild(img);
+        this.previewImageList.push(fileReader.result as string);
         this.numUploadedImages += 1;
       };
     },
@@ -71,10 +82,7 @@ export default defineComponent({
     ["dragover", "drop"].forEach((eventName) => {
       (this.$refs.dropArea as HTMLElement).addEventListener(
         eventName,
-        (event) => {
-          event.preventDefault();
-          event.stopPropagation();
-        }
+        this.customPreventDefault
       );
     });
 
@@ -172,19 +180,5 @@ input[type="file"] {
 }
 .hide {
   display: none;
-}
-</style>
-
-<style>
-/* Image elements are created based on user actions, and those elements
-will not be given attributes that bind them to scoped CSS. 
-Therefore, it's neccessary to style image elements in non-scoped CSS.
-*/
-.drop-area-image > img {
-  width: 100%;
-  height: 50px;
-  box-sizing: border-box;
-  border: 1px solid grey;
-  border-radius: 3px;
 }
 </style>
