@@ -40,6 +40,8 @@ export default defineComponent({
     return {
       numUploadedImages: 0,
       previewImageList: [] as string[],
+      numProcessingImage: 0,
+      numProcessCompletedImage: 0,
     };
   },
   computed: {
@@ -69,9 +71,19 @@ export default defineComponent({
         this.numUploadedImages += 1;
       };
     },
-    handleUploadedImage(image: File) {
+    handleImage(image: File) {
       this.processImage(image);
       this.previewImage(image);
+    },
+    processImagesFromFiles(files: FileList) {
+      const uploadedImages = [...files].filter((file: File) => {
+        return file.type.startsWith("image");
+      });
+      this.numProcessingImage = Math.min(
+        uploadedImages.length,
+        MAX_NUM_IMAGES - this.numUploadedImages
+      );
+      uploadedImages.forEach(this.handleImage);
     },
     uploadFiles(event: Event) {
       if (this.numUploadedImages >= MAX_NUM_IMAGES) {
@@ -81,10 +93,19 @@ export default defineComponent({
       if (!uploadedFiles) {
         return;
       }
-      const uploadedImages = [...uploadedFiles].filter((file: File) => {
-        return file.type.startsWith("image");
-      });
-      uploadedImages.forEach(this.handleUploadedImage);
+      this.processImagesFromFiles(uploadedFiles);
+    },
+    dropFiles(event: DragEvent) {
+      if (this.numUploadedImages >= MAX_NUM_IMAGES) {
+        return;
+      }
+      if (!event.dataTransfer) {
+        return;
+      }
+      if (!event.dataTransfer.files.length) {
+        return;
+      }
+      this.processImagesFromFiles(event.dataTransfer.files);
     },
     deletePreviewImage() {
       this.numUploadedImages -= 1;
@@ -107,22 +128,7 @@ export default defineComponent({
 
     (this.$refs.dropArea as HTMLElement).addEventListener(
       "drop",
-      (event: DragEvent) => {
-        if (this.numUploadedImages >= MAX_NUM_IMAGES) {
-          return;
-        }
-        if (!event.dataTransfer) {
-          return;
-        }
-        const draggedFiles = [...event.dataTransfer.files];
-        if (!draggedFiles.length) {
-          return;
-        }
-        const draggedImages = draggedFiles.filter((file: File) => {
-          return file.type.startsWith("image");
-        });
-        draggedImages.forEach(this.handleUploadedImage);
-      }
+      this.dropFiles
     );
   },
   beforeUnmount() {
