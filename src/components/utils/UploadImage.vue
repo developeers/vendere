@@ -12,6 +12,7 @@
         v-for="(imageUrl, index) in previewImageList"
         :imageUrl="imageUrl"
         :key="index"
+        @delete="deletePreviewImage"
       >
       </image-preview>
     </div>
@@ -69,6 +70,9 @@ export default defineComponent({
         return file.type.startsWith("image");
       });
       uploadedImages.forEach((image) => this.previewImage(image));
+    },
+    deletePreviewImage() {
+      this.numUploadedImages -= 1;
     },
   },
   created() {
