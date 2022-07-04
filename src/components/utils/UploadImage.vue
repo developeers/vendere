@@ -113,6 +113,7 @@ export default defineComponent({
       if (!event.dataTransfer.files.length) {
         return;
       }
+      this.draggedOver = false;
       this.processImagesFromFiles(event.dataTransfer.files);
     },
     removePreviewImage(imageId: string) {
@@ -194,7 +195,7 @@ export default defineComponent({
   max-width: 300px;
   margin: 0 auto;
 }
-.drop-area *:not(.file-upload-button) {
+.drop-area :where(.fa-camera, .drop-area-text) {
   pointer-events: none;
 }
 .drop-area-image {
