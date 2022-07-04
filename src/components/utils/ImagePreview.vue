@@ -1,5 +1,5 @@
 <template>
-  <img :src="imageUrl" alt="Preview" ref="image" :class="[{ hide: removed }]" />
+  <img :src="imageSrc" alt="Preview" ref="image" :class="[{ hide: removed }]" />
 </template>
 
 <script lang="ts">
@@ -11,7 +11,7 @@ export default defineComponent({
       type: String,
       required: true,
     },
-    imageUrl: {
+    imageSrc: {
       type: String,
       required: true,
     },
@@ -27,8 +27,8 @@ export default defineComponent({
   },
   mounted() {
     (this.$refs.image as HTMLElement).addEventListener("dblclick", async () => {
-      this.$emit("remove");
       await this.removeImage(this.imageId);
+      this.$emit("remove");
       this.removed = true;
     });
   },

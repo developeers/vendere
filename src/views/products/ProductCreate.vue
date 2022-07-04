@@ -6,6 +6,7 @@
       <upload-image
         :processImage="uploadImageToFirebase"
         :removeImage="removeImageFromFirebase"
+        @update-urls="handleUpdatedUrls"
       ></upload-image>
     </div>
     <div class="create-product-form">
@@ -103,9 +104,8 @@ export default defineComponent({
       const fileName = uuidv4();
       const storageRef = ref(firebaseStorage, fileName);
       await uploadBytes(storageRef, image);
-      const downLoadUrl = await getDownloadURL(storageRef);
-      this.imageList.push(downLoadUrl);
-      return fileName;
+      const downloadUrl = await getDownloadURL(storageRef);
+      return { imageId: fileName, imageUrl: downloadUrl };
     },
     async removeImageFromFirebase(imageId: string) {
       const storageRef = ref(firebaseStorage, imageId);
@@ -115,6 +115,9 @@ export default defineComponent({
       console.log("Create product: ", this.product);
       submitProduct(this.product);
       this.$router.push({ name: "home" });
+    },
+    handleUpdatedUrls(urlsList: string[]) {
+      this.imageList = urlsList;
     },
   },
 });

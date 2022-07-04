@@ -11,10 +11,10 @@
       <image-preview
         v-for="(image, index) in previewImageList"
         :imageId="image.imageId"
-        :imageUrl="image.imageUrl"
+        :imageSrc="image.imageSrc"
         :removeImage="removeImage"
         :key="index"
-        @remove="removePreviewImage"
+        @remove="removePreviewImage(image.imageId)"
       >
       </image-preview>
     </div>
@@ -28,8 +28,8 @@ import ImagePreview from "./ImagePreview.vue";
 
 const MAX_NUM_IMAGES = 9;
 
-interface ImageData {
-  imageUrl: string;
+interface ImagePreviewData {
+  imageSrc: string;
   imageId: string;
 }
 
@@ -50,7 +50,9 @@ export default defineComponent({
   data() {
     return {
       numPreviewImages: 0,
-      previewImageList: [] as ImageData[],
+      numProcessingImage: 0,
+      previewImageList: [] as ImagePreviewData[],
+      imageUrlMap: {} as Record<string, string>,
     };
   },
   methods: {
@@ -63,25 +65,31 @@ export default defineComponent({
       fileReader.readAsDataURL(image);
       fileReader.onloadend = () => {
         this.previewImageList.push({
-          imageUrl: fileReader.result as string,
+          imageSrc: fileReader.result as string,
           imageId: imageId,
         });
         this.numPreviewImages += 1;
+        this.numProcessingImage -= 1;
+        if (this.numProcessingImage == 0) {
+          // Finish processing and displaying all images
+          this.emitUrlList();
+        }
       };
     },
     async handleImage(image: File) {
-      const imageId = await this.processImage(image);
+      const { imageId, imageUrl } = await this.processImage(image);
+      this.imageUrlMap[imageId] = imageUrl;
       this.previewImage(image, imageId);
     },
     processImagesFromFiles(files: FileList) {
       const uploadedImages = [...files].filter((file: File) => {
         return file.type.startsWith("image");
       });
-      const numProcessingImage = Math.min(
+      this.numProcessingImage = Math.min(
         uploadedImages.length,
         MAX_NUM_IMAGES - this.numPreviewImages
       );
-      const processedImages = uploadedImages.slice(0, numProcessingImage);
+      const processedImages = uploadedImages.slice(0, this.numProcessingImage);
       processedImages.forEach(this.handleImage);
     },
     uploadFiles(event: Event) {
@@ -106,8 +114,16 @@ export default defineComponent({
       }
       this.processImagesFromFiles(event.dataTransfer.files);
     },
-    removePreviewImage() {
+    removePreviewImage(imageId: string) {
+      delete this.imageUrlMap[imageId];
+      this.emitUrlList();
       this.numPreviewImages -= 1;
+    },
+    emitUrlList() {
+      const updatedUrlList = Object.keys(this.imageUrlMap).map(
+        (key) => this.imageUrlMap[key]
+      );
+      this.$emit("update-urls", updatedUrlList);
     },
   },
   created() {
