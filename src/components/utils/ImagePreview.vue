@@ -1,5 +1,5 @@
 <template>
-  <img :src="imageUrl" alt="Preview" ref="image" :class="[{ hide: deleted }]" />
+  <img :src="imageUrl" alt="Preview" ref="image" :class="[{ hide: removed }]" />
 </template>
 
 <script lang="ts">
@@ -7,20 +7,29 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
   props: {
+    imageId: {
+      type: String,
+      required: true,
+    },
     imageUrl: {
       type: String,
+      required: true,
+    },
+    removeImage: {
+      type: Function,
       required: true,
     },
   },
   data() {
     return {
-      deleted: false,
+      removed: false,
     };
   },
   mounted() {
-    (this.$refs.image as HTMLElement).addEventListener("dblclick", () => {
-      this.deleted = true;
-      this.$emit("delete");
+    (this.$refs.image as HTMLElement).addEventListener("dblclick", async () => {
+      this.$emit("remove");
+      await this.removeImage(this.imageId);
+      this.removed = true;
     });
   },
 });
@@ -33,6 +42,7 @@ img {
   box-sizing: border-box;
   border: 1px solid grey;
   border-radius: 3px;
+  cursor: pointer;
 }
 .hide {
   display: none;

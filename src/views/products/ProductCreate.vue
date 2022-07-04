@@ -3,7 +3,10 @@
   <h3 class="page-title">Sell your item</h3>
   <div class="product-create-container">
     <div class="product-image-upload">
-      <upload-image :processImage="uploadImageToFirebase"></upload-image>
+      <upload-image
+        :processImage="uploadImageToFirebase"
+        :removeImage="removeImageFromFirebase"
+      ></upload-image>
     </div>
     <div class="create-product-form">
       <h4>Description</h4>
@@ -65,7 +68,12 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  deleteObject,
+} from "firebase/storage";
 
 import { DefaultProductInfo } from "@/services/interfaces/IProduct";
 import { submitProduct } from "@/services/vendereApi/VendereApiProduct";
@@ -95,6 +103,11 @@ export default defineComponent({
       await uploadBytes(storageRef, image);
       const downLoadUrl = await getDownloadURL(storageRef);
       this.imageList.push(downLoadUrl);
+      return "imageId";
+    },
+    async removeImageFromFirebase(imageId: string) {
+      const storageRef = ref(firebaseStorage, imageId);
+      await deleteObject(storageRef);
     },
     submitNewProduct() {
       console.log("Create product: ", this.product);

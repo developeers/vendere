@@ -9,10 +9,12 @@
     <input id="file-upload" type="file" multiple @change="uploadFiles" />
     <div class="drop-area-image">
       <image-preview
-        v-for="(imageUrl, index) in previewImageList"
-        :imageUrl="imageUrl"
+        v-for="(image, index) in previewImageList"
+        :imageId="image.imageId"
+        :imageUrl="image.imageUrl"
+        :removeImage="removeImage"
         :key="index"
-        @delete="deletePreviewImage"
+        @remove="removePreviewImage"
       >
       </image-preview>
     </div>
@@ -26,9 +28,18 @@ import ImagePreview from "./ImagePreview.vue";
 
 const MAX_NUM_IMAGES = 9;
 
+interface ImageData {
+  imageUrl: string;
+  imageId: string;
+}
+
 export default defineComponent({
   props: {
     processImage: {
+      type: Function,
+      required: true,
+    },
+    removeImage: {
       type: Function,
       required: true,
     },
@@ -39,7 +50,7 @@ export default defineComponent({
   data() {
     return {
       numPreviewImages: 0,
-      previewImageList: [] as string[],
+      previewImageList: [] as ImageData[],
     };
   },
   methods: {
@@ -47,17 +58,20 @@ export default defineComponent({
       event.preventDefault();
       event.stopPropagation();
     },
-    previewImage(image: File) {
+    previewImage(image: File, imageId: string) {
       const fileReader = new FileReader();
       fileReader.readAsDataURL(image);
       fileReader.onloadend = () => {
-        this.previewImageList.push(fileReader.result as string);
+        this.previewImageList.push({
+          imageUrl: fileReader.result as string,
+          imageId: imageId,
+        });
         this.numPreviewImages += 1;
       };
     },
     async handleImage(image: File) {
-      await this.processImage(image);
-      this.previewImage(image);
+      const imageId = await this.processImage(image);
+      this.previewImage(image, imageId);
     },
     processImagesFromFiles(files: FileList) {
       const uploadedImages = [...files].filter((file: File) => {
@@ -92,7 +106,7 @@ export default defineComponent({
       }
       this.processImagesFromFiles(event.dataTransfer.files);
     },
-    deletePreviewImage() {
+    removePreviewImage() {
       this.numPreviewImages -= 1;
     },
   },
