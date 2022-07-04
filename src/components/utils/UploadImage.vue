@@ -158,11 +158,12 @@ export default defineComponent({
         ).getBoundingClientRect();
         // Only disable highlight animation when dragleave events occurs outside of drop area.
         // By default, dragleave event occurs when dragging into child elements (still inside drop area).
+        const surplusGap = 10; //px
         if (
-          event.clientX >= dropAreaPosition.left &&
-          event.clientX <= dropAreaPosition.right &&
-          event.clientY >= dropAreaPosition.top &&
-          event.clientY <= dropAreaPosition.bottom
+          event.clientX >= dropAreaPosition.left + surplusGap &&
+          event.clientX <= dropAreaPosition.right - surplusGap &&
+          event.clientY >= dropAreaPosition.top + surplusGap &&
+          event.clientY <= dropAreaPosition.bottom - surplusGap
         ) {
           return;
         }
