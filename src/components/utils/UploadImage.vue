@@ -1,5 +1,5 @@
 <template>
-  <div class="drop-area" ref="dropArea">
+  <div class="drop-area" :class="[{ highlight: draggedOver }]" ref="dropArea">
     <i class="fa fa-camera" :class="[{ hide: numPreviewImages }]"></i>
     <div class="drop-area-text" :class="[{ hide: numPreviewImages }]">
       <p>Drop image here</p>
@@ -49,6 +49,7 @@ export default defineComponent({
   },
   data() {
     return {
+      draggedOver: false,
       numPreviewImages: 0,
       numProcessingImage: 0,
       previewImageList: [] as ImagePreviewData[],
@@ -145,6 +146,29 @@ export default defineComponent({
       "drop",
       this.dropFiles
     );
+    // Show / hide highlight animation on drop area when files are dragged in / out
+    (this.$refs.dropArea as HTMLElement).addEventListener("dragenter", () => {
+      this.draggedOver = true;
+    });
+    (this.$refs.dropArea as HTMLElement).addEventListener(
+      "dragleave",
+      (event) => {
+        const dropAreaPosition = (
+          this.$refs.dropArea as HTMLElement
+        ).getBoundingClientRect();
+        // Only disable highlight animation when dragleave events occurs outside of drop area.
+        // By default, dragleave event occurs when dragging into child elements (still inside drop area).
+        if (
+          event.clientX >= dropAreaPosition.left &&
+          event.clientX <= dropAreaPosition.right &&
+          event.clientY >= dropAreaPosition.top &&
+          event.clientY <= dropAreaPosition.bottom
+        ) {
+          return;
+        }
+        this.draggedOver = false;
+      }
+    );
   },
   beforeUnmount() {
     ["dragover", "drop"].forEach((eventName) => {
@@ -168,6 +192,9 @@ export default defineComponent({
   border: 1px dashed grey;
   max-width: 300px;
   margin: 0 auto;
+}
+.drop-area *:not(.file-upload-button) {
+  pointer-events: none;
 }
 .drop-area-image {
   position: absolute;
@@ -220,5 +247,8 @@ input[type="file"] {
 }
 .hide {
   display: none;
+}
+.highlight {
+  box-shadow: 0 0 7px 5px lightblue;
 }
 </style>
