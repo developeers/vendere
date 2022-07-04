@@ -74,6 +74,7 @@ import {
   getDownloadURL,
   deleteObject,
 } from "firebase/storage";
+import { v4 as uuidv4 } from "uuid";
 
 import { DefaultProductInfo } from "@/services/interfaces/IProduct";
 import { submitProduct } from "@/services/vendereApi/VendereApiProduct";
@@ -99,11 +100,12 @@ export default defineComponent({
   },
   methods: {
     async uploadImageToFirebase(image: File) {
-      const storageRef = ref(firebaseStorage, "fileName");
+      const fileName = uuidv4();
+      const storageRef = ref(firebaseStorage, fileName);
       await uploadBytes(storageRef, image);
       const downLoadUrl = await getDownloadURL(storageRef);
       this.imageList.push(downLoadUrl);
-      return "imageId";
+      return fileName;
     },
     async removeImageFromFirebase(imageId: string) {
       const storageRef = ref(firebaseStorage, imageId);
