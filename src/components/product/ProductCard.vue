@@ -1,6 +1,6 @@
 <template>
   <div class="product-card-container" @click="navToDetailPage">
-    <img :src="product.imageUrl" alt="Product image" />
+    <img :src="product.imageUrls[0]" alt="Product image" />
     <div class="product-info">
       <div class="product-name">{{ product.name }}</div>
       <div class="product-price">¥{{ product.price }}</div>

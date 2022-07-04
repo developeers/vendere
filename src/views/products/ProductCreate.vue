@@ -24,14 +24,14 @@
           type="text"
           id="product-price"
           name="product-price"
-          v-model="product.price"
+          v-model="price"
         />
         <label for="roduct-description">Tell us about your item</label>
         <input
           type="text"
           id="product-description"
           name="product-description"
-          v-model="product.price"
+          v-model="product.description"
         />
       </div>
 
@@ -39,7 +39,11 @@
       <div class="product-input-container">
         <div class="select-input">
           <label for="product-category">Category</label>
-          <select name="product-category" id="product-category">
+          <select
+            name="product-category"
+            id="product-category"
+            v-model="product.category"
+          >
             <option value="">Select a category</option>
             <option value="computerAccessories">Computer Accessories</option>
             <option value="housewares">Housewares</option>
@@ -52,7 +56,11 @@
 
         <div class="select-input">
           <label for="product-condition">Condition</label>
-          <select name="product-condition" id="product-condition">
+          <select
+            name="product-condition"
+            id="product-condition"
+            v-model="product.condition"
+          >
             <option value="">Select condition</option>
             <option value="likeNew">Like New</option>
             <option value="good">Good</option>
@@ -68,9 +76,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 import {
-  ref,
+  ref as firebaseRef,
   uploadBytes,
   getDownloadURL,
   deleteObject,
@@ -87,8 +95,8 @@ import UploadImage from "@/components/utils/UploadImage.vue";
 export default defineComponent({
   setup() {
     const product = DefaultProductInfo;
-
-    return { product };
+    const price = ref();
+    return { product, price };
   },
   components: {
     SimpleNavBar,
@@ -102,13 +110,13 @@ export default defineComponent({
   methods: {
     async uploadImageToFirebase(image: File) {
       const fileName = uuidv4();
-      const storageRef = ref(firebaseStorage, fileName);
+      const storageRef = firebaseRef(firebaseStorage, fileName);
       await uploadBytes(storageRef, image);
       const downloadUrl = await getDownloadURL(storageRef);
       return { imageId: fileName, imageUrl: downloadUrl };
     },
     async removeImageFromFirebase(imageId: string) {
-      const storageRef = ref(firebaseStorage, imageId);
+      const storageRef = firebaseRef(firebaseStorage, imageId);
       await deleteObject(storageRef);
     },
     submitNewProduct() {

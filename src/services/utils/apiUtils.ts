@@ -15,14 +15,21 @@ export interface IFirestoreFieldFilter {
 }
 
 export const convertApiResponseProduct = (
-    response: IApiResponse
+    response: any
 ): IProductInfo => {
+    const imageUrls = [] as string[]
+    for (const imageUrl of response.fields.imageUrls.arrayValue.values) {
+        imageUrls.push(imageUrl.stringValue)
+    }
     const product: IProductInfo = {
         name: response.fields.name.stringValue,
         price: +response.fields.price.integerValue,
+        description: response.fields.description.stringValue,
+        category: response.fields.category.stringValue,
+        condition: response.fields.condition.stringValue,
         sellerUID: response.fields.sellerUID.stringValue,
         updatedAt: response.updateTime,
-        imageUrl: response.fields.imageUrl.stringValue,
+        imageUrls: imageUrls,
         hashId: response.name.split("/").slice(-1)[0],
     }
     return product
