@@ -70,7 +70,7 @@
         </div>
       </div>
 
-      <div class="submit-button" @click="submitNewProduct">Submit</div>
+      <div class="submit-button" @click="createProduct">Submit</div>
     </div>
   </div>
 </template>
@@ -86,11 +86,13 @@ import {
 import { v4 as uuidv4 } from "uuid";
 
 import { DefaultProductInfo } from "@/services/interfaces/IProduct";
-import { submitProduct } from "@/services/vendereApi/VendereApiProduct";
+import { createOrUpdateProduct } from "@/services/vendereApi/VendereApiProduct";
 import { firebaseStorage } from "@/firebase";
 
 import SimpleNavBar from "@/components/navigation/SimpleNavBar.vue";
 import UploadImage from "@/components/utils/UploadImage.vue";
+
+import UserModule from "@/store/modules/User";
 
 export default defineComponent({
   setup() {
@@ -101,11 +103,6 @@ export default defineComponent({
   components: {
     SimpleNavBar,
     UploadImage,
-  },
-  data() {
-    return {
-      imageList: [] as string[],
-    };
   },
   methods: {
     async uploadImageToFirebase(image: File) {
@@ -119,13 +116,15 @@ export default defineComponent({
       const storageRef = firebaseRef(firebaseStorage, imageId);
       await deleteObject(storageRef);
     },
-    submitNewProduct() {
-      console.log("Create product: ", this.product);
-      submitProduct(this.product);
+    async createProduct() {
+      this.product.price = this.price;
+      this.product.sellerUID =
+        UserModule.loginUser?.uid || "TMX5rjGJkxgxriUMwmD3PJzXzgj1";
+      await createOrUpdateProduct(this.product);
       this.$router.push({ name: "home" });
     },
     handleUpdatedUrls(urlsList: string[]) {
-      this.imageList = urlsList;
+      this.product.imageUrls = urlsList;
     },
   },
 });

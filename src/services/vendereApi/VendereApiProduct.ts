@@ -1,7 +1,8 @@
-import { VendereApiInstance } from './VendereApiBase'
-import { IApiResponse } from './vendereApiResponse/IApiResponse'
-import { IProductInfo } from '@/services/interfaces/IProduct'
-import { convertApiResponseProduct } from '../utils/apiUtils'
+import { IProductInfo } from '@/services/interfaces/IProduct';
+
+import { convertApiResponseProduct } from '../utils/apiUtils';
+import { VendereApiInstance } from './VendereApiBase';
+import { IApiResponse } from './vendereApiResponse/IApiResponse';
 
 export const getProductsList = async (): Promise<Array<IProductInfo>> => {
     const res = await VendereApiInstance.get(`products`)
@@ -13,16 +14,22 @@ export const getProductByHashId = async (productHashId: string): Promise<IProduc
     return convertApiResponseProduct(res?.data)
 }
 
-export const submitProduct = async (product: IProductInfo): Promise<void> => {
+export const createOrUpdateProduct = async (product: IProductInfo): Promise<void> => {
+    const imageUrlArrayValues = product.imageUrls.map(imageUrl => { return { "stringValue": imageUrl } })
     const postParams = {
         fields: {
             name: { stringValue: product.name },
             price: { integerValue: product.price },
+            description: { stringValue: product.description },
+            category: { stringValue: product.category },
+            condition: { stringValue: product.condition },
+            sellerUID: { stringValue: product.sellerUID },
+            imageUrls: {
+                arrayValue: {
+                    "values": imageUrlArrayValues
+                }
+            },
         }
     }
-    VendereApiInstance.post(`products`, postParams).then(res => {
-        if (res.status === 200) {
-            // To-do: Save new product at Vuex store
-        }
-    }).catch(error => console.log(error))
+    await VendereApiInstance.post(`products`, postParams)
 }
