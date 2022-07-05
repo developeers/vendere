@@ -32,12 +32,16 @@ import { getProductByHashId } from "@/services/vendereApi/VendereApiProduct";
 import { DefaultProductInfo } from "@/services/interfaces/IProduct";
 import { getUserByUID } from "@/services/vendereApi/VendereApiUser";
 import UserModule from "@/store/modules/User";
+import ProductModule from "@/store/modules/Product";
 
 export default defineComponent({
   components: {
     ProductImageOverview,
     SellerInfo,
     SellerReviewList,
+  },
+  setup() {
+    ProductModule.setProductThumbnailIndex(0);
   },
   data() {
     const productDetail = DefaultProductInfo;
