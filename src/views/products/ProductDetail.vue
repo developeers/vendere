@@ -2,7 +2,7 @@
   <div class="product-detail-container">
     <div class="product-image-carousel">
       <ProductImageOverview
-        v-for="(imageUrl, index) in imagesList"
+        v-for="(imageUrl, index) in productDetail.imageUrls"
         :key="index"
         :thumbnailIndex="index"
         :imageUrl="imageUrl"
@@ -41,16 +41,9 @@ export default defineComponent({
   },
   data() {
     const productDetail = DefaultProductInfo;
-    const imagesList = [
-      "https://cdn.pixabay.com/photo/2021/11/12/07/04/china-6788187_960_720.jpg",
-      "https://cdn.pixabay.com/photo/2020/02/25/09/57/road-4878453_960_720.jpg",
-      "https://cdn.pixabay.com/photo/2017/03/27/14/56/auto-2179220_960_720.jpg",
-      "https://cdn.pixabay.com/photo/2020/10/21/18/07/laptop-5673901_960_720.jpg",
-    ];
     const sellerInfo = reactive({});
     return {
       productDetail,
-      imagesList,
       sellerInfo,
     };
   },
