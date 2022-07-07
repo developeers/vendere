@@ -9,13 +9,35 @@
       />
     </div>
     <div class="product-description">
-      <h2>{{ productDetail.name }}</h2>
-      <h5 class="product-price">{{ productDetail.price }} ¥</h5>
-      <p v-if="sellerInfo.name">
-        Uploaded by {{ sellerInfo.name }} at {{ productDetail.updatedAt }}
-      </p>
-      <div class="custom-button add-to-cart-button">Add to cart</div>
-      <div class="custom-button order-button">Buy now</div>
+      <div class="product-summary">
+        <h2>{{ productDetail.name }}</h2>
+        <router-link
+          :to="{ name: 'SellerDetail', params: { uid: sellerInfo.uid } }"
+          >{{ sellerInfo.name }}</router-link
+        >
+        <h2 class="product-price">¥{{ productDetail.price }}</h2>
+        <div class="custom-button add-to-cart-button">Add to cart</div>
+        <div class="custom-button order-button">Buy now</div>
+      </div>
+
+      <div class="product-overview">
+        <h4>Overview</h4>
+        <div class="overview-info-container">
+          <p>Condition</p>
+          <p>{{ productDetail.condition }}</p>
+        </div>
+        <div class="overview-info-container">
+          <p>Category</p>
+          <p>{{ productDetail.category }}</p>
+        </div>
+        <h4>Details</h4>
+        <div class="overview-info-container">
+          <p>Posted</p>
+          <p>{{ convertedDate }}</p>
+        </div>
+        <h4>Description</h4>
+        <p>{{ productDetail.description }}</p>
+      </div>
     </div>
   </div>
   <div v-if="!isLoading">
@@ -55,6 +77,11 @@ export default defineComponent({
       isLoading,
     };
   },
+  computed: {
+    convertedDate(): string {
+      return this.productDetail.updatedAt.slice(0, 10);
+    },
+  },
   created() {
     const productHashId = this.$route.params.hashId as string;
     getProductByHashId(productHashId).then((product) => {
@@ -79,7 +106,7 @@ export default defineComponent({
 .product-detail-container {
   display: flex;
   height: 450px;
-  gap: 30px;
+  gap: 50px;
 }
 .product-image-carousel {
   width: 60%;
@@ -95,15 +122,28 @@ export default defineComponent({
 }
 .product-description {
   margin: 0 auto;
-  width: calc(40% - 30px);
+  text-align: left;
+  width: calc(40% - 50px);
+}
+.product-summary {
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e4e4e4;
+}
+.product-summary > h2 {
+  font-size: 28px;
+}
+.product-summary > a {
+  text-decoration: none;
+  font-weight: bold;
+  color: cadetblue;
 }
 .product-price {
   color: brown;
-  font-style: italic;
+  margin-top: 20px;
 }
 .product-description .custom-button {
-  width: 50%;
-  height: 33px;
+  width: 100%;
+  height: 36px;
   font-weight: bold;
   display: flex;
   align-items: center;
@@ -113,6 +153,19 @@ export default defineComponent({
   cursor: pointer;
   border-radius: 5px;
   background: whitesmoke;
+  box-sizing: border-box;
+}
+.product-overview > h4,
+.product-overview > p:last-child {
+  margin-top: 10px;
+}
+.overview-info-container {
+  display: flex;
+  margin: 10px 0;
+}
+.overview-info-container > p:first-child {
+  width: 140px;
+  color: grey;
 }
 .add-to-cart-button {
   color: cadetblue;
