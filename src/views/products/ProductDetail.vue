@@ -1,5 +1,5 @@
 <template>
-  <div class="product-detail-container">
+  <div v-if="!isLoading" class="product-detail-container">
     <div class="product-image-carousel">
       <ProductImageOverview
         v-for="(imageUrl, index) in productDetail.imageUrls"
@@ -18,8 +18,10 @@
       <div class="custom-button order-button">Buy now</div>
     </div>
   </div>
-  <SellerInfo :uid="sellerInfo.uid" />
-  <SellerReviewList :sellerUID="sellerInfo.uid" />
+  <div v-if="!isLoading">
+    <SellerInfo :uid="sellerInfo.uid" />
+    <SellerReviewList :sellerUID="sellerInfo.uid" />
+  </div>
 </template>
 
 <script lang="ts">
@@ -46,22 +48,26 @@ export default defineComponent({
   data() {
     const productDetail = DefaultProductInfo;
     const sellerInfo = reactive({});
+    const isLoading = true;
     return {
       productDetail,
       sellerInfo,
+      isLoading,
     };
   },
-  mounted() {
+  created() {
     const productHashId = this.$route.params.hashId as string;
     getProductByHashId(productHashId).then((product) => {
       this.productDetail = product;
       const sellerInfo = UserModule.userInfo(product.sellerUID);
       if (sellerInfo) {
         this.sellerInfo = sellerInfo;
+        this.isLoading = false;
       } else {
         getUserByUID(product.sellerUID).then((sellerInfo) => {
           UserModule.addUserInfo(sellerInfo);
           this.sellerInfo = sellerInfo;
+          this.isLoading = false;
         });
       }
     });

@@ -25,6 +25,7 @@ export default defineComponent({
   props: {
     sellerUID: {
       type: String,
+      required: true,
     },
   },
   data() {
@@ -38,84 +39,82 @@ export default defineComponent({
   components: {
     SellerReview,
   },
-  watch: {
-    sellerUID(newUID) {
-      getSellerReviews(newUID).then((reviews) => {
-        const reviewUserUIDs = reviews.map((review) => review.reviewUserUID);
-        getUserByUIDs(reviewUserUIDs)
-          .then((users) => {
-            users.forEach((user) => {
-              const reviewContent = reviews.find(
-                (review) => review.reviewUserUID === user.uid
-              )!.content;
-              this.reviews.push({
-                content: reviewContent,
-                reviewUserName: user.name,
-                reviewUserImageUrl: user.imageUrl!,
-              });
+  created() {
+    getSellerReviews(this.sellerUID).then((reviews) => {
+      const reviewUserUIDs = reviews.map((review) => review.reviewUserUID);
+      getUserByUIDs(reviewUserUIDs)
+        .then((users) => {
+          users.forEach((user) => {
+            const reviewContent = reviews.find(
+              (review) => review.reviewUserUID === user.uid
+            )!.content;
+            this.reviews.push({
+              content: reviewContent,
+              reviewUserName: user.name,
+              reviewUserImageUrl: user.imageUrl!,
             });
-          })
-          .finally(() => {
-            this.isLoading = false;
-            // Invoke setTimeOut with timer value is 0 to run the callback function after
-            // other operations on the main thread have finished (e.g., updating templates)
-            setTimeout(() => {
-              if (this.reviews.length <= 5) {
+          });
+        })
+        .finally(() => {
+          this.isLoading = false;
+          // Invoke setTimeOut with timer value is 0 to run the callback function after
+          // other operations on the main thread have finished (e.g., updating templates)
+          setTimeout(() => {
+            if (this.reviews.length <= 5) {
+              return;
+            }
+            const prevButton = document.querySelector(
+              "#prev-button"
+            ) as HTMLElement;
+            const nextButton = document.querySelector(
+              "#next-button"
+            ) as HTMLElement;
+            const sellerReviewListElement = document.querySelector(
+              ".seller-review-list"
+            ) as HTMLElement;
+
+            const reviewItemWidth = 136;
+            const reviewItemGap = 27;
+            const scrollDistance = reviewItemWidth + reviewItemGap;
+            const scrollTime = 300; // ms
+
+            let prevClickTime = Date.now();
+            nextButton.style.display = "block";
+
+            prevButton.addEventListener("click", () => {
+              const clickTime = Date.now();
+              if (clickTime < prevClickTime + scrollTime) {
                 return;
               }
-              const prevButton = document.querySelector(
-                "#prev-button"
-              ) as HTMLElement;
-              const nextButton = document.querySelector(
-                "#next-button"
-              ) as HTMLElement;
-              const sellerReviewListElement = document.querySelector(
-                ".seller-review-list"
-              ) as HTMLElement;
-
-              const reviewItemWidth = 136;
-              const reviewItemGap = 27;
-              const scrollDistance = reviewItemWidth + reviewItemGap;
-              const scrollTime = 300; // ms
-
-              let prevClickTime = Date.now();
+              sellerReviewListElement.scrollBy(-scrollDistance, 0);
+              prevClickTime = clickTime;
               nextButton.style.display = "block";
-
-              prevButton.addEventListener("click", () => {
-                const clickTime = Date.now();
-                if (clickTime < prevClickTime + scrollTime) {
-                  return;
+              setTimeout(() => {
+                if (sellerReviewListElement.scrollLeft <= 0) {
+                  prevButton.style.display = "none";
                 }
-                sellerReviewListElement.scrollBy(-scrollDistance, 0);
-                prevClickTime = clickTime;
-                nextButton.style.display = "block";
-                setTimeout(() => {
-                  if (sellerReviewListElement.scrollLeft <= 0) {
-                    prevButton.style.display = "none";
-                  }
-                }, scrollTime);
-              });
+              }, scrollTime);
+            });
 
-              nextButton.addEventListener("click", () => {
-                const clickTime = Date.now();
-                if (clickTime < prevClickTime + scrollTime) {
-                  return;
+            nextButton.addEventListener("click", () => {
+              const clickTime = Date.now();
+              if (clickTime < prevClickTime + scrollTime) {
+                return;
+              }
+              sellerReviewListElement.scrollBy(scrollDistance, 0);
+              prevClickTime = clickTime;
+              prevButton.style.display = "block";
+              setTimeout(() => {
+                const numScrolledLeftItems =
+                  sellerReviewListElement.scrollLeft / scrollDistance;
+                if (numScrolledLeftItems >= this.reviews.length - 5) {
+                  nextButton.style.display = "none";
                 }
-                sellerReviewListElement.scrollBy(scrollDistance, 0);
-                prevClickTime = clickTime;
-                prevButton.style.display = "block";
-                setTimeout(() => {
-                  const numScrolledLeftItems =
-                    sellerReviewListElement.scrollLeft / scrollDistance;
-                  if (numScrolledLeftItems >= this.reviews.length - 5) {
-                    nextButton.style.display = "none";
-                  }
-                }, scrollTime);
-              });
-            }, 0);
-          });
-      });
-    },
+              }, scrollTime);
+            });
+          }, 0);
+        });
+    });
   },
 });
 </script>

@@ -1,6 +1,6 @@
 <template>
   <h3 class="meet-seller-text">Meet the seller</h3>
-  <div class="seller-info-container" v-if="seller">
+  <div class="seller-info-container">
     <div class="seller-profile-image">
       <img :src="seller.imageUrl" alt="Profile image" />
     </div>
@@ -20,17 +20,18 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "vue";
+import { defineComponent } from "vue";
 import UserModule from "@/store/modules/User";
 
 export default defineComponent({
   setup(props) {
-    const seller = computed(() => UserModule.userInfo(props.uid || ""));
+    const seller = UserModule.userInfo(props.uid);
     return { seller };
   },
   props: {
     uid: {
       type: String,
+      required: true,
     },
   },
   methods: {
