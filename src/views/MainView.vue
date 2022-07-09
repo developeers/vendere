@@ -1,9 +1,11 @@
 <template>
   <navigation-bar></navigation-bar>
-  <div class="body-container">
-    <router-view />
+  <div class="main-container">
+    <div class="body-container">
+      <router-view />
+    </div>
+    <footer-component></footer-component>
   </div>
-  <footer-component></footer-component>
 </template>
 
 <script lang="ts">
@@ -20,6 +22,12 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.main-container {
+  min-height: calc(100vh - 90px);
+  position: relative;
+  padding-bottom: 215px;
+  box-sizing: border-box;
+}
 .body-container {
   width: 90vw;
   max-width: 1280px;

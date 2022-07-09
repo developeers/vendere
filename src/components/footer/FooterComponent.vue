@@ -38,6 +38,9 @@ export default defineComponent({});
 
 <style scoped>
 .footer-container {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
   display: flex;
   justify-content: space-around;
   padding: 20px;

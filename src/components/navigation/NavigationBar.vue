@@ -111,7 +111,8 @@ export default defineComponent({
   top: 0;
   left: 0;
   z-index: 1;
-  width: calc(100vw - 32px);
+  width: 100vw;
+  box-sizing: border-box;
 }
 .not-loggin-options {
   display: flex;
