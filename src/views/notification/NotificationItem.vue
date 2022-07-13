@@ -5,6 +5,7 @@
       <p class="notification-item-title">Notification 1</p>
       <p class="notification-date">3 days ago</p>
     </div>
+    <div class="notification-item-arrow"></div>
   </div>
 </template>
 
@@ -39,5 +40,15 @@
 .notification-date {
   color: grey;
   font-size: 12px;
+}
+.notification-item-arrow {
+  width: 9px;
+  height: 9px;
+  margin-left: auto;
+  margin-right: 5px;
+  border-top: 3px solid #b1b1b1;
+  border-right: 3px solid #b1b1b1;
+  border-top-right-radius: 3px;
+  transform: rotate(45deg);
 }
 </style>
