@@ -10,7 +10,7 @@
       <router-link v-if="isUserLoggedIn" :to="{ name: 'Notification' }"
         >Notifications</router-link
       >
-      <router-link to="#"
+      <router-link :to="{ name: 'OrderHistory' }"
         >Orders <i class="fa fa-shopping-cart"></i
       ></router-link>
       <div

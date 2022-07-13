@@ -3,6 +3,7 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import HomeView from '@/views/HomeView.vue';
 import MainView from '@/views/MainView.vue';
 import NotificationList from '@/views/notification/NotificationList.vue';
+import OrderHistory from '@/views/order/OrderHistory.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -47,6 +48,11 @@ const routes: Array<RouteRecordRaw> = [
         path: "/notifications",
         name: "Notification",
         component: NotificationList,
+      },
+      {
+        path: "/order-history",
+        name: "OrderHistory",
+        component: OrderHistory,
       },
     ],
   },
