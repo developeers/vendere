@@ -2,19 +2,36 @@
   <div class="notification-item-container">
     <img src="@/assets/app_logo.png" alt="App Logo" />
     <div class="notification-item-detail">
-      <p class="notification-item-title">Notification 1</p>
-      <p class="notification-date">3 days ago</p>
+      <p class="notification-item-title">{{ title }}</p>
+      <p class="notification-date">{{ date }}</p>
     </div>
     <div class="notification-item-arrow"></div>
   </div>
 </template>
+
+<script lang="ts">
+import { defineComponent } from "vue";
+
+export default defineComponent({
+  props: {
+    title: {
+      type: String,
+      required: true,
+    },
+    date: {
+      type: String,
+      required: true,
+    },
+  },
+});
+</script>
 
 <style scoped>
 .notification-item-container {
   display: flex;
   align-items: center;
   gap: 14px;
-  padding: 10px 0;
+  padding: 14px 0;
   border-bottom: 1px solid #e0e0e0;
   cursor: pointer;
 }

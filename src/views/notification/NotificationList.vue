@@ -2,7 +2,12 @@
   <div class="container">
     <h2>Notifications</h2>
     <div class="notification-container">
-      <notification-item v-for="index in 10" :key="index"></notification-item>
+      <notification-item
+        v-for="(item, index) in notificationItems"
+        :title="item.title"
+        :date="item.date"
+        :key="index"
+      ></notification-item>
     </div>
   </div>
 </template>
@@ -14,6 +19,21 @@ import NotificationItem from "./NotificationItem.vue";
 export default defineComponent({
   components: {
     NotificationItem,
+  },
+  setup() {
+    const notificationItems = [];
+    let dayGap = 2;
+    const numOfNotificationItems = Math.floor(Math.random() * 7) + 3;
+    for (let i = 1; i <= numOfNotificationItems; i++) {
+      notificationItems.push({
+        title: "Notification number #" + i,
+        date: dayGap + " days ago",
+      });
+      dayGap += Math.floor(Math.random() * 3);
+    }
+    return {
+      notificationItems,
+    };
   },
 });
 </script>
