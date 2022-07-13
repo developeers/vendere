@@ -1,0 +1,43 @@
+<template>
+  <div class="notification-item-container">
+    <img src="@/assets/app_logo.png" alt="App Logo" />
+    <div class="notification-item-detail">
+      <p class="notification-item-title">Notification 1</p>
+      <p class="notification-date">3 days ago</p>
+    </div>
+  </div>
+</template>
+
+<style scoped>
+.notification-item-container {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 0;
+  border-bottom: 1px solid #e0e0e0;
+  cursor: pointer;
+}
+.notification-item-container:hover {
+  background: #f8f8f8;
+}
+.notification-item-container:first-child {
+  border-top: 1px solid #e0e0e0;
+}
+.notification-item-container > img {
+  width: 42px;
+  height: 41px;
+  border-radius: 50%;
+}
+.notification-item-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.notification-item-title {
+  font-weight: bold;
+}
+.notification-date {
+  color: grey;
+  font-size: 12px;
+}
+</style>
