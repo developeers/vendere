@@ -194,6 +194,8 @@ export default defineComponent({
   border: 1px dashed grey;
   max-width: 300px;
   margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
 }
 .drop-area :where(.fa-camera, .drop-area-text) {
   pointer-events: none;
@@ -224,6 +226,9 @@ export default defineComponent({
   top: 7px;
   font-size: 15px;
   color: grey;
+}
+.drop-area-text > p {
+  margin: 0;
 }
 .drop-area-text > p:nth-child(2) {
   font-size: 14px;

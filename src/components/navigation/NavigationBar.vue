@@ -7,7 +7,9 @@
         <router-link :to="{ name: 'SignUp' }">Sign up</router-link>
         <router-link :to="{ name: 'Login' }">Login</router-link>
       </div>
-      <router-link v-if="isUserLoggedIn" to="#">Notifications</router-link>
+      <router-link v-if="isUserLoggedIn" :to="{ name: 'Notification' }"
+        >Notifications</router-link
+      >
       <router-link to="#"
         >Orders <i class="fa fa-shopping-cart"></i
       ></router-link>
