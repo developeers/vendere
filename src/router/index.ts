@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 
+import PageNotFound from '@/components/utils/PageNotFound.vue';
 import UserModule from '@/store/modules/User';
 import HomeView from '@/views/HomeView.vue';
 import MainView from '@/views/MainView.vue';
@@ -15,6 +16,7 @@ export const routeNames = {
   SELLER_DETAIL: "SellerDetail",
   NOTIFICATION: "Notification",
   ORDER_HISTORY: "OrderHistory",
+  PAGE_NOT_FOUND: "PageNotFound",
 };
 
 const routes: Array<RouteRecordRaw> = [
@@ -67,6 +69,11 @@ const routes: Array<RouteRecordRaw> = [
         component: OrderHistory,
       },
     ],
+  },
+  {
+    path: "/:pathMatch(.*)*",
+    name: routeNames.PAGE_NOT_FOUND,
+    component: PageNotFound,
   },
 ];
 
