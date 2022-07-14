@@ -81,12 +81,21 @@ const notAllowUnauthenticatedUserUrls = [
   routeNames.ORDER_HISTORY,
 ];
 
+const notAllowAuthenticatedUserUrls = [routeNames.LOGIN, routeNames.SIGN_UP];
+
 router.beforeEach((to) => {
+  const destinationRouteName = to.name as string;
   if (
     !UserModule.isLogin &&
-    notAllowUnauthenticatedUserUrls.includes(to.name as string)
+    notAllowUnauthenticatedUserUrls.includes(destinationRouteName)
   ) {
     return { name: routeNames.LOGIN };
+  }
+  if (
+    UserModule.isLogin &&
+    notAllowAuthenticatedUserUrls.includes(destinationRouteName)
+  ) {
+    return { name: routeNames.HOME };
   }
 });
 
