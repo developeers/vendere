@@ -93,6 +93,7 @@ import SimpleNavBar from "@/components/navigation/SimpleNavBar.vue";
 import UploadImage from "@/components/utils/UploadImage.vue";
 
 import UserModule from "@/store/modules/User";
+import { routeNames } from "@/router";
 
 export default defineComponent({
   setup() {
@@ -121,7 +122,7 @@ export default defineComponent({
       this.product.sellerUID =
         UserModule.loginUser?.uid || "TMX5rjGJkxgxriUMwmD3PJzXzgj1";
       await createOrUpdateProduct(this.product);
-      this.$router.push({ name: "home" });
+      this.$router.push({ name: routeNames.HOME });
     },
     handleUpdatedUrls(urlsList: string[]) {
       this.product.imageUrls = urlsList;

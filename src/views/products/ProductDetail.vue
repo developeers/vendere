@@ -12,7 +12,10 @@
       <div class="product-summary">
         <h2>{{ productDetail.name }}</h2>
         <router-link
-          :to="{ name: 'SellerDetail', params: { uid: sellerInfo.uid } }"
+          :to="{
+            name: routeNames.SELLER_DETAIL,
+            params: { uid: sellerInfo.uid },
+          }"
           >{{ sellerInfo.name }}</router-link
         >
         <h2 class="product-price">¥{{ productDetail.price }}</h2>
@@ -57,6 +60,7 @@ import { DefaultProductInfo } from "@/services/interfaces/IProduct";
 import { getUserByUID } from "@/services/vendereApi/VendereApiUser";
 import UserModule from "@/store/modules/User";
 import ProductModule from "@/store/modules/Product";
+import { routeNames } from "@/router/index";
 
 export default defineComponent({
   components: {
@@ -66,6 +70,7 @@ export default defineComponent({
   },
   setup() {
     ProductModule.setProductThumbnailIndex(0);
+    return { routeNames };
   },
   data() {
     const productDetail = DefaultProductInfo;

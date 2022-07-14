@@ -2,7 +2,7 @@
   <div class="signup-container">
     <app-motto></app-motto>
     <div class="signup-form">
-      <router-link :to="{ name: 'home' }" class="app-name-auth-form"
+      <router-link :to="{ name: routeNames.HOME }" class="app-name-auth-form"
         >Vendere</router-link
       >
       <h3 class="signup-title">Sing up to Vendere</h3>
@@ -41,7 +41,9 @@
       </button>
       <p class="redirect-login">
         Already have an account?
-        <router-link :to="{ name: 'Login' }" class="redirect-login-link"
+        <router-link
+          :to="{ name: routeNames.LOGIN }"
+          class="redirect-login-link"
           >Login
         </router-link>
       </p>
@@ -56,11 +58,13 @@ import UserModule from "@/store/modules/User";
 import { createUser } from "@/services/vendereApi/VendereApiUser";
 import { resetInputFieldState } from "@/services/utils/componentUtils";
 import AppMotto from "./AppMotto.vue";
+import { routeNames } from "@/router/index";
 
 export default defineComponent({
   setup() {
     return {
       resetInputFieldState,
+      routeNames,
     };
   },
   components: {
@@ -126,7 +130,7 @@ export default defineComponent({
               "https://cdn.pixabay.com/photo/2018/04/18/18/56/user-3331257_1280.png",
           }).then((res) => {
             UserModule.setLoginUser(res);
-            this.$router.push({ name: "home" });
+            this.$router.push({ name: routeNames.HOME });
             // Workaround: Finished creating user account at Firestore,
             // inform Firebase Auth's onAuthStateChanged that getUserByUID can be called
             UserModule.setIsUserBeingCreated(false);

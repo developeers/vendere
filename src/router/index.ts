@@ -5,20 +5,31 @@ import MainView from '@/views/MainView.vue';
 import NotificationList from '@/views/notification/NotificationList.vue';
 import OrderHistory from '@/views/order/OrderHistory.vue';
 
+export const routeNames = {
+  SIGN_UP: "SignUp",
+  LOGIN: "Login",
+  PRODUCT_CREATE: "ProductCreate",
+  HOME: "Home",
+  PRODUCT_DETAIL: "ProductDetail",
+  SELLER_DETAIL: "SellerDetail",
+  NOTIFICATION: "Notification",
+  ORDER_HISTORY: "OrderHistory",
+};
+
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/sign-up",
-    name: "SignUp",
+    name: routeNames.SIGN_UP,
     component: () => import("@/views/auth/SignUp.vue"),
   },
   {
     path: "/login",
-    name: "Login",
+    name: routeNames.LOGIN,
     component: () => import("@/views/auth/LoginComponent.vue"),
   },
   {
     path: "/sell",
-    name: "ProductCreate",
+    name: routeNames.PRODUCT_CREATE,
     component: () =>
       import(
         /* webpackChunkName: "about" */ "@/views/products/ProductCreate.vue"
@@ -31,27 +42,27 @@ const routes: Array<RouteRecordRaw> = [
     children: [
       {
         path: "/",
-        name: "home",
+        name: routeNames.HOME,
         component: HomeView,
       },
       {
         path: "/product/:hashId",
-        name: "ProductDetail",
+        name: routeNames.PRODUCT_DETAIL,
         component: () => import("@/views/products/ProductDetail.vue"),
       },
       {
         path: "/seller/:uid",
-        name: "SellerDetail",
+        name: routeNames.SELLER_DETAIL,
         component: () => import("@/views/seller/SellerDetail.vue"),
       },
       {
         path: "/notifications",
-        name: "Notification",
+        name: routeNames.NOTIFICATION,
         component: NotificationList,
       },
       {
         path: "/order-history",
-        name: "OrderHistory",
+        name: routeNames.ORDER_HISTORY,
         component: OrderHistory,
       },
     ],

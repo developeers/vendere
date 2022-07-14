@@ -1,16 +1,18 @@
 <template>
   <nav class="nav-bar">
-    <router-link :to="{ name: 'home' }" class="app-name">Vendere</router-link>
+    <router-link :to="{ name: routeNames.HOME }" class="app-name"
+      >Vendere</router-link
+    >
     <SearchBar />
     <div class="profile">
       <div v-if="!isUserLoggedIn" class="not-loggin-options">
-        <router-link :to="{ name: 'SignUp' }">Sign up</router-link>
-        <router-link :to="{ name: 'Login' }">Login</router-link>
+        <router-link :to="{ name: routeNames.SIGN_UP }">Sign up</router-link>
+        <router-link :to="{ name: routeNames.LOGIN }">Login</router-link>
       </div>
-      <router-link v-if="isUserLoggedIn" :to="{ name: 'Notification' }"
+      <router-link v-if="isUserLoggedIn" :to="{ name: routeNames.NOTIFICATION }"
         >Notifications</router-link
       >
-      <router-link :to="{ name: 'OrderHistory' }"
+      <router-link :to="{ name: routeNames.ORDER_HISTORY }"
         >Orders <i class="fa fa-shopping-cart"></i
       ></router-link>
       <div
@@ -35,7 +37,7 @@
           <router-link to="/" @click="logout">Logout</router-link>
         </div>
       </div>
-      <router-link :to="{ name: 'ProductCreate' }" class="sell-button"
+      <router-link :to="{ name: routeNames.PRODUCT_CREATE }" class="sell-button"
         >Sale</router-link
       >
     </div>
@@ -47,6 +49,7 @@ import { computed, defineComponent } from "vue";
 
 import UserModule from "@/store/modules/User";
 import SearchBar from "./SearchBar.vue";
+import { routeNames } from "@/router/index";
 import { getAuth, signOut } from "@firebase/auth";
 
 export default defineComponent({
@@ -63,6 +66,7 @@ export default defineComponent({
       loginUser,
       auth,
       signOut,
+      routeNames,
     };
   },
   mounted() {
@@ -92,7 +96,7 @@ export default defineComponent({
         UserModule.setAccessToken();
         UserModule.setRefreshToken();
         UserModule.setLoginUser();
-        this.$router.push({ name: "home" });
+        this.$router.push({ name: routeNames.HOME });
       });
     },
   },

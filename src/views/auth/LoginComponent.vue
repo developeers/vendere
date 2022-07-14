@@ -2,13 +2,15 @@
   <div class="login-container">
     <p class="redirect-signup">
       Don't have an account?
-      <router-link :to="{ name: 'SignUp' }" class="redirect-signup-link"
+      <router-link
+        :to="{ name: routeNames.SIGN_UP }"
+        class="redirect-signup-link"
         >Sign up</router-link
       >
     </p>
     <app-motto></app-motto>
     <div class="login-form">
-      <router-link :to="{ name: 'home' }" class="app-name-auth-form"
+      <router-link :to="{ name: routeNames.HOME }" class="app-name-auth-form"
         >Vendere</router-link
       >
       <h3 class="login-title">Log in to Vendere</h3>
@@ -46,6 +48,7 @@ import { defineComponent } from "vue";
 import { resetInputFieldState } from "@/services/utils/componentUtils";
 import UserModule from "@/store/modules/User";
 import { getUserByUID } from "@/services/vendereApi/VendereApiUser";
+import { routeNames } from "@/router/index";
 
 import AppMotto from "./AppMotto.vue";
 
@@ -53,6 +56,7 @@ export default defineComponent({
   setup() {
     return {
       resetInputFieldState,
+      routeNames,
     };
   },
   components: {
@@ -100,7 +104,7 @@ export default defineComponent({
             UserModule.setLoginUser(userInfo);
           });
 
-          this.$router.push({ name: "home" });
+          this.$router.push({ name: routeNames.HOME });
         })
         .catch((error) => {
           console.log(error);

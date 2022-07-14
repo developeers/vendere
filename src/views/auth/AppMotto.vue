@@ -1,6 +1,6 @@
 <template>
   <div class="app-motto-container">
-    <router-link :to="{ name: 'home' }"
+    <router-link :to="{ name: routeNames.HOME }"
       ><h3 class="app-name">Vendere</h3></router-link
     >
     <p class="app-motto">
@@ -9,6 +9,19 @@
     </p>
   </div>
 </template>
+
+<script lang="ts">
+import { defineComponent } from "vue";
+import { routeNames } from "@/router/index";
+
+export default defineComponent({
+  setup() {
+    return {
+      routeNames,
+    };
+  },
+});
+</script>
 
 
 <style scoped>

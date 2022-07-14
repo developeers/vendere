@@ -1,13 +1,20 @@
 <template>
   <nav class="simple-nav-bar">
-    <router-link :to="{ name: 'home' }" class="app-name">Vendere</router-link>
+    <router-link :to="{ name: routeNames.HOME }" class="app-name"
+      >Vendere</router-link
+    >
   </nav>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import { routeNames } from "@/router/index";
 
-export default defineComponent({});
+export default defineComponent({
+  setup() {
+    return { routeNames };
+  },
+});
 </script>
 
 
