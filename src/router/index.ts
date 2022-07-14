@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 
+import UserModule from '@/store/modules/User';
 import HomeView from '@/views/HomeView.vue';
 import MainView from '@/views/MainView.vue';
 import NotificationList from '@/views/notification/NotificationList.vue';
@@ -72,6 +73,21 @@ const routes: Array<RouteRecordRaw> = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
+});
+
+const notAllowUnauthenticatedUserUrls = [
+  routeNames.PRODUCT_CREATE,
+  routeNames.NOTIFICATION,
+  routeNames.ORDER_HISTORY,
+];
+
+router.beforeEach((to) => {
+  if (
+    !UserModule.isLogin &&
+    notAllowUnauthenticatedUserUrls.includes(to.name as string)
+  ) {
+    return { name: routeNames.LOGIN };
+  }
 });
 
 export default router;
