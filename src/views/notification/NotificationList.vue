@@ -1,4 +1,5 @@
 <template>
+  <pseudo-flag></pseudo-flag>
   <div class="container">
     <h2>Notifications</h2>
     <div class="notification-container">
@@ -15,10 +16,12 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import NotificationItem from "./NotificationItem.vue";
+import PseudoFlag from "@/components/utils/PseudoFlag.vue";
 
 export default defineComponent({
   components: {
     NotificationItem,
+    PseudoFlag,
   },
   setup() {
     const notificationItems = [];

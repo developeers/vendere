@@ -1,4 +1,5 @@
 <template>
+  <pseudo-flag></pseudo-flag>
   <div class="order-history-container">
     <h2>Your Orders</h2>
     <order-item
@@ -13,10 +14,12 @@
 import { defineComponent } from "vue";
 import OrderItem from "./OrderItem.vue";
 import { IOrderInfo } from "@/services/interfaces/IOrder";
+import PseudoFlag from "@/components/utils/PseudoFlag.vue";
 
 export default defineComponent({
   components: {
     OrderItem,
+    PseudoFlag,
   },
   setup() {
     const numOfOrders = Math.floor(Math.random() * 5) + 5;
