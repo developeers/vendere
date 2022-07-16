@@ -12,7 +12,7 @@
         :imageUrl="imageUrl"
       />
     </div>
-    <div class="product-description">
+    <div class="product-description" ref="productDescription">
       <div class="product-summary">
         <h2>{{ productDetail.name }}</h2>
         <router-link
@@ -116,10 +116,20 @@ export default defineComponent({
       }
       const productImageZoomInHeight = getProductImageZoomInHeight();
 
-      (this.$refs.productDetailContainer as HTMLElement).style.height =
+      (this.$refs.productDetailContainer as HTMLElement).style.minHeight =
         productImageZoomInHeight + 50 + "px";
       (this.$refs.productImageCarousel as HTMLElement).style.top =
         productImageZoomInHeight + 10 + "px";
+
+      if (window.innerWidth <= 768) {
+        (this.$refs.productDescription as HTMLElement).style.top =
+          productImageZoomInHeight + 30 + "px";
+        (this.$refs.productDescription as HTMLElement).style.marginBottom =
+          productImageZoomInHeight + 50 + "px";
+      } else {
+        (this.$refs.productDescription as HTMLElement).style.top = "";
+        (this.$refs.productDescription as HTMLElement).style.marginBottom = "";
+      }
     },
   },
   mounted() {
@@ -135,7 +145,7 @@ export default defineComponent({
 <style scoped>
 .product-detail-container {
   display: flex;
-  height: 450px;
+  min-height: 450px;
   gap: 50px;
 }
 .product-image-carousel {
@@ -151,6 +161,7 @@ export default defineComponent({
   width: 100%;
 }
 .product-description {
+  position: relative;
   margin: 0 auto;
   text-align: left;
   width: calc(40% - 50px);
@@ -212,5 +223,16 @@ export default defineComponent({
 .order-button:hover {
   color: whitesmoke;
   background: mediumvioletred;
+}
+@media screen and (max-width: 768px) {
+  .product-detail-container {
+    display: block;
+  }
+  .product-image-carousel {
+    width: 100%;
+  }
+  .product-description {
+    width: 100%;
+  }
 }
 </style>
