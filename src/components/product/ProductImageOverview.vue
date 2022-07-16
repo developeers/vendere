@@ -6,7 +6,11 @@
       alt="Product image"
       @mouseover="zoomInProductImage"
     />
-    <div class="product-image-zoom-in" :class="{ show: selectedFlag }">
+    <div
+      class="product-image-zoom-in"
+      :class="{ show: selectedFlag }"
+      ref="zoomInImage"
+    >
       <img :src="imageUrl" alt="Product image" />
     </div>
   </div>
@@ -63,14 +67,10 @@ export default defineComponent({
       ) as HTMLElement;
 
       productImageCarousel.style.top = productImageZoomInHeight + 10 + "px";
-      const productImageZoomIns = document.getElementsByClassName(
-        "product-image-zoom-in"
-        // eslint-disable-next-line no-undef
-      ) as HTMLCollectionOf<HTMLElement>;
-      for (let i = 0; i < productImageZoomIns.length; i++) {
-        productImageZoomIns[i].style.top =
-          -productImageZoomInHeight - 15 + "px";
-      }
+
+      (this.$refs.zoomInImage as HTMLElement).style.top =
+        -productImageZoomInHeight - 15 + "px";
+
       productDetailContainer.style.height =
         productImageZoomInHeight + 50 + "px";
     },
