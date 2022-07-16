@@ -19,6 +19,7 @@
 <script lang="ts">
 import { computed, defineComponent } from "vue";
 import ProductModule from "@/store/modules/Product";
+import { getProductImageZoomInHeight } from "@/services/utils/componentUtils";
 
 export default defineComponent({
   props: {
@@ -45,34 +46,9 @@ export default defineComponent({
   },
   methods: {
     updateHeightProductImageContainer() {
-      const viewportWidth = window.innerWidth;
-      let productImageZoomInHeight;
-      if (viewportWidth <= 600) {
-        productImageZoomInHeight = 240;
-      } else if (viewportWidth <= 768) {
-        productImageZoomInHeight = 300;
-      } else if (viewportWidth <= 992) {
-        productImageZoomInHeight = 360;
-      } else if (viewportWidth <= 1280) {
-        productImageZoomInHeight = 420;
-      } else {
-        productImageZoomInHeight = 480;
-      }
-
-      const productDetailContainer = document.querySelector(
-        ".product-detail-container"
-      ) as HTMLElement;
-      const productImageCarousel = document.querySelector(
-        ".product-image-carousel"
-      ) as HTMLElement;
-
-      productImageCarousel.style.top = productImageZoomInHeight + 10 + "px";
-
+      const productImageZoomInHeight = getProductImageZoomInHeight();
       (this.$refs.zoomInImage as HTMLElement).style.top =
         -productImageZoomInHeight - 15 + "px";
-
-      productDetailContainer.style.height =
-        productImageZoomInHeight + 50 + "px";
     },
     zoomInProductImage() {
       ProductModule.setProductThumbnailIndex(this.thumbnailIndex);

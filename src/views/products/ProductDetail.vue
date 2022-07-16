@@ -1,6 +1,10 @@
 <template>
-  <div v-if="!isLoading" class="product-detail-container">
-    <div class="product-image-carousel">
+  <div
+    v-if="!isLoading"
+    class="product-detail-container"
+    ref="productDetailContainer"
+  >
+    <div class="product-image-carousel" ref="productImageCarousel">
       <ProductImageOverview
         v-for="(imageUrl, index) in productDetail.imageUrls"
         :key="index"
@@ -61,6 +65,7 @@ import { getUserByUID } from "@/services/vendereApi/VendereApiUser";
 import UserModule from "@/store/modules/User";
 import ProductModule from "@/store/modules/Product";
 import { routeNames } from "@/router/index";
+import { getProductImageZoomInHeight } from "@/services/utils/componentUtils";
 
 export default defineComponent({
   components: {
@@ -103,6 +108,26 @@ export default defineComponent({
         });
       }
     });
+  },
+  methods: {
+    updateContainerHeight() {
+      if (this.isLoading) {
+        return;
+      }
+      const productImageZoomInHeight = getProductImageZoomInHeight();
+
+      (this.$refs.productDetailContainer as HTMLElement).style.height =
+        productImageZoomInHeight + 50 + "px";
+      (this.$refs.productImageCarousel as HTMLElement).style.top =
+        productImageZoomInHeight + 10 + "px";
+    },
+  },
+  mounted() {
+    this.updateContainerHeight();
+    window.addEventListener("resize", this.updateContainerHeight);
+  },
+  beforeUnmount() {
+    window.removeEventListener("resize", this.updateContainerHeight);
   },
 });
 </script>
