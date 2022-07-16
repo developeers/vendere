@@ -105,6 +105,9 @@ export default defineComponent({
           UserModule.addUserInfo(sellerInfo);
           this.sellerInfo = sellerInfo;
           this.isLoading = false;
+          setTimeout(() => {
+            this.updateContainerHeight();
+          }, 0);
         });
       }
     });
@@ -133,7 +136,6 @@ export default defineComponent({
     },
   },
   mounted() {
-    this.updateContainerHeight();
     window.addEventListener("resize", this.updateContainerHeight);
   },
   beforeUnmount() {
