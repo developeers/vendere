@@ -87,6 +87,15 @@ export default defineComponent({
       isLoading,
     };
   },
+  watch: {
+    isLoading(newValue) {
+      if (!newValue) {
+        setTimeout(() => {
+          this.updateContainerHeight();
+        }, 0);
+      }
+    },
+  },
   computed: {
     convertedDate(): string {
       return this.productDetail.updatedAt.slice(0, 10);
@@ -105,9 +114,6 @@ export default defineComponent({
           UserModule.addUserInfo(sellerInfo);
           this.sellerInfo = sellerInfo;
           this.isLoading = false;
-          setTimeout(() => {
-            this.updateContainerHeight();
-          }, 0);
         });
       }
     });
@@ -123,6 +129,8 @@ export default defineComponent({
         productImageZoomInHeight + 50 + "px";
       (this.$refs.productImageCarousel as HTMLElement).style.top =
         productImageZoomInHeight + 10 + "px";
+      (this.$refs.productImageCarousel as HTMLElement).style.visibility =
+        "initial";
 
       if (window.innerWidth <= 768) {
         (this.$refs.productDescription as HTMLElement).style.top =
@@ -158,6 +166,7 @@ export default defineComponent({
   justify-content: center;
   gap: 10px;
   top: 400px;
+  visibility: hidden;
 }
 .product-image-carousel > img {
   width: 100%;
