@@ -32,3 +32,37 @@ export const getNumOfDisplayReviews = () => {
   }
   return numOfDisplayReviews;
 };
+
+export const convertProductCondition = (condition: string): string => {
+  switch (condition) {
+    case "likeNew":
+      return "Like New";
+    case "good":
+      return "Good";
+    case "acceptable":
+      return "Acceptable";
+    case "poorCondition":
+      return "Poor Condition";
+    default:
+      return "";
+  }
+};
+
+export const convertProductCategory = (category: string): string => {
+  switch (category) {
+    case "computerAccessories":
+      return "Compute Accessories";
+    case "housewares":
+      return "Housewares";
+    case "electronics":
+      return "Electronics";
+    case "clothing":
+      return "Clothing";
+    case "books":
+      return "Books";
+    case "toys":
+      return "Toys";
+    default:
+      return "";
+  }
+};

@@ -31,11 +31,11 @@
         <h4>Overview</h4>
         <div class="overview-info-container">
           <p>Condition</p>
-          <p>{{ productDetail.condition }}</p>
+          <p>{{ convertProductCondition(productDetail.condition) }}</p>
         </div>
         <div class="overview-info-container">
           <p>Category</p>
-          <p>{{ productDetail.category }}</p>
+          <p>{{ convertProductCategory(productDetail.category) }}</p>
         </div>
         <h4>Details</h4>
         <div class="overview-info-container">
@@ -65,7 +65,11 @@ import { getUserByUID } from "@/services/vendereApi/VendereApiUser";
 import UserModule from "@/store/modules/User";
 import ProductModule from "@/store/modules/Product";
 import { routeNames } from "@/router/index";
-import { getProductImageZoomInHeight } from "@/services/utils/componentUtils";
+import {
+  convertProductCategory,
+  convertProductCondition,
+  getProductImageZoomInHeight,
+} from "@/services/utils/componentUtils";
 
 export default defineComponent({
   components: {
@@ -75,7 +79,11 @@ export default defineComponent({
   },
   setup() {
     ProductModule.setProductThumbnailIndex(0);
-    return { routeNames };
+    return {
+      routeNames,
+      convertProductCondition,
+      convertProductCategory,
+    };
   },
   data() {
     const productDetail = DefaultProductInfo;
