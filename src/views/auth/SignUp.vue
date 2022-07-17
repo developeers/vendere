@@ -13,6 +13,7 @@
           name="email"
           placeholder="Enter your email"
           @mousedown="resetInputFieldState"
+          @keyup="handleKeyupEvent"
         />
         <span class="warning-message">* This field is required.</span>
       </div>
@@ -23,6 +24,7 @@
           name="username"
           placeholder="Create a username"
           @mousedown="resetInputFieldState"
+          @keyup="handleKeyupEvent"
         />
         <span class="warning-message">* This field is required.</span>
       </div>
@@ -33,6 +35,7 @@
           name="password"
           placeholder="Create a password"
           @mousedown="resetInputFieldState"
+          @keyup="handleKeyupEvent"
         />
         <span class="warning-message">* This field is required.</span>
       </div>
@@ -71,6 +74,11 @@ export default defineComponent({
     AppMotto,
   },
   methods: {
+    handleKeyupEvent(event: KeyboardEvent) {
+      if (event.key == "Enter") {
+        this.signUpFirebaseUser();
+      }
+    },
     signUpFirebaseUser() {
       const auth = getAuth();
       const emailInput = document.querySelector(
