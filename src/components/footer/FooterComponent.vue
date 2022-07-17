@@ -43,9 +43,11 @@ export default defineComponent({});
   width: 100%;
   display: flex;
   justify-content: space-around;
+  gap: 12px;
   padding: 20px;
   background: whitesmoke;
   border-top: 2px solid mediumvioletred;
+  box-sizing: border-box;
 }
 .footer-container-column {
   display: flex;
@@ -59,5 +61,10 @@ export default defineComponent({});
 .footer-container-column > a:first-child {
   font-weight: bold;
   font-size: 18px;
+}
+@media screen and (max-width: 500px) {
+  .footer-container-column:nth-child(3) {
+    display: none;
+  }
 }
 </style>

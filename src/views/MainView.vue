@@ -35,4 +35,9 @@ export default defineComponent({
   margin-top: 90px;
   margin-bottom: 50px;
 }
+@media screen and (max-width: 500px) {
+  .main-container {
+    padding-bottom: 237px;
+  }
+}
 </style>

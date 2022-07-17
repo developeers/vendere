@@ -210,4 +210,9 @@ export default defineComponent({
 .profile a.sell-button:hover {
   opacity: 0.8;
 }
+@media screen and (max-width: 500px) {
+  .nav-bar .profile {
+    display: none;
+  }
+}
 </style>

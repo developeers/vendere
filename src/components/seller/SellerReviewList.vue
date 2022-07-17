@@ -153,4 +153,9 @@ export default defineComponent({
   right: -35px;
   transform: rotate(45deg);
 }
+@media screen and (max-width: 500px) {
+  .seller-review-list-container {
+    display: none;
+  }
+}
 </style>
