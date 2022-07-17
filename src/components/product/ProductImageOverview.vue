@@ -8,7 +8,7 @@
     />
     <div
       class="product-image-zoom-in"
-      :class="{ show: selectedFlag }"
+      :class="{ displayImage: selectedFlag }"
       ref="zoomInImage"
     >
       <img :src="imageUrl" alt="Product image" />
@@ -83,34 +83,38 @@ export default defineComponent({
   left: 0;
   right: 0;
   top: -400px;
-}
-.product-image-zoom-in > img {
   width: 100%;
   height: 480px;
   box-shadow: 0 0 7px 3px cadetblue;
   border-radius: 3px;
 }
+.product-image-zoom-in > img {
+  max-width: 100%;
+  max-height: 100%;
+}
 @media screen and (max-width: 1280px) {
-  .product-image-zoom-in > img {
+  .product-image-zoom-in {
     height: 420px;
   }
 }
 @media screen and (max-width: 992px) {
-  .product-image-zoom-in > img {
+  .product-image-zoom-in {
     height: 360px;
   }
 }
 @media screen and (max-width: 768px) {
-  .product-image-zoom-in > img {
+  .product-image-zoom-in {
     height: 450px;
   }
 }
 @media screen and (max-width: 600px) {
-  .product-image-zoom-in > img {
+  .product-image-zoom-in {
     height: 300px;
   }
 }
-.product-image-zoom-in {
-  display: none;
+.displayImage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>
