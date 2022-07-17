@@ -136,7 +136,7 @@ export default defineComponent({
         (this.$refs.productDescription as HTMLElement).style.top =
           productImageZoomInHeight + 30 + "px";
         (this.$refs.productDescription as HTMLElement).style.marginBottom =
-          productImageZoomInHeight + 50 + "px";
+          productImageZoomInHeight + 70 + "px";
       } else {
         (this.$refs.productDescription as HTMLElement).style.top = "";
         (this.$refs.productDescription as HTMLElement).style.marginBottom = "";

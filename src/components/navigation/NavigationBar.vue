@@ -118,6 +118,7 @@ export default defineComponent({
   left: 0;
   z-index: 1;
   width: 100vw;
+  height: 60px;
   box-sizing: border-box;
 }
 .not-loggin-options {

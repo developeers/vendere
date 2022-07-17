@@ -32,10 +32,10 @@ export default defineComponent({
   width: 90vw;
   max-width: 1280px;
   margin: 0 auto;
-  margin-top: 90px;
+  margin-top: 100px;
   margin-bottom: 50px;
 }
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 480px) {
   .main-container {
     padding-bottom: 237px;
   }
