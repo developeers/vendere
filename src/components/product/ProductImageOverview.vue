@@ -1,11 +1,9 @@
 <template>
-  <div class="carousel-item-container">
-    <img
-      :src="imageUrl"
-      :class="{ 'selected-thumbnail': selectedFlag }"
-      alt="Product image"
-      @mouseover="zoomInProductImage"
-    />
+  <div
+    class="carousel-item-container"
+    :class="{ 'selected-thumbnail': selectedFlag }"
+  >
+    <img :src="imageUrl" alt="Product image" @mouseover="zoomInProductImage" />
     <div
       class="product-image-zoom-in"
       :class="{ displayImage: selectedFlag }"
@@ -67,15 +65,20 @@ export default defineComponent({
 <style scoped>
 .carousel-item-container {
   width: 60px;
-}
-.carousel-item-container > img {
-  width: 100%;
   height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #dddddd;
+  border-radius: 3px;
   cursor: pointer;
 }
-.carousel-item-container > img.selected-thumbnail {
+.carousel-item-container > img {
+  max-width: 100%;
+  max-height: 100%;
+}
+.carousel-item-container.selected-thumbnail {
   box-shadow: 0 0 7px 3px cadetblue;
-  border-radius: 3px;
 }
 .product-image-zoom-in {
   display: none;
