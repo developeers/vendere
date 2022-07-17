@@ -7,9 +7,9 @@ export const getProductImageZoomInHeight = () => {
   const viewportWidth = window.innerWidth;
   let productImageZoomInHeight;
   if (viewportWidth <= 600) {
-    productImageZoomInHeight = 240;
-  } else if (viewportWidth <= 768) {
     productImageZoomInHeight = 300;
+  } else if (viewportWidth <= 768) {
+    productImageZoomInHeight = 450;
   } else if (viewportWidth <= 992) {
     productImageZoomInHeight = 360;
   } else if (viewportWidth <= 1280) {

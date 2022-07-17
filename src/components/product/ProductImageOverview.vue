@@ -102,12 +102,12 @@ export default defineComponent({
 }
 @media screen and (max-width: 768px) {
   .product-image-zoom-in > img {
-    height: 300px;
+    height: 450px;
   }
 }
 @media screen and (max-width: 600px) {
   .product-image-zoom-in > img {
-    height: 240px;
+    height: 300px;
   }
 }
 .product-image-zoom-in {
