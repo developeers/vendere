@@ -19,3 +19,16 @@ export const getProductImageZoomInHeight = () => {
   }
   return productImageZoomInHeight;
 };
+
+export const getNumOfDisplayReviews = () => {
+  const viewportWidth = window.innerWidth;
+  let numOfDisplayReviews;
+  if (viewportWidth <= 715) {
+    numOfDisplayReviews = 3;
+  } else if (viewportWidth <= 900) {
+    numOfDisplayReviews = 4;
+  } else {
+    numOfDisplayReviews = 5;
+  }
+  return numOfDisplayReviews;
+};

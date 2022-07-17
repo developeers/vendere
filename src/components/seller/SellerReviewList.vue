@@ -20,6 +20,7 @@ import {
   getUserByUIDs,
 } from "@/services/vendereApi/VendereApiUser";
 import { IReviewInfo } from "@/services/interfaces/ISellerReview";
+import { getNumOfDisplayReviews } from "@/services/utils/componentUtils";
 
 export default defineComponent({
   props: {
@@ -31,15 +32,23 @@ export default defineComponent({
   data() {
     const isLoading = true;
     const reviews: Array<IReviewInfo> = [];
+    const numDisplayReviews = 5;
     return {
       reviews,
       isLoading,
+      numDisplayReviews,
     };
   },
   components: {
     SellerReview,
   },
+  methods: {
+    updateNumOfDisplayReviews() {
+      this.numDisplayReviews = getNumOfDisplayReviews();
+    },
+  },
   created() {
+    window.addEventListener("resize", this.updateNumOfDisplayReviews);
     getSellerReviews(this.sellerUID).then((reviews) => {
       const reviewUserUIDs = reviews.map((review) => review.reviewUserUID);
       getUserByUIDs(reviewUserUIDs)
@@ -57,10 +66,11 @@ export default defineComponent({
         })
         .finally(() => {
           this.isLoading = false;
+          this.numDisplayReviews = getNumOfDisplayReviews();
           // Invoke setTimeOut with timer value is 0 to run the callback function after
           // other operations on the main thread have finished (e.g., updating templates)
           setTimeout(() => {
-            if (this.reviews.length <= 5) {
+            if (this.reviews.length <= this.numDisplayReviews) {
               return;
             }
             const prevButton = document.querySelector(
@@ -107,7 +117,10 @@ export default defineComponent({
               setTimeout(() => {
                 const numScrolledLeftItems =
                   sellerReviewListElement.scrollLeft / scrollDistance;
-                if (numScrolledLeftItems >= this.reviews.length - 5) {
+                if (
+                  numScrolledLeftItems >=
+                  this.reviews.length - this.numDisplayReviews
+                ) {
                   nextButton.style.display = "none";
                 }
               }, scrollTime);
@@ -115,6 +128,9 @@ export default defineComponent({
           }, 0);
         });
     });
+  },
+  beforeUnmount() {
+    window.removeEventListener("resize", this.updateNumOfDisplayReviews);
   },
 });
 </script>
@@ -136,7 +152,7 @@ export default defineComponent({
 #next-button {
   display: none;
   position: absolute;
-  top: 45%;
+  top: 40%;
   transform: translateY(-50%);
   width: 16px;
   height: 16px;
@@ -146,12 +162,25 @@ export default defineComponent({
   cursor: pointer;
 }
 #prev-button {
-  left: -35px;
+  left: -30px;
   transform: rotate(-135deg);
 }
 #next-button {
-  right: -35px;
+  right: -30px;
   transform: rotate(45deg);
+}
+@media screen and (max-width: 900px) {
+  .seller-review-list {
+    max-width: 625px; /* reviewItemWidth x 4 + gap x 3 */
+  }
+}
+@media screen and (max-width: 715px) {
+  .seller-review-list {
+    max-width: 462px; /* reviewItemWidth x 3 + gap x 2 */
+  }
+  .seller-review-list-container {
+    margin: 0 auto;
+  }
 }
 @media screen and (max-width: 500px) {
   .seller-review-list-container {
