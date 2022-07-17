@@ -14,6 +14,7 @@ export const routeNames = {
   HOME: "Home",
   PRODUCT_DETAIL: "ProductDetail",
   SELLER_DETAIL: "SellerDetail",
+  USER_PROFILE: "UserProfile",
   NOTIFICATION: "Notification",
   ORDER_HISTORY: "OrderHistory",
   PAGE_NOT_FOUND: "PageNotFound",
@@ -59,6 +60,11 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/seller/SellerDetail.vue"),
       },
       {
+        path: "/user/profile/:uid",
+        name: routeNames.USER_PROFILE,
+        component: () => import("@/views/user/UserProfile.vue"),
+      },
+      {
         path: "/notifications",
         name: routeNames.NOTIFICATION,
         component: NotificationList,
@@ -86,6 +92,7 @@ const notAllowUnauthenticatedUserUrls = [
   routeNames.PRODUCT_CREATE,
   routeNames.NOTIFICATION,
   routeNames.ORDER_HISTORY,
+  routeNames.USER_PROFILE,
 ];
 
 const notAllowAuthenticatedUserUrls = [routeNames.LOGIN, routeNames.SIGN_UP];

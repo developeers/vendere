@@ -22,18 +22,28 @@
       >
         Account
       </div>
-      <div class="profile-menu-dropdown" ref="dropdownMenu">
+      <div v-if="loginUser" class="profile-menu-dropdown" ref="dropdownMenu">
         <div class="dropdown-items">
-          <router-link to="#" class="profile-menu">
+          <router-link
+            :to="{
+              name: routeNames.USER_PROFILE,
+              params: { uid: loginUser.uid },
+            }"
+            class="profile-menu"
+          >
             <img
               alt="Profile image"
               id="profile-icon"
-              :src="loginUser?.imageUrl"
+              :src="loginUser.imageUrl"
             />
-            <div id="login-username">{{ loginUser?.name }}</div>
+            <div id="login-username">{{ loginUser.name }}</div>
           </router-link>
-          <router-link to="#">Products you bought</router-link>
-          <router-link to="#">Sold products</router-link>
+          <router-link to="#" class="not-implemented"
+            >Products you bought</router-link
+          >
+          <router-link to="#" class="not-implemented"
+            >Sold products</router-link
+          >
           <router-link to="/" @click="logout">Logout</router-link>
         </div>
       </div>
@@ -159,8 +169,8 @@ export default defineComponent({
   background: white;
   position: fixed;
   width: 230px;
-  top: 55px;
-  right: 3px;
+  top: 60px;
+  right: 1px;
   border-radius: 3px;
 }
 .profile-menu {
@@ -210,6 +220,9 @@ export default defineComponent({
 }
 .profile a.sell-button:hover {
   opacity: 0.8;
+}
+.dropdown-items a.not-implemented {
+  color: #a4a4a4;
 }
 @media screen and (max-width: 500px) {
   .nav-bar .profile {
