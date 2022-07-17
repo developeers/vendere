@@ -1,8 +1,8 @@
 <template>
   <div v-if="!isLoading" class="seller-review-list-container">
     <div id="prev-button"></div>
-    <div id="next-button"></div>
-    <div class="seller-review-list">
+    <div id="next-button" ref="nextButton"></div>
+    <div class="seller-review-list" ref="reviewList">
       <SellerReview
         v-for="(review, index) in reviews"
         :key="index"
@@ -21,6 +21,11 @@ import {
 } from "@/services/vendereApi/VendereApiUser";
 import { IReviewInfo } from "@/services/interfaces/ISellerReview";
 import { getNumOfDisplayReviews } from "@/services/utils/componentUtils";
+
+const reviewItemWidth = 136;
+const reviewItemGap = 27;
+const scrollDistance = reviewItemWidth + reviewItemGap;
+const scrollTime = 300; // ms
 
 export default defineComponent({
   props: {
@@ -45,6 +50,16 @@ export default defineComponent({
   methods: {
     updateNumOfDisplayReviews() {
       this.numDisplayReviews = getNumOfDisplayReviews();
+      if (this.isLoading) {
+        return;
+      }
+      const numScrolledLeftItems =
+        (this.$refs.reviewList as HTMLElement).scrollLeft / scrollDistance;
+      if (numScrolledLeftItems + this.numDisplayReviews < this.reviews.length) {
+        (this.$refs.nextButton as HTMLElement).style.display = "block";
+      } else {
+        (this.$refs.nextButton as HTMLElement).style.display = "none";
+      }
     },
   },
   created() {
@@ -82,11 +97,6 @@ export default defineComponent({
             const sellerReviewListElement = document.querySelector(
               ".seller-review-list"
             ) as HTMLElement;
-
-            const reviewItemWidth = 136;
-            const reviewItemGap = 27;
-            const scrollDistance = reviewItemWidth + reviewItemGap;
-            const scrollTime = 300; // ms
 
             let prevClickTime = Date.now();
             nextButton.style.display = "block";
@@ -148,8 +158,7 @@ export default defineComponent({
   scroll-behavior: smooth;
   padding: 7px;
 }
-#prev-button,
-#next-button {
+.seller-review-list-container :where(#prev-button, #next-button) {
   display: none;
   position: absolute;
   top: 40%;
@@ -161,11 +170,11 @@ export default defineComponent({
   border-top-right-radius: 5px;
   cursor: pointer;
 }
-#prev-button {
+.seller-review-list-container #prev-button {
   left: -30px;
   transform: rotate(-135deg);
 }
-#next-button {
+.seller-review-list-container #next-button {
   right: -30px;
   transform: rotate(45deg);
 }
