@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="product-list-container">
     <ProductCard
       v-for="(product, index) in productsList"
       :product="product"
@@ -46,10 +46,20 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.container {
+.product-list-container {
   margin: 20px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
+}
+@media screen and (max-width: 1096px) {
+  .product-list-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media screen and (max-width: 850px) {
+  .product-list-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 </style>
