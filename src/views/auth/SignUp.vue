@@ -136,13 +136,17 @@ export default defineComponent({
             averageReview: +(Math.random() + 3.7).toFixed(1),
             imageUrl:
               "https://cdn.pixabay.com/photo/2018/04/18/18/56/user-3331257_1280.png",
-          }).then((res) => {
-            UserModule.setLoginUser(res);
-            this.$router.push({ name: routeNames.HOME });
-            // Workaround: Finished creating user account at Firestore,
-            // inform Firebase Auth's onAuthStateChanged that getUserByUID can be called
-            UserModule.setIsUserBeingCreated(false);
-          });
+          })
+            .then((res) => {
+              UserModule.setLoginUser(res);
+              this.$router.push({ name: routeNames.HOME });
+              // Workaround: Finished creating user account at Firestore,
+              // inform Firebase Auth's onAuthStateChanged that getUserByUID can be called
+              UserModule.setIsUserBeingCreated(false);
+            })
+            .catch((err) => {
+              console.log("Error creating user: ", err);
+            });
         })
         .catch((error) => {
           console.log("Error signing up user: ", error);

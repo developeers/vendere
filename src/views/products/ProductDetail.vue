@@ -112,6 +112,9 @@ export default defineComponent({
   created() {
     const productHashId = this.$route.params.hashId as string;
     getProductByHashId(productHashId).then((product) => {
+      if (!product) {
+        return;
+      }
       this.productDetail = product;
       const sellerInfo = UserModule.userInfo(product.sellerUID);
       if (sellerInfo) {
@@ -119,9 +122,11 @@ export default defineComponent({
         this.isLoading = false;
       } else {
         getUserByUID(product.sellerUID).then((sellerInfo) => {
-          UserModule.addUserInfo(sellerInfo);
-          this.sellerInfo = sellerInfo;
-          this.isLoading = false;
+          if (sellerInfo) {
+            UserModule.addUserInfo(sellerInfo);
+            this.sellerInfo = sellerInfo;
+            this.isLoading = false;
+          }
         });
       }
     });

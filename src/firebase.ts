@@ -10,12 +10,12 @@ import UserModule from './store/modules/User';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyC5FRiW7CiNiSu_Qpufsnsx-3yYO_hr8Ls",
-    authDomain: "vendere-23f76.firebaseapp.com",
-    projectId: "vendere-23f76",
-    storageBucket: "vendere-23f76.appspot.com",
-    messagingSenderId: "483241483648",
-    appId: "1:483241483648:web:496f2601d1f542a4ee3565"
+  apiKey: "AIzaSyC5FRiW7CiNiSu_Qpufsnsx-3yYO_hr8Ls",
+  authDomain: "vendere-23f76.firebaseapp.com",
+  projectId: "vendere-23f76",
+  storageBucket: "vendere-23f76.appspot.com",
+  messagingSenderId: "483241483648",
+  appId: "1:483241483648:web:496f2601d1f542a4ee3565",
 };
 
 // Backup Firebase project
@@ -34,14 +34,18 @@ export const refreshAccessTokenApiUrl = `https://securetoken.googleapis.com/v1/t
 
 const auth = getAuth();
 onAuthStateChanged(auth, (user) => {
-    if (user) {
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/firebase.User
-        UserModule.setFirebaseUser(user);
-        if (!UserModule.isUserBeingCreated) {
-            getUserByUID(user.uid).then(userInfo => UserModule.setLoginUser(userInfo))
+  if (user) {
+    // User is signed in, see docs for a list of available properties
+    // https://firebase.google.com/docs/reference/js/firebase.User
+    UserModule.setFirebaseUser(user);
+    if (!UserModule.isUserBeingCreated) {
+      getUserByUID(user.uid).then((userInfo) => {
+        if (userInfo) {
+          UserModule.setLoginUser(userInfo);
         }
+      });
     }
+  }
 });
 
 export const firebaseStorage = getStorage(app);

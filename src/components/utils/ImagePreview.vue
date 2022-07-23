@@ -27,9 +27,12 @@ export default defineComponent({
   },
   mounted() {
     (this.$refs.image as HTMLElement).addEventListener("dblclick", async () => {
-      await this.removeImage(this.imageId);
-      this.$emit("remove");
-      this.removed = true;
+      await this.removeImage(this.imageId)
+        .then(() => {
+          this.$emit("remove");
+          this.removed = true;
+        })
+        .catch((err: any) => console.log("Error removing image: ", err));
     });
   },
 });

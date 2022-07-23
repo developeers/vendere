@@ -110,7 +110,9 @@ export default defineComponent({
       const fileName = uuidv4();
       const storageRef = firebaseRef(firebaseStorage, fileName);
       await uploadBytes(storageRef, image);
-      const downloadUrl = await getDownloadURL(storageRef);
+      const downloadUrl = await getDownloadURL(storageRef).catch((err: any) => {
+        console.log("Error getting image URl from Firebase: ", err);
+      });
       return { imageId: fileName, imageUrl: downloadUrl };
     },
     async removeImageFromFirebase(imageId: string) {
@@ -119,8 +121,7 @@ export default defineComponent({
     },
     async createProduct() {
       this.product.price = this.price;
-      this.product.sellerUID =
-        UserModule.loginUser?.uid || "TMX5rjGJkxgxriUMwmD3PJzXzgj1";
+      this.product.sellerUID = UserModule.loginUser!.uid;
       await createOrUpdateProduct(this.product);
       this.$router.push({ name: routeNames.HOME });
     },

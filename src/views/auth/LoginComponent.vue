@@ -108,7 +108,9 @@ export default defineComponent({
           });
 
           getUserByUID(loginUser.uid).then((userInfo) => {
-            UserModule.setLoginUser(userInfo);
+            if (userInfo) {
+              UserModule.setLoginUser(userInfo);
+            }
           });
 
           this.$router.push({ name: routeNames.HOME });
