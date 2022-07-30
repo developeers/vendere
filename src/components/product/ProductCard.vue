@@ -49,8 +49,6 @@ img {
 }
 .product-info {
   position: relative;
-  min-width: 180px;
-  max-width: 300px;
 }
 .product-name {
   text-align: left;

@@ -224,6 +224,11 @@ export default defineComponent({
 .dropdown-items a.not-implemented {
   color: #a4a4a4;
 }
+@media screen and (max-width: 767px) {
+  .fa-shopping-cart {
+    display: none;
+  }
+}
 @media screen and (max-width: 500px) {
   .nav-bar .profile {
     display: none;

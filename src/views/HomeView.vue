@@ -52,4 +52,10 @@ export default defineComponent({
     grid-template-columns: repeat(2, 1fr);
   }
 }
+@media screen and (max-width: 480px) {
+  .product-list-container {
+    margin: 0;
+    gap: 15px;
+  }
+}
 </style>
