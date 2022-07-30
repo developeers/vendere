@@ -3,11 +3,16 @@
     <input
       type="text"
       class="search-bar"
-      id="search-bar"
       placeholder="Search here"
+      ref="searchInput"
+      @click="showSearchResults"
     />
-    <button type="button" class="search-button"></button>
-    <div class="search-results hide"></div>
+    <button
+      type="button"
+      class="search-button"
+      @click="showSearchResults"
+    ></button>
+    <div class="search-results hide" ref="searchResults"></div>
   </div>
 </template>
 
@@ -16,13 +21,29 @@ import { defineComponent } from "vue";
 // import ProductModule from "@/store/modules/Product";
 
 export default defineComponent({
+  methods: {
+    showSearchResults() {
+      const searchResultElement = this.$refs.searchResults as HTMLElement;
+      searchResultElement.classList.remove("hide");
+    },
+    hideSearchResults(event: Event) {
+      const searchResultElement = this.$refs.searchResults as HTMLElement;
+      if (event.target instanceof HTMLElement) {
+        if (
+          event.target.className == "search-bar" ||
+          event.target.className == "search-button"
+        ) {
+          return;
+        }
+      }
+      searchResultElement.classList.add("hide");
+    },
+  },
   mounted() {
-    const searchBarInput = document.getElementById(
-      "search-bar"
-    ) as HTMLInputElement;
-    searchBarInput!.addEventListener("keyup", () => {
-      //   const searchKeyWord = searchBarInput!.value.toLowerCase();
-    });
+    document.addEventListener("click", this.hideSearchResults);
+  },
+  beforeUnmount() {
+    document.removeEventListener("click", this.hideSearchResults);
   },
 });
 </script>
