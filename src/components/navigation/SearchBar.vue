@@ -28,9 +28,13 @@ import { defineComponent, ref } from "vue";
 import ProductModule from "@/store/modules/Product";
 import { routeNames } from "@/router/index";
 import { IProductInfo } from "@/services/interfaces/IProduct";
+import { getProductsList } from "@/services/vendereApi/VendereApiProduct";
 
 export default defineComponent({
   setup() {
+    getProductsList().then((productList: Array<IProductInfo>) => {
+      ProductModule.setAllProductsList(productList);
+    });
     const searchProductResults = ref([] as Array<IProductInfo>);
     return {
       searchProductResults,

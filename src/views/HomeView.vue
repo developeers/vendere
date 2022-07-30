@@ -12,8 +12,6 @@
 import { computed, defineComponent } from "vue";
 
 import ProductCard from "@/components/product/ProductCard.vue";
-import { IProductInfo } from "@/services/interfaces/IProduct";
-import { getProductsList } from "@/services/vendereApi/VendereApiProduct";
 import ProductModule from "@/store/modules/Product";
 
 export default defineComponent({
@@ -26,11 +24,6 @@ export default defineComponent({
     return {
       productsList,
     };
-  },
-  mounted() {
-    getProductsList().then((productsList: Array<IProductInfo>) => {
-      ProductModule.setAllProductsList(productsList);
-    });
   },
 });
 </script>
