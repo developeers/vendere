@@ -2,7 +2,7 @@
   <navigation-bar></navigation-bar>
   <div class="main-container">
     <div class="body-container">
-      <router-view />
+      <router-view :key="$router.currentRoute._value.path" />
     </div>
     <footer-component></footer-component>
   </div>

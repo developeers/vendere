@@ -16,7 +16,6 @@
           name: routeNames.PRODUCT_DETAIL,
           params: { hashId: product.hashId },
         }"
-        class="profile-menu"
       >
         {{ product.name }}
       </router-link>
