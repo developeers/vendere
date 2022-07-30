@@ -22,23 +22,13 @@ export default defineComponent({
     ProductCard,
   },
   setup() {
-    const productsList = computed(() => {
-      const filteredProductsList = ProductModule.productsList;
-      if (
-        filteredProductsList.length > 0 ||
-        ProductModule.searchKeyword.length > 0
-      ) {
-        return filteredProductsList;
-      }
-      return ProductModule.allProductsList;
-    });
+    const productsList = computed(() => ProductModule.allProductsList);
     return {
       productsList,
     };
   },
   mounted() {
     getProductsList().then((productsList: Array<IProductInfo>) => {
-      ProductModule.setProductsList(productsList);
       ProductModule.setAllProductsList(productsList);
     });
   },
