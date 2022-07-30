@@ -7,12 +7,13 @@
       placeholder="Search here"
     />
     <button type="button" class="search-button"></button>
+    <div class="search-results hide"></div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import ProductModule from "@/store/modules/Product";
+// import ProductModule from "@/store/modules/Product";
 
 export default defineComponent({
   mounted() {
@@ -20,7 +21,7 @@ export default defineComponent({
       "search-bar"
     ) as HTMLInputElement;
     searchBarInput!.addEventListener("keyup", () => {
-      const searchKeyWord = searchBarInput!.value.toLowerCase();
+      //   const searchKeyWord = searchBarInput!.value.toLowerCase();
     });
   },
 });
@@ -31,7 +32,7 @@ export default defineComponent({
 .search-bar-container {
   position: relative;
 }
-.search-bar {
+.search-bar-container .search-bar {
   outline: none;
   height: 30px;
   width: 25vw;
@@ -57,5 +58,17 @@ button.search-button {
   width: 20px;
   height: 20px;
   padding: 0;
+}
+.search-bar-container .search-results {
+  position: absolute;
+  top: 36px;
+  width: 100%;
+  height: 200px;
+  background: white;
+  border-radius: 7px;
+  border: 1px solid whitesmoke;
+}
+.hide {
+  display: none !important;
 }
 </style>
