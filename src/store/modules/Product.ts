@@ -26,6 +26,14 @@ class ProductModule extends VuexModule {
   get allProductsList() {
     return this._allProducts;
   }
+  get filteredProductsList() {
+    return (keyword: string) => {
+      keyword = keyword.toLowerCase();
+      return this._allProducts
+        .filter((product) => product.name.toLowerCase().includes(keyword))
+        .slice(0, 7);
+    };
+  }
   get productThumbnailIndex() {
     return this._productThumbnailIndex;
   }

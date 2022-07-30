@@ -6,6 +6,7 @@
       placeholder="Search here"
       ref="searchInput"
       @click="showSearchResults"
+      @keyup="searchProducts"
     />
     <button
       type="button"
@@ -14,7 +15,7 @@
     ></button>
     <div class="search-results hide" ref="searchResults">
       <router-link
-        v-for="(product, index) in searchProducts"
+        v-for="(product, index) in searchProductResults"
         :key="index"
         :to="{
           name: routeNames.PRODUCT_DETAIL,
@@ -29,15 +30,16 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 import ProductModule from "@/store/modules/Product";
 import { routeNames } from "@/router/index";
+import { IProductInfo } from "@/services/interfaces/IProduct";
 
 export default defineComponent({
   setup() {
-    const searchProducts = computed(() => ProductModule.allProductsList);
+    const searchProductResults = ref([] as Array<IProductInfo>);
     return {
-      searchProducts,
+      searchProductResults,
       routeNames,
     };
   },
@@ -57,6 +59,12 @@ export default defineComponent({
         }
       }
       searchResultElement.classList.add("hide");
+    },
+    searchProducts() {
+      const searchInputElement = this.$refs.searchInput as HTMLInputElement;
+      this.searchProductResults = ProductModule.filteredProductsList(
+        searchInputElement.value
+      );
     },
   },
   mounted() {
@@ -101,13 +109,26 @@ button.search-button {
   padding: 0;
 }
 .search-bar-container .search-results {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
   position: absolute;
   top: 36px;
   width: 100%;
-  height: 200px;
+  padding: 10px;
+  box-sizing: border-box;
+  text-align: left;
   background: white;
   border-radius: 7px;
   border: 1px solid whitesmoke;
+}
+.search-bar-container .search-results > a {
+  text-decoration: none;
+  color: #333333;
+  font-size: 15px;
+}
+.search-bar-container .search-results > a:hover {
+  color: mediumvioletred;
 }
 .hide {
   display: none !important;
