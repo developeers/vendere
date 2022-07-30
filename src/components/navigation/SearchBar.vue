@@ -12,15 +12,35 @@
       class="search-button"
       @click="showSearchResults"
     ></button>
-    <div class="search-results hide" ref="searchResults"></div>
+    <div class="search-results hide" ref="searchResults">
+      <router-link
+        v-for="(product, index) in searchProducts"
+        :key="index"
+        :to="{
+          name: routeNames.PRODUCT_DETAIL,
+          params: { hashId: product.hashId },
+        }"
+        class="profile-menu"
+      >
+        {{ product.name }}
+      </router-link>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-// import ProductModule from "@/store/modules/Product";
+import { computed, defineComponent } from "vue";
+import ProductModule from "@/store/modules/Product";
+import { routeNames } from "@/router/index";
 
 export default defineComponent({
+  setup() {
+    const searchProducts = computed(() => ProductModule.allProductsList);
+    return {
+      searchProducts,
+      routeNames,
+    };
+  },
   methods: {
     showSearchResults() {
       const searchResultElement = this.$refs.searchResults as HTMLElement;
