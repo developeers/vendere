@@ -1,6 +1,7 @@
 # vendere
 
-A Mercari-like E-commerce site. (Visit: https://vendere-23f76.web.app/)
+A Mercari-like E-commerce site. (Visit: https://vendere-23f76.web.app/).   
+Test account: `vendere-test@gmail.com` / `abc1234!`
 
 ### Home Page
 <img width="1440" alt="Screen Shot 2022-07-24 at 19 02 42" src="https://user-images.githubusercontent.com/25933120/180643875-1d9be0fa-65c0-482f-9674-a60bf87d9df5.png">
