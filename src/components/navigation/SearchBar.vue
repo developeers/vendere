@@ -5,14 +5,9 @@
       class="search-bar"
       placeholder="Search here"
       ref="searchInput"
-      @click="showSearchResults"
       @keyup="searchProducts"
     />
-    <button
-      type="button"
-      class="search-button"
-      @click="showSearchResults"
-    ></button>
+    <button type="button" class="search-button"></button>
     <div class="search-results hide" ref="searchResults">
       <router-link
         v-for="(product, index) in searchProductResults"
@@ -44,10 +39,6 @@ export default defineComponent({
     };
   },
   methods: {
-    showSearchResults() {
-      const searchResultElement = this.$refs.searchResults as HTMLElement;
-      searchResultElement.classList.remove("hide");
-    },
     hideSearchResults(event: Event) {
       const searchResultElement = this.$refs.searchResults as HTMLElement;
       if (event.target instanceof HTMLElement) {
@@ -62,9 +53,15 @@ export default defineComponent({
     },
     searchProducts() {
       const searchInputElement = this.$refs.searchInput as HTMLInputElement;
+      const searchResultElement = this.$refs.searchResults as HTMLElement;
       this.searchProductResults = ProductModule.filteredProductsList(
         searchInputElement.value
       );
+      if (this.searchProductResults.length) {
+        searchResultElement.classList.remove("hide");
+      } else {
+        searchResultElement.classList.add("hide");
+      }
     },
   },
   mounted() {
@@ -75,7 +72,6 @@ export default defineComponent({
   },
 });
 </script>
-
 
 <style scoped>
 .search-bar-container {
