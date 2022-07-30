@@ -76,16 +76,18 @@ export default defineComponent({
 <style scoped>
 .search-bar-container {
   position: relative;
+  max-width: 360px;
+  min-width: 250px;
+  width: 25vw;
 }
 .search-bar-container .search-bar {
   outline: none;
+  width: 100%;
   height: 30px;
-  width: 25vw;
   border-radius: 20px;
   border: 0;
   padding-left: 12px;
-  max-width: 280px;
-  min-width: 190px;
+  box-sizing: border-box;
 }
 input.search-bar::placeholder {
   font-family: "Courier New", Courier, monospace;
@@ -107,11 +109,11 @@ button.search-button {
 .search-bar-container .search-results {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 15px;
   position: absolute;
   top: 36px;
   width: 100%;
-  padding: 10px;
+  padding: 15px;
   box-sizing: border-box;
   text-align: left;
   background: white;
