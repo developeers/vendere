@@ -57,6 +57,7 @@ export default defineComponent({});
 .footer-container-column > a {
   text-decoration: none;
   color: mediumvioletred;
+  cursor: not-allowed;
 }
 .footer-container-column > a:first-child {
   font-weight: bold;

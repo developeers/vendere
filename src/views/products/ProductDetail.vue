@@ -232,19 +232,21 @@ export default defineComponent({
   width: 140px;
   color: grey;
 }
-.add-to-cart-button {
+.product-description .custom-button.add-to-cart-button {
   color: cadetblue;
   border: 2px solid cadetblue;
+  cursor: not-allowed;
 }
-.add-to-cart-button:hover {
+.product-description .custom-button.add-to-cart-button:hover {
   color: whitesmoke;
   background: cadetblue;
 }
-.order-button {
+.product-description .custom-button.order-button {
   color: mediumvioletred;
   border: 2px solid mediumvioletred;
+  cursor: not-allowed;
 }
-.order-button:hover {
+.product-description .custom-button.order-button:hover {
   color: whitesmoke;
   background: mediumvioletred;
 }

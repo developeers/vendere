@@ -38,12 +38,10 @@
             />
             <div id="login-username">{{ loginUser.name }}</div>
           </router-link>
-          <router-link to="#" class="not-implemented"
+          <router-link to="" class="not-implemented"
             >Products you bought</router-link
           >
-          <router-link to="#" class="not-implemented"
-            >Sold products</router-link
-          >
+          <router-link to="" class="not-implemented">Sold products</router-link>
           <router-link to="/" @click="logout">Logout</router-link>
         </div>
       </div>
@@ -223,6 +221,7 @@ export default defineComponent({
 }
 .dropdown-items a.not-implemented {
   color: #a4a4a4;
+  cursor: not-allowed;
 }
 @media screen and (max-width: 767px) {
   .fa-shopping-cart {
